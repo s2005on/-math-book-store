@@ -4,7 +4,10 @@ from zipfile import ZIP_DEFLATED, ZipFile
 
 ROOT = Path(__file__).resolve().parents[1]
 DIST = ROOT / "dist"
-ARCHIVE = DIST / "Math-Book-Store-v0.5.1.zip"
+VERSION = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
+if not VERSION or any(ch not in "0123456789." for ch in VERSION):
+    raise ValueError("VERSION không hợp lệ")
+ARCHIVE = DIST / f"Math-Book-Store-v{VERSION}.zip"
 EXCLUDED_DIRS = {".git", ".venv", "__pycache__", "node_modules", "dist", ".pytest_cache"}
 EXCLUDED_FILES = {".env", "shop.sqlite3"}
 EXCLUDED_SUFFIXES = {".pyc", ".pyo"}
