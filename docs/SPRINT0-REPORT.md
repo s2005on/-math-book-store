@@ -3,17 +3,23 @@
 ## Goal
 Create a runnable storefront foundation and project workflow.
 
-## Completed locally
+## Completed and merged
 - Responsive storefront and seven-item sample catalog.
 - Search, class filters, sorting and product details.
 - Browser cart and clearly labeled demo checkout.
 - Static admin preview.
 - FastAPI static host and /health endpoint.
-- Python and Node tests.
-- Academic project docs, Git conventions, release notes and deploy templates.
+- Book-cover mockups and catalog data.
+- Project charter, requirements, system design, WBS, schedule, Scrum, backlog, demo and release documentation.
+- GitHub Actions, issue/PR templates, deploy templates and test suites.
+- Pull Request #1 merged into main.
 
 ## Verification
-5/5 Python tests and 4/4 Node tests passed locally. GitHub Actions status must be checked on the branch after source synchronization.
+- Python: 5/5 tests passed.
+- Node: 4/4 tests passed.
+- GitHub Actions: Ubuntu / Python 3.12 passed.
+- GitHub Actions: Windows / Python 3.12 passed.
+- Merge commit: d987f5e69d9726cc358926f6f8c610e3569c04ad.
 
 ## Not completed
-Database, real catalog CRUD, admin authentication, order API, payment and production deployment.
+Database, real catalog CRUD, admin authentication, order API, payment, notifications, inventory and production deployment.
