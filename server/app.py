@@ -58,6 +58,13 @@ def init_db():
         if not db.execute("SELECT 1 FROM books LIMIT 1").fetchone():
             for book in json.loads((WEB / "catalog.json").read_text(encoding="utf-8")):
                 db.execute("INSERT INTO books(id,name,category,price,image,description,label,sortOrder,in_stock,status) VALUES (?,?,?,?,?,?,?,?,?,?)", (book["id"],book["name"],book["category"],book.get("price"),book["image"],book.get("description",""),book.get("label",""),book.get("sortOrder",100),int(book.get("in_stock",True)),book.get("status","available"))))
+        # Seed the announced title once; do not overwrite admin edits on subsequent starts.
+        if not db.execute("SELECT 1 FROM books WHERE id='upcoming-logic'").fetchone():
+            db.execute("INSERT INTO books(id,name,category,price,image,description,label,sortOrder,in_stock,status) VALUES (?,?,?,?,?,?,?,?,?,?)",
+                ("upcoming-logic","Toán tổ hợp và tư duy logic","Ôn thi lớp 10",None,
+                 "assets/books/coming-soon-combinatorics.svg",
+                 "Bồi dưỡng học sinh giỏi, rèn tư duy tổ hợp và logic. Chưa có ngày phát hành chính thức.",
+                 "SẮP RA MẮT",0,0,"coming_soon"))
         admin_user = os.getenv("MBS_ADMIN_USER", "").strip().lower()
         admin_password = os.getenv("MBS_ADMIN_PASSWORD", "")
         if admin_user and len(admin_password) >= 12:
