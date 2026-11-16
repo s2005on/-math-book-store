@@ -1,11 +1,11 @@
-# Math Book Store — bản chạy máy cá nhân v0.5.1
+# LTD's Book Store — bản chạy máy cá nhân v0.5.1
 
 Website cửa hàng sách Toán với đăng nhập, quản lý kho sách và banner sách sắp ra mắt. Không cần VPS hay GitHub để chạy sau khi đã tải ZIP về máy.
 
 ## Cách chạy nhanh trên Windows
 
 1. Cài **Python 3.11 trở lên** từ https://www.python.org/downloads/ (khi cài, chọn **Add Python to PATH**).
-2. Giải nén toàn bộ file ZIP vào một thư mục, ví dụ `Desktop\\Math-Book-Store`.
+2. Giải nén toàn bộ file ZIP vào một thư mục, ví dụ `Desktop\\LTDs-Book-Store`.
 3. Nhấn đúp **RUN-WINDOWS.bat**.
 4. Lần đầu chạy, cửa sổ sẽ hỏi tên đăng nhập và mật khẩu quản trị (ít nhất 12 ký tự). Mật khẩu được lưu trong file `.env` trên máy.
 5. Website tự mở tại http://127.0.0.1:8017/
