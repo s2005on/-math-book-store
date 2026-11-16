@@ -47,6 +47,7 @@ def verify(password, saved):
 def init_db():
     with database() as db:
         db.executescript("""
+        CREATE TABLE IF NOT EXISTS seed_history (key TEXT PRIMARY KEY);
         CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, username TEXT UNIQUE NOT NULL, password TEXT NOT NULL, role TEXT NOT NULL);
         CREATE TABLE IF NOT EXISTS sessions (token_hash TEXT PRIMARY KEY, user_id INTEGER NOT NULL, csrf TEXT NOT NULL, expires INTEGER NOT NULL);
         CREATE TABLE IF NOT EXISTS books (id TEXT PRIMARY KEY, name TEXT NOT NULL, category TEXT NOT NULL, price INTEGER, image TEXT NOT NULL, description TEXT NOT NULL DEFAULT '', label TEXT NOT NULL DEFAULT '', sortOrder INTEGER NOT NULL DEFAULT 100, in_stock INTEGER NOT NULL DEFAULT 1, status TEXT NOT NULL DEFAULT 'available');
@@ -59,12 +60,13 @@ def init_db():
             for book in json.loads((WEB / "catalog.json").read_text(encoding="utf-8")):
                 db.execute("INSERT INTO books(id,name,category,price,image,description,label,sortOrder,in_stock,status) VALUES (?,?,?,?,?,?,?,?,?,?)", (book["id"],book["name"],book["category"],book.get("price"),book["image"],book.get("description",""),book.get("label",""),book.get("sortOrder",100),int(book.get("in_stock",True)),book.get("status","available")))
         # Seed the announced title once; do not overwrite admin edits on subsequent starts.
-        if not db.execute("SELECT 1 FROM books WHERE id='upcoming-logic'").fetchone():
+        if not db.execute("SELECT 1 FROM seed_history WHERE key='upcoming-logic-v1'").fetchone():
             db.execute("INSERT INTO books(id,name,category,price,image,description,label,sortOrder,in_stock,status) VALUES (?,?,?,?,?,?,?,?,?,?)",
                 ("upcoming-logic","Toán tổ hợp và tư duy logic","Ôn thi lớp 10",None,
                  "assets/books/coming-soon-combinatorics.svg",
                  "Bồi dưỡng học sinh giỏi, rèn tư duy tổ hợp và logic. Chưa có ngày phát hành chính thức.",
                  "SẮP RA MẮT",0,0,"coming_soon"))
+            db.execute("INSERT INTO seed_history(key) VALUES ('upcoming-logic-v1')")
         admin_user = os.getenv("MBS_ADMIN_USER", "").strip().lower()
         admin_password = os.getenv("MBS_ADMIN_PASSWORD", "")
         if admin_user and len(admin_password) >= 12:
