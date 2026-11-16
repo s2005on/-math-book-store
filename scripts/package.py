@@ -4,7 +4,7 @@ from zipfile import ZIP_DEFLATED, ZipFile
 
 ROOT = Path(__file__).resolve().parents[1]
 DIST = ROOT / "dist"
-ARCHIVE = DIST / "Math-Book-Store-v0.5.0.zip"
+ARCHIVE = DIST / "Math-Book-Store-v0.5.1.zip"
 EXCLUDED_DIRS = {".git", ".venv", "__pycache__", "node_modules", "dist", ".pytest_cache"}
 EXCLUDED_FILES = {".env", "shop.sqlite3"}
 EXCLUDED_SUFFIXES = {".pyc", ".pyo"}
