@@ -1,45 +1,51 @@
-# Math Book Store v0.4.0 — đồ án bán sách
+# Math Book Store — bản chạy máy cá nhân v0.5.0
 
-Repo riêng tham khảo luồng trải nghiệm từ [VNU Food Hola](https://github.com/s2005on/vnu-food-hola). Giao diện trang chủ giữ màu xanh lá/kem/cam hiện có; KHÔNG thay đổi ảnh bìa sách gốc và KHÔNG thay đổi repo bán đồ ăn.
+Website cửa hàng sách Toán với đăng nhập, quản lý kho sách và banner sách sắp ra mắt. Không cần VPS hay GitHub để chạy sau khi đã tải ZIP về máy.
+
+## Cách chạy nhanh trên Windows
+
+1. Cài **Python 3.11 trở lên** từ https://www.python.org/downloads/ (khi cài, chọn **Add Python to PATH**).
+2. Giải nén toàn bộ file ZIP vào một thư mục, ví dụ `Desktop\\Math-Book-Store`.
+3. Nhấn đúp **RUN-WINDOWS.bat**.
+4. Lần đầu chạy, cửa sổ sẽ hỏi tên đăng nhập và mật khẩu quản trị (ít nhất 12 ký tự). Mật khẩu được lưu trong file `.env` trên máy.
+5. Website tự mở tại http://127.0.0.1:8017/
+
+Lần đầu cần Internet để tải thư viện Python. Những lần sau chạy lại `RUN-WINDOWS.bat`, không cần tạo tài khoản admin lần nữa.
+
+## macOS / Linux
+
+Cài Python 3.11+, mở Terminal tại thư mục đã giải nén và chạy:
+
+```bash
+chmod +x run.sh
+./run.sh
+```
+
+## Các địa chỉ
+
+- Trang cửa hàng: http://127.0.0.1:8017/
+- Đăng nhập: http://127.0.0.1:8017/login.html
+- Quản lý sách: http://127.0.0.1:8017/admin.html
+- Kiểm tra hoạt động: http://127.0.0.1:8017/health
 
 ## Tính năng
-- Cửa hàng: lọc/tìm kiếm sách, phân loại theo lớp, xem chi tiết, giỏ hàng và checkout **demo**.
-- Tài khoản: đăng ký/đăng nhập khách hàng tại `/login.html`; quản trị viên có thể đăng nhập và đi đến `/admin.html`.
-- Quản trị: thêm slot sách mới; tải ảnh JPG/PNG/WebP tối đa 5 MB; sửa tên, mô tả, giá, danh mục, tình trạng **còn hàng/hết hàng**, xóa sách.
-- Ảnh upload được chuyển sang WebP và lưu phía máy chủ. Sản phẩm hết hàng bị khóa thêm giỏ hàng.
-- Dữ liệu sách/tài khoản trong SQLite, ảnh trong `MBS_DATA_DIR/uploads`.
-- **63 đề ôn thi vào lớp 10: 139.000đ** theo giá vừa nhận. Cuốn HSG lớp 7 chưa in: chưa mở bán.
 
-## Chạy local (FastAPI, Python 3.11+)
-```bash
-python -m pip install -r server/requirements.txt
-# Thiết lập 2 biến môi trường trên máy chạy, không commit mật khẩu vào GitHub:
-export MBS_ADMIN_USER=adminmath
-export MBS_ADMIN_PASSWORD='THAY_BANG_MAT_KHAU_MANH_TOI_THIEU_12_KY_TU'
-export MBS_DATA_DIR=/opt/math-book-store-data
-python -m uvicorn server.app:app --host 127.0.0.1 --port 8017
-```
-Trên Windows PowerShell dùng `$env:MBS_ADMIN_USER="adminmath"`, `$env:MBS_ADMIN_PASSWORD="..."` và `$env:MBS_DATA_DIR="..."`.
+- Đăng ký/đăng nhập khách hàng và tài khoản quản trị.
+- Thêm sách mới, tải ảnh bìa JPG/PNG/WebP (tối đa 5 MB), sửa thông tin, giá, mô tả và xóa sách.
+- Trạng thái: **Còn hàng**, **Hết hàng**, **Sắp ra mắt**.
+- Sách sắp ra mắt tự hiển thị trong banner riêng; không thể thêm vào giỏ hàng.
+- Tìm kiếm, lọc sách, xem chi tiết và giỏ hàng demo.
 
-Mở `http://127.0.0.1:8017/`, `/login.html`, `/admin.html`, `/health`.
-**Lưu ý:** tài khoản admin chỉ tự tạo khi lần đầu thiết lập và chưa tồn tại tên tương ứng. Thay đổi biến môi trường không đổi mật khẩu của admin đã tạo. Không dùng mật khẩu ví dụ trong thực tế.
+## Dữ liệu và an toàn
 
-## Chạy trên VPS / HTTPS
-- Cấu hình domain và Nginx reverse proxy đến `127.0.0.1:8017`, bật HTTPS và set `MBS_SECURE_COOKIES=1`.
-- Gắn volume bền vững cho `MBS_DATA_DIR`; sao lưu file SQLite **và** thư mục `uploads`.
-- Giới hạn quyền hệ thống cho thư mục dữ liệu; không đặt thư mục SQLite bên trong `server/web`.
-- Giữ bí mật mật khẩu admin ở VPS hoặc secrets; không đưa vào GitHub. Cần giám sát, backup, giới hạn đăng ký và kiểm thử trước khi mở cho người dùng thật.
+- Cơ sở dữ liệu SQLite và ảnh tải lên được lưu trong `server/data/`.
+- File `.env` lưu thông tin khởi tạo admin. Không gửi file này cho người khác và không tải lên GitHub.
+- Không xóa `server/data/` nếu muốn giữ tài khoản, sách và ảnh đã tải lên.
+- Sao lưu định kỳ toàn bộ thư mục `server/data/`.
+- Website mặc định chỉ truy cập trên máy đang chạy (`127.0.0.1`), không tự công khai lên Internet.
 
-## Chú ý GitHub Pages
-GitHub Pages chỉ host file tĩnh. Trang chủ có thể hiển thị catalog từ `catalog.json`, nhưng **đăng nhập, upload ảnh, quản lý tồn kho và đồng bộ dữ liệu không hoạt động** trên Pages. Để dùng chức năng mới phải chạy FastAPI trên VPS. Nếu API không có, trang quản trị sẽ báo rõ.
+## Lưu ý
 
-## Kiểm thử
-```bash
-python -m pip install -r server/requirements-test.txt
-python -m unittest discover -s tests -v
-node --check server/web/app.js
-node --test tests/*.test.cjs
-```
-
-## Giới hạn
-Checkout vẫn chỉ là mô phỏng, không gửi đơn thật, không có thanh toán thật. Chưa kiểm thử hệ thống trên VPS sản xuất. Không dùng thông tin cá nhân thật trong form checkout demo.
+- Checkout hiện là bản demo, chưa gửi đơn hàng và chưa tích hợp thanh toán.
+- Cần để cửa sổ terminal chạy nền trong lúc dùng website; nhấn Ctrl+C để dừng.
+- Nếu cổng 8017 đang được ứng dụng khác sử dụng, hãy tắt ứng dụng đó rồi chạy lại.
