@@ -1,3 +1,12 @@
+## v0.3.0 — Book mockup storefront
+
+- Hoàn thiện nhận diện cửa hàng sách theo tông xanh navy – kem – đồng.
+- Làm nổi bật ảnh sản phẩm dạng cuốn sách, không chỉnh sửa thiết kế bìa gốc.
+- Hoàn thiện bộ lọc lớp, tìm kiếm, sắp xếp, chi tiết sách và giỏ hàng.
+- Bổ sung ghi chú rõ ràng rằng checkout hiện là demo, chưa tiếp nhận đơn thật.
+- Chuẩn bị workflow xuất bản giao diện tĩnh lên GitHub Pages.
+- Chạy lại 9 bài kiểm thử tự động: 5 Python smoke tests và 4 Node catalog tests.
+
 # Changelog
 
 ## v0.2.0 — UI Foundation
