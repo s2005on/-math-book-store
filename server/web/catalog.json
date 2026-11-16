@@ -1,9 +1,72 @@
 [
-  {"id":"math6","name":"Bài tập thực hành Toán 6 – Bộ 2 tập","category":"Lớp 6","price":80000,"image":"assets/books/math6-set.webp","description":"Bộ sách cơ bản và nâng cao, gồm Tập 1 và Tập 2.","label":"BỘ 2 TẬP","sortOrder":1},
-  {"id":"math7","name":"Bài tập thực hành Toán 7 – Bộ 2 tập","category":"Lớp 7","price":80000,"image":"assets/books/math7-set.webp","description":"Bộ sách cơ bản và nâng cao, gồm Tập 1 và Tập 2.","label":"BỘ 2 TẬP","sortOrder":2},
-  {"id":"math8","name":"Bài tập thực hành Toán 8 – Bộ 2 tập","category":"Lớp 8","price":80000,"image":"assets/books/math8-set.webp","description":"Bộ sách cơ bản và nâng cao, gồm Tập 1 và Tập 2.","label":"BỘ 2 TẬP","sortOrder":3},
-  {"id":"math9","name":"Bài tập thực hành Toán 9 – Bộ 2 tập","category":"Lớp 9","price":80000,"image":"assets/books/math9-set.webp","description":"Bộ sách cơ bản và nâng cao, gồm Tập 1 và Tập 2.","label":"BỘ 2 TẬP","sortOrder":4},
-  {"id":"entrance","name":"Luyện thi vào lớp 10 – Đại số & Hình học","category":"Ôn thi lớp 10","price":270000,"image":"assets/books/entrance-set.webp","description":"Bộ 2 cuốn luyện thi vào lớp 10: Đại số Tập 1 và Hình học Tập 2.","label":"LUYỆN THI","sortOrder":5},
-  {"id":"hsg8","name":"Chinh phục đề thi học sinh giỏi Toán 8","category":"Lớp 8","price":198000,"image":"assets/books/hsg8.webp","description":"Tài liệu chinh phục đề thi học sinh giỏi môn Toán dành cho học sinh lớp 8.","label":"HỌC SINH GIỎI","sortOrder":6},
-  {"id":"63de","name":"63 đề ôn thi vào lớp 10 môn Toán","category":"Ôn thi lớp 10","price":null,"image":"assets/books/63de.webp","description":"Tuyển tập 63 đề ôn thi vào lớp 10 môn Toán. Giá bán đang được cập nhật.","label":"ÔN THI LỚP 10","sortOrder":7}
+  {
+    "id": "math6",
+    "name": "Bài tập thực hành Toán 6 – Bộ 2 tập",
+    "category": "Lớp 6",
+    "price": 80000,
+    "image": "assets/books/math6-set.webp",
+    "description": "Bộ sách cơ bản và nâng cao, gồm Tập 1 và Tập 2.",
+    "label": "BỘ 2 TẬP",
+    "sortOrder": 1
+  },
+  {
+    "id": "math7",
+    "name": "Bài tập thực hành Toán 7 – Bộ 2 tập",
+    "category": "Lớp 7",
+    "price": 80000,
+    "image": "assets/books/math7-set.webp",
+    "description": "Bộ sách cơ bản và nâng cao, gồm Tập 1 và Tập 2.",
+    "label": "BỘ 2 TẬP",
+    "sortOrder": 2
+  },
+  {
+    "id": "math8",
+    "name": "Bài tập thực hành Toán 8 – Bộ 2 tập",
+    "category": "Lớp 8",
+    "price": 80000,
+    "image": "assets/books/math8-set.webp",
+    "description": "Bộ sách cơ bản và nâng cao, gồm Tập 1 và Tập 2.",
+    "label": "BỘ 2 TẬP",
+    "sortOrder": 3
+  },
+  {
+    "id": "math9",
+    "name": "Bài tập thực hành Toán 9 – Bộ 2 tập",
+    "category": "Lớp 9",
+    "price": 80000,
+    "image": "assets/books/math9-set.webp",
+    "description": "Bộ sách cơ bản và nâng cao, gồm Tập 1 và Tập 2.",
+    "label": "BỘ 2 TẬP",
+    "sortOrder": 4
+  },
+  {
+    "id": "entrance",
+    "name": "Luyện thi vào lớp 10 – Đại số & Hình học",
+    "category": "Ôn thi lớp 10",
+    "price": 270000,
+    "image": "assets/books/entrance-set.webp",
+    "description": "Bộ 2 cuốn luyện thi vào lớp 10: Đại số Tập 1 và Hình học Tập 2.",
+    "label": "LUYỆN THI",
+    "sortOrder": 5
+  },
+  {
+    "id": "hsg8",
+    "name": "Chinh phục đề thi học sinh giỏi Toán 8",
+    "category": "Lớp 8",
+    "price": 198000,
+    "image": "assets/books/hsg8.webp",
+    "description": "Tài liệu chinh phục đề thi học sinh giỏi môn Toán dành cho học sinh lớp 8.",
+    "label": "HỌC SINH GIỎI",
+    "sortOrder": 6
+  },
+  {
+    "id": "63de",
+    "name": "63 đề ôn thi vào lớp 10 môn Toán",
+    "category": "Ôn thi lớp 10",
+    "price": null,
+    "image": "assets/books/63de.webp",
+    "description": "Tuyển tập 63 đề ôn thi vào lớp 10 môn Toán. Giá bán đang được cập nhật.",
+    "label": "ÔN THI LỚP 10",
+    "sortOrder": 7
+  }
 ]
