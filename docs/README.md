@@ -4,6 +4,8 @@ The documentation layout follows the project-management structure used in VNU Fo
 
 | File | Purpose |
 |---|---|
+| WORKFLOW.md | Quy trình Scrum rút gọn, branch/PR, CI, release |
+| REPO-SYNC-STATUS.md | Theo dõi chênh lệch GitHub v0.5.1 và ZIP local v0.6.0 |
 | 01-project-charter.md | Project goals, scope and success criteria |
 | 02-requirements.md | Functional and non-functional requirements |
 | 03-system-design.md | Architecture and data flow |
