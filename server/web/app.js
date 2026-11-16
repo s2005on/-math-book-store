@@ -10,13 +10,14 @@ let activeCategory = 'Tất cả';
 let cart = {};
 let toastTimer = null;
 const categories = ['Tất cả', 'Lớp 6', 'Lớp 7', 'Lớp 8', 'Lớp 9', 'Ôn thi lớp 10'];
-const CART_KEY = 'math-book-store-cart-v020';
+const CART_KEY = 'ltds-book-store-cart-v020';
+const LEGACY_CART_KEY = 'math-book-store-cart-v020';
 const isAvailable = p => (p.status ? p.status === 'available' : p.in_stock !== false) && p.price !== null;
 const statusText = p => p.status === 'coming_soon' ? 'Sắp ra mắt' : p.status === 'sold_out' || p.in_stock === false ? 'Hết hàng' : '';
 
 function loadCart() {
   try {
-    const saved = JSON.parse(localStorage.getItem(CART_KEY) || '{}');
+    const saved = JSON.parse(localStorage.getItem(CART_KEY) || localStorage.getItem(LEGACY_CART_KEY) || '{}');
     if (!saved || typeof saved !== 'object' || Array.isArray(saved)) return;
     for (const [id, quantity] of Object.entries(saved)) {
       if (Number.isInteger(quantity) && quantity > 0 && quantity <= 99) cart[id] = quantity;
