@@ -1,4 +1,4 @@
-# Quy ước Git — Math Book Store
+# Quy ước Git — LTD's Book Store
 
 - `main`: nhánh tích hợp ổn định. Đề nghị cập nhật qua PR, không sửa trực tiếp.
 - Nhánh công việc: `feat/*`, `fix/*`, `docs/*`, `test/*`, `chore/*`.
