@@ -26,12 +26,14 @@ def main() -> int:
         print("Can Python 3.11 tro len. Hay cai Python 3.11+ roi chay lai.")
         return 1
 
-    if not PYTHON.exists():
-        print("[1/4] Dang tao moi truong Python rieng...")
-        run([sys.executable, "-m", "venv", str(VENV)])
-
-    print("[2/4] Dang cai/cap nhat thu vien (can Internet trong lan dau)...")
-    run([str(PYTHON), "-m", "pip", "install", "-r", str(ROOT / "server" / "requirements.txt")])
+    # Install into .venv, then relaunch with that interpreter so dotenv is importable.
+    if "--ready" not in sys.argv:
+        if not PYTHON.exists():
+            print("[1/4] Dang tao moi truong Python rieng...")
+            run([sys.executable, "-m", "venv", str(VENV)])
+        print("[2/4] Dang cai/cap nhat thu vien (can Internet trong lan dau)...")
+        run([str(PYTHON), "-m", "pip", "install", "-r", str(ROOT / "server" / "requirements.txt")])
+        return subprocess.call([str(PYTHON), str(ROOT / "start.py"), "--ready"], cwd=ROOT)
 
     from dotenv import dotenv_values, set_key
     config = dotenv_values(ENV_FILE) if ENV_FILE.exists() else {}
