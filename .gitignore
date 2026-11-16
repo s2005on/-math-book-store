@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+server/data/
+.env
+.DS_Store
+Thumbs.db
+server/web/assets/source/

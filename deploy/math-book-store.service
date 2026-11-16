@@ -1,0 +1,19 @@
+[Unit]
+Description=Math Book Store UI Foundation
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/opt/math-book-store
+ExecStart=/opt/math-book-store/.venv/bin/uvicorn server.app:app --host 127.0.0.1 --port 8017
+Restart=on-failure
+RestartSec=3
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+
+[Install]
+WantedBy=multi-user.target

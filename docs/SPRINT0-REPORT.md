@@ -1,18 +1,19 @@
 # Sprint 0 Report — UI Foundation
 
-## Mục tiêu
-Tạo storefront có thể chạy local, catalog sách mẫu, giỏ hàng demo, giao diện responsive và bộ khung tài liệu/kiểm thử.
+## Goal
+Create a runnable storefront foundation and project workflow.
 
-## Kết quả
-- Storefront, tìm kiếm, lọc lớp, sắp xếp, chi tiết sách.
-- Giỏ hàng demo và checkout minh họa.
-- Admin UI preview.
-- FastAPI static host và health endpoint.
-- Bộ ảnh bìa mockup và dữ liệu catalog mẫu.
-- Tài liệu dự án, issue/PR templates và CI workflow.
+## Completed locally
+- Responsive storefront and seven-item sample catalog.
+- Search, class filters, sorting and product details.
+- Browser cart and clearly labeled demo checkout.
+- Static admin preview.
+- FastAPI static host and /health endpoint.
+- Python and Node tests.
+- Academic project docs, Git conventions, release notes and deploy templates.
 
-## Kiểm chứng
-Python 5/5 và Node 4/4 test đạt trong local.
+## Verification
+5/5 Python tests and 4/4 Node tests passed locally. GitHub Actions status must be checked on the branch after source synchronization.
 
-## Chưa hoàn thành
-Database, authentication, admin CRUD, order API, payment, notifications, inventory và production hardening.
+## Not completed
+Database, real catalog CRUD, admin authentication, order API, payment and production deployment.

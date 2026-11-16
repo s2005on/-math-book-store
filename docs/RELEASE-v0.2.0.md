@@ -1,17 +1,10 @@
-# Release v0.2.0 — UI Foundation
+# Math Book Store v0.2.0 — UI Foundation
 
 ## Included
-Storefront, product catalog JSON, responsive layout, search/filter/sort, local cart, demo checkout, admin preview, FastAPI static host, health endpoint, tests, CI and project documentation.
+Responsive storefront, sample catalog JSON, book-cover mockups, search/filter/sort, product detail dialog, local cart, demo checkout, static admin preview, FastAPI static host, health endpoint, automated tests and academic documentation.
 
 ## Not included
-Order processing API, database, admin authentication, payment gateway, stock management, shipping and production deployment.
+Database, admin login, CRUD API, real order processing, payment gateway, inventory, shipping or production deployment.
 
-## Acceptance
-- App serves on localhost port 8017.
-- Catalog JSON and product images load.
-- Cart operations work in browser.
-- Python and Node test suites pass.
-- CI matrix is configured for Ubuntu and Windows.
-
-## Release note
-This is an academic UI foundation, not a production commerce system.
+## Verification
+Local: 5 Python tests and 4 Node tests passed. CI and VPS verification remain separate checks.
