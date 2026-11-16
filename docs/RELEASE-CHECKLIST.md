@@ -1,23 +1,17 @@
-# Release Checklist — UI Foundation v0.2.0
+# Checklist phát hành Math Book Store
 
-- [x] Repository có README, changelog, version và hướng dẫn chạy.
-- [x] Storefront responsive và admin UI preview.
-- [x] Danh mục 7 sản phẩm và giá mẫu.
-- [x] Ảnh bìa mockup được xử lý từ ảnh nguồn.
-- [x] Search, filter, sort, product detail, cart demo.
-- [x] Checkout demo nêu rõ chưa gửi đơn thật.
-- [x] FastAPI static host và health endpoint.
-- [x] Python smoke tests.
-- [x] Node catalog/asset tests.
-- [ ] Kiểm thử thủ công đầy đủ trên trình duyệt desktop/mobile theo `docs/TEST-PLAN.md`.
-- [x] GitHub Actions workflow.
-- [x] Pull Request #1 đã merge vào `main`.
-- [x] CI Ubuntu / Python 3.12 và Windows / Python 3.12 đều đạt.
-- [ ] Tạo Git tag và GitHub Release chính thức.
-- [ ] Xác nhận thông tin/giá các đầu sách còn thiếu.
-- [ ] Triển khai API, database và xác thực.
-- [ ] Kiểm thử đơn hàng thật, bảo mật và backup trước production.
+**Áp dụng cho mỗi release; đây là checklist, không phải chứng nhận đã hoàn tất.**
 
-## Ghi chú
+- [ ] Mã nguồn của bản Windows cần phát hành đã được **đồng bộ đầy đủ** lên GitHub.
+- [ ] VERSION, CHANGELOG, README và ghi chú release cùng một phiên bản.
+- [ ] PR đã được rà soát `Files changed`; CI cả Ubuntu/Windows đều đạt.
+- [ ] Các bài test backend, frontend và kiểm thử ZIP được chạy thành công.
+- [ ] ZIP chứa file `RUN-WINDOWS.bat`, mã nguồn, ảnh sản phẩm đúng phiên bản và không có dữ liệu cá nhân.
+- [ ] Ảnh bìa rõ, không méo; kiểm tra cả desktop và mobile.
+- [ ] Thử tìm kiếm, giỏ, tài khoản, quản trị thêm/sửa/xóa và trạng thái sách.
+- [ ] Nếu phiên bản có chức năng đơn hàng: kiểm tra giá phía server, quyền khách, đặt/hủy/xử lý đơn, dữ liệu không bị thất thoát.
+- [ ] Có sao lưu `server/data/` trước khi nâng cấp dữ liệu local và hướng dẫn rollback.
+- [ ] Gắn tag lên đúng commit trong `main`; ghi chú chức năng và giới hạn đã biết trong GitHub Release.
+- [ ] Ghi bằng chứng test, ngày, môi trường và commit vào VERIFICATION.md hoặc file evidence phù hợp.
 
-Đây là UI Foundation phục vụ đồ án và demo. Không sử dụng để nhận đơn thật; chưa có API đơn hàng, database, xác thực quản trị hoặc thanh toán.
+**Trạng thái 17/11/2026:** code GitHub đang là v0.5.1, ZIP local v0.6.0 **chưa đồng bộ**. Không tick các mục trên khi chưa có minh chứng. Xem [REPO-SYNC-STATUS.md](REPO-SYNC-STATUS.md).

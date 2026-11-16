@@ -1,7 +1,7 @@
 name: Math Book Store CI
 on:
   push:
-    branches: [main, "feat/**", "fix/**"]
+    branches: [main, "feat/**", "fix/**", "docs/**", "test/**", "chore/**"]
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -34,10 +34,13 @@ jobs:
 
       - name: Build standalone ZIP
         run: python scripts/package.py
-      - name: Upload standalone ZIP
+      - name: Verify standalone ZIP
+        run: python scripts/verify_package.py
+      - name: Upload verified ZIP (Ubuntu build only)
+        if: runner.os == 'Linux'
         uses: actions/upload-artifact@v4
         with:
-          name: Math-Book-Store-v0.5.0
-          path: dist/Math-Book-Store-v0.5.0.zip
+          name: Math-Book-Store-local
+          path: dist/Math-Book-Store-*.zip
           if-no-files-found: error
           retention-days: 14
