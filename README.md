@@ -6,7 +6,7 @@ Website cửa hàng sách Toán với đăng nhập, quản lý kho sách và ba
 
 > **Trạng thái mã nguồn:** nhánh `main` đang chứa v0.5.1; bản ZIP local v0.9.0 (có quản lý đơn hàng và ảnh nét cao) **chưa được đồng bộ đầy đủ lên GitHub**. Xem [đối chiếu](docs/REPO-SYNC-STATUS.md) trước khi tải source từ GitHub thay cho bản ZIP local.
 
-[Quy trình làm đồ án](docs/WORKFLOW.md) · [GitHub Actions](https://github.com/s2005on/LTDs-Book-Store/actions) · [Phiên bản và release](docs/VERSIONING.md)
+[Đối chiếu hồ sơ với VNU Food Hola](docs/ACADEMIC-TRACEABILITY.md) · [Nhập ZIP phiên bản mới](docs/VERSION-INTAKE.md) · [Quy trình làm đồ án](docs/WORKFLOW.md) · [GitHub Actions](https://github.com/s2005on/LTDs-Book-Store/actions) · [Phiên bản và release](docs/VERSIONING.md)
 
 ## Cách chạy nhanh trên Windows
 
@@ -61,4 +61,4 @@ chmod +x run.sh
 
 ## Chuyển thương hiệu thành LTD's Book Store
 
-Tên repository mong muốn: `s2005on/LTDs-Book-Store`. Chủ repository đổi tại **GitHub Settings → General → Repository name** để giữ toàn bộ lịch sử. Lưu ý: mã nguồn trên nhánh `main` hiện vẫn là **v0.5.1**; bản ZIP **v0.9.0** đã được chỉnh tên đồng bộ nhưng chưa nhập đầy đủ mã mới và ảnh độ phân giải cao lên GitHub. Xem [kế hoạch đồng bộ](docs/LTD-RENAME-AND-SYNC.md) trước khi tạo Release.
+Repository chính thức đã đổi tên: [`s2005on/LTDs-Book-Store`](https://github.com/s2005on/LTDs-Book-Store), giữ nguyên lịch sử Git. Lưu ý: mã nguồn trên nhánh `main` hiện vẫn là **v0.5.1**; bản ZIP **v0.9.0** đã được chỉnh tên đồng bộ nhưng chưa nhập đầy đủ mã mới và ảnh độ phân giải cao lên GitHub. Xem [kế hoạch đồng bộ](docs/LTD-RENAME-AND-SYNC.md) trước khi tạo Release.

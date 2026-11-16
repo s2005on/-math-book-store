@@ -51,4 +51,11 @@ Khi lưu bằng chứng: ghi ngày, commit/tag, hệ điều hành, bước th�
 
 ## 6. Trạng thái đồng bộ
 
-Xem [REPO-SYNC-STATUS.md](REPO-SYNC-STATUS.md). **Bản ZIP v0.9.0 đang dùng trên máy chưa đồng nghĩa với mã nguồn `main` hiện tại (v0.5.1)**. Cần đối chiếu, nhập và kiểm thử trước khi phát hành phiên bản 0.6.0 từ GitHub.
+Xem [REPO-SYNC-STATUS.md](REPO-SYNC-STATUS.md), [VERSION-INTAKE.md](VERSION-INTAKE.md) và [ACADEMIC-TRACEABILITY.md](ACADEMIC-TRACEABILITY.md). **Bản ZIP v0.9.0 đang dùng trên máy chưa đồng nghĩa với mã nguồn `main` hiện tại (v0.5.1)**. Cần đối chiếu, nhập và kiểm thử trước khi phát hành phiên bản v0.9.0 từ GitHub.
+
+## 7. Bàn giao học phần và các bản ZIP tiếp theo
+
+- Chỉ tiếp nhận phiên bản theo [VERSION-INTAKE.md](VERSION-INTAKE.md): SHA-256 ZIP, diff, kiểm tra secrets, test, PR, tag.
+- Lưu bằng chứng thật đúng commit trong [docs/evidence](evidence/README.md) (UI desktop/mobile, test backend/frontend, CI).
+- Mỗi Sprint có mục tiêu, issue/PR và kết quả demo ở [SPRINT-TRACKER.md](SPRINT-TRACKER.md).
+- Không tăng VERSION hoặc tạo tag thay người dùng khi chưa nhận và kiểm chứng bản cập nhật. Không nói các phiên bản ZIP local đã lên `main` khi chưa merge.

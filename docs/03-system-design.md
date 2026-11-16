@@ -1,53 +1,66 @@
-# 03 — Thiết kế hệ thống
+# 03 — Thiết kế hệ thống LTD's Book Store
 
-## Kiến trúc hiện tại
+## 1. Phiên bản và phạm vi được mô tả
 
-```text
-Browser
-  ├── server/web/index.html
-  ├── server/web/styles.css
-  ├── server/web/app.js
-  ├── server/web/catalog.json
-  └── server/web/assets/books/*
-          │
-          ▼
-FastAPI static host (server/app.py)
-  └── GET /health
-```
+Tài liệu này mô tả **mã nguồn thực có trên GitHub `main` v0.5.1** tại thời điểm xây dựng hồ sơ, **không phải toàn bộ chức năng trong ZIP local v0.9.0**. Bản v0.9.0 cần [nhập và kiểm thử riêng](REPO-SYNC-STATUS.md) trước khi cập nhật sơ đồ. Không có VPS production trong phạm vi này.
 
-FastAPI hiện chỉ phục vụ file tĩnh và endpoint health. Chưa có API nghiệp vụ hay database.
-
-## Thành phần giao diện
-
-- `index.html`: storefront, hero, danh mục, card, dialog và footer.
-- `app.js`: tải catalog, lọc/tìm kiếm/sắp xếp, cart, chi tiết và checkout demo.
-- `styles.css`: design tokens, layout, responsive, sticky header và sticky cart.
-- `catalog.json`: dữ liệu mẫu độc lập với giao diện.
-- `admin.html` / `admin.css`: bản xem trước bố cục quản trị tĩnh.
-
-## Dữ liệu sản phẩm
-
-Mỗi sản phẩm có `id`, `name`, `category`, `price`, `image`, `description`, `label` và `sortOrder`. `price: null` thể hiện chưa có giá được xác nhận; sản phẩm này không thể thêm vào giỏ.
-
-## Thiết kế ảnh bìa
-
-Ảnh bìa được cắt phối cảnh từ ảnh gốc, dựng thành mockup có bóng đổ và nền trong suốt/neutral. Không tái tạo chữ bằng mô hình sinh ảnh để tránh sai tên sách hoặc nội dung bìa. Ảnh gốc không đưa vào repository công khai; chỉ lưu ảnh đã xử lý.
-
-## Kiến trúc mục tiêu
+## 2. Kiến trúc thực tế
 
 ```text
-Browser ── HTTPS ──> Nginx ──> FastAPI
-                                  ├── Catalog API
-                                  ├── Cart / Order API
-                                  ├── Admin Auth + Admin API
-                                  └── SQLite (MVP) / PostgreSQL (scale)
+Trình duyệt người mua / quản trị
+  |  HTML/CSS/JavaScript: server/web/
+  |  Giỏ hàng localStorage (không phải đơn đã gửi)
+  |  Cookie đăng nhập HttpOnly + CSRF khi ghi dữ liệu
+  v
+FastAPI — server/app.py (127.0.0.1:8017)
+  |- /health
+  |- /api/books (đọc công khai)
+  |- /api/register, /api/login, /api/logout, /api/me
+  |- /api/admin/books + /api/admin/books/{id} (CRUD quản trị)
+  |- /api/admin/upload, /api/images/{name}
+  |- StaticFiles: giao diện và ảnh bìa
+  v
+SQLite: server/data/shop.sqlite3 (users, sessions, books, seed_history)
+Filesystem: server/data/uploads/ (ảnh upload)
 ```
 
-Schema dự kiến: `admins`, `products`, `orders`, `order_items`, `order_events`, `settings`. Thiết kế schema chi tiết cần được chốt trước Sprint 1.
+**Điều đã triển khai:** đăng ký, đăng nhập, phân quyền admin, danh mục sách, CRUD, ảnh upload, trạng thái bán, cửa hàng và giỏ hàng mẫu. **Điều chưa có trong mã GitHub v0.5.1:** lưu đơn thật, lịch sử đơn và quản lý trạng thái đơn. Checkout tại phiên bản này là demo.
 
-## Rủi ro và quyết định
+## 3. Các endpoint có trên `main`
 
-- Giá sản phẩm có thể thay đổi: backend cần tính giá tại thời điểm checkout.
-- Thông tin sách còn thiếu: không tự suy đoán; đánh dấu cần cập nhật.
-- Ảnh chụp có phối cảnh: xử lý hình học để giữ nguyên nội dung bìa.
-- Frontend-only không đủ để vận hành bán hàng: giữ thông báo rõ ràng ở checkout.
+| Phương thức | URL | Ý nghĩa |
+|---|---|---|
+| GET | `/health` | kiểm tra máy chủ |
+| GET | `/api/books` | danh sách sản phẩm/trạng thái |
+| GET | `/api/me` | trạng thái đăng nhập |
+| POST | `/api/register` | tạo tài khoản khách |
+| POST | `/api/login` | đăng nhập, cấp cookie phiên |
+| POST | `/api/logout` | kết thúc phiên |
+| POST | `/api/admin/books` | quản trị thêm sách |
+| PUT | `/api/admin/books/{id}` | quản trị sửa sách |
+| DELETE | `/api/admin/books/{id}` | quản trị xóa sách |
+| POST | `/api/admin/upload` | quản trị tải ảnh (JPG/PNG/WebP) |
+| GET | `/api/images/{name}` | trả ảnh đã tải |
+
+Không liệt kê API đơn hàng của ZIP v0.9.0 ở đây cho đến khi PR nhập phiên bản được merge.
+
+## 4. Mô hình dữ liệu và quy tắc
+
+- `users`: tên đăng nhập, mật khẩu hash PBKDF2, quyền (`admin`/`customer`).
+- `sessions`: lưu hash phiên, mã CSRF, thời hạn.
+- `books`: ID, tên, danh mục, giá, ảnh, nhãn, mô tả, thứ tự hiển thị, tình trạng.
+- `seed_history`: dấu mốc dữ liệu mẫu đã khởi tạo để tránh thêm lại khi quản trị xóa.
+
+Trạng thái sản phẩm gồm `available`, `sold_out`, `coming_soon`. Sách sắp ra mắt và hết hàng không được thêm vào giỏ. Các thao tác ghi ở API admin kiểm tra phiên, vai trò và CSRF phía máy chủ.
+
+## 5. Quyết định thiết kế, giới hạn và an toàn
+
+- Chạy local; `server/data/` không được commit, cần sao lưu trước khi nâng cấp.
+- `.env` chứa cấu hình admin; không cho lên GitHub. Khi mở mạng công cộng cần HTTPS, Secure cookie, audit bảo mật trước khi sử dụng thực.
+- Ảnh bìa gốc giữ nguyên thiết kế, chỉ tối ưu hiển thị; ảnh chất lượng cao của ZIP v0.9.0 chưa đồng bộ vào `main`.
+- `catalog.json` hỗ trợ fallback frontend nhưng nguồn dữ liệu động khi server hoạt động là API SQLite.
+- Tài khoản khách có thể đăng nhập; chưa có thanh toán tự động, email, phục hồi mật khẩu hoặc vận chuyển thật.
+
+## 6. Kiến trúc mục tiêu (chưa tính là đã làm)
+
+Sau khi nhập ZIP v0.9.0, bổ sung sơ đồ bảng `orders` và các API tạo đơn, lịch sử, hủy, quản trị trạng thái dựa trên **mã thực tế đã kiểm thử**, đồng thời cập nhật [TEST-PLAN.md](TEST-PLAN.md) và bằng chứng cho đúng commit.

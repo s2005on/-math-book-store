@@ -5,7 +5,7 @@
 - **Tên đề tài:** Xây dựng website thương mại điện tử bán sách tham khảo Toán.
 - **Tên dự án:** LTD's Book Store.
 - **Loại sản phẩm:** Website responsive, mô hình cửa hàng đơn lẻ.
-- **Trạng thái:** UI Foundation — Sprint 0.
+- **Trạng thái gốc của tài liệu:** UI Foundation — Sprint 0 (lịch sử giai đoạn khởi tạo).
 - **Nguồn tham khảo quy trình:** VNU Food Hola (`s2005on/vnu-food-hola`).
 
 ## Bối cảnh và vấn đề
@@ -40,3 +40,7 @@ Không bao gồm API đơn hàng thật, database, tài khoản, thanh toán, t�
 - Ảnh bìa sản phẩm được xử lý từ nguồn ảnh người bán cung cấp.
 - Có thể chạy local bằng hướng dẫn trong README.
 - Kiểm thử tự động và CI chạy qua.
+
+## Cập nhật tình trạng mã nguồn GitHub
+
+Từ sau Sprint 0, `main` v0.5.1 đã có FastAPI, SQLite, đăng ký/đăng nhập và CRUD sách; vì vậy phần **Phạm vi Sprint 0** ở trên chỉ mô tả phạm vi lúc bắt đầu, **không** mô tả toàn bộ phần mềm hiện tại. Chức năng đơn hàng và ảnh độ phân giải cao của ZIP v0.9.0 chưa đồng bộ lên `main`. Theo dõi [REPO-SYNC-STATUS.md](REPO-SYNC-STATUS.md) và [ACADEMIC-TRACEABILITY.md](ACADEMIC-TRACEABILITY.md).
