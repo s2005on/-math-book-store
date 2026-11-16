@@ -9,3 +9,9 @@ server/data/
 .DS_Store
 Thumbs.db
 server/web/assets/source/
+.env
+.venv/
+server/data/
+__pycache__/
+*.py[cod]
+.DS_Store
