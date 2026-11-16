@@ -26,7 +26,7 @@ test('sample price data is consistent', () => {
   assert.equal(prices.math9, 80000);
   assert.equal(prices.entrance, 270000);
   assert.equal(prices.hsg8, 198000);
-  assert.equal(prices['63de'], null);
+  assert.equal(prices['63de'], 139000);
 });
 
 test('storefront references catalog, CSS and JavaScript', () => {
