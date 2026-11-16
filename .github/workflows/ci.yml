@@ -31,3 +31,13 @@ jobs:
         run: node --check server/web/app.js
       - name: Catalog tests
         run: node --test tests/*.test.cjs
+
+      - name: Build standalone ZIP
+        run: python scripts/package.py
+      - name: Upload standalone ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: Math-Book-Store-v0.5.0
+          path: dist/Math-Book-Store-v0.5.0.zip
+          if-no-files-found: error
+          retention-days: 14
