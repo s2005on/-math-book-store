@@ -76,7 +76,7 @@ function productCard(product) {
   article.innerHTML = `
     <div class="product-visual">
       <span class="${badgeClass}">${escapeHTML(product.category)}</span>${product.in_stock === false ? '<span class="soldout">Hết hàng</span>' : ''}
-      <img src="${escapeHTML(product.image)}" alt="${escapeHTML(product.name)}" loading="lazy" width="420" height="320">
+      <img src="${escapeHTML(product.image)}" alt="${escapeHTML(product.name)}" loading="lazy" decoding="async" width="420" height="320">
     </div>
     <div class="product-body">
       <span class="product-kicker">${escapeHTML(product.label)}</span>

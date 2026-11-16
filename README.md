@@ -1,4 +1,4 @@
-# Math Book Store v0.4.0 — đồ án bán sách
+# Math Book Store v0.4.1 — đồ án bán sách
 
 Repo riêng tham khảo luồng trải nghiệm từ [VNU Food Hola](https://github.com/s2005on/vnu-food-hola). Giao diện trang chủ giữ màu xanh lá/kem/cam hiện có; KHÔNG thay đổi ảnh bìa sách gốc và KHÔNG thay đổi repo bán đồ ăn.
 
@@ -6,7 +6,8 @@ Repo riêng tham khảo luồng trải nghiệm từ [VNU Food Hola](https://git
 - Cửa hàng: lọc/tìm kiếm sách, phân loại theo lớp, xem chi tiết, giỏ hàng và checkout **demo**.
 - Tài khoản: đăng ký/đăng nhập khách hàng tại `/login.html`; quản trị viên có thể đăng nhập và đi đến `/admin.html`.
 - Quản trị: thêm slot sách mới; tải ảnh JPG/PNG/WebP tối đa 5 MB; sửa tên, mô tả, giá, danh mục, tình trạng **còn hàng/hết hàng**, xóa sách.
-- Ảnh upload được chuyển sang WebP và lưu phía máy chủ. Sản phẩm hết hàng bị khóa thêm giỏ hàng.
+- Ảnh upload được chuyển sang WebP và lưu phía máy chủ.
+- Ảnh upload lưu WebP quality 96; bộ ảnh catalog mới giữ độ phân giải gốc và không chỉnh sửa nội dung bìa. Sản phẩm hết hàng bị khóa thêm giỏ hàng.
 - Dữ liệu sách/tài khoản trong SQLite, ảnh trong `MBS_DATA_DIR/uploads`.
 - **63 đề ôn thi vào lớp 10: 139.000đ** theo giá vừa nhận. Cuốn HSG lớp 7 chưa in: chưa mở bán.
 
