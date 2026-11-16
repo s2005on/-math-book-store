@@ -206,7 +206,7 @@ async def upload(request:Request,file:UploadFile=File(...)):
             img=photo.convert("RGB")
             img.thumbnail((1600,1600))
             filename=uuid4().hex+".webp"
-            img.save(UPLOADS/filename,"WEBP",quality=85,method=4)
+            img.save(UPLOADS/filename,"WEBP",quality=96,method=6)
     except (UnidentifiedImageError,OSError,ValueError):
         raise HTTPException(400,"Ảnh không hợp lệ")
     return {"url":"/api/images/"+filename}
