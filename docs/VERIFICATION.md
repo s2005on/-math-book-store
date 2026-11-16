@@ -7,13 +7,13 @@
 - Catalog image references: all 7 product assets exist.
 
 ## GitHub Actions verification
-- Workflow: Math Book Store CI.
+- Workflow: LTD's Book Store CI.
 - Commit: `d987f5e69d9726cc358926f6f8c610e3569c04ad` (merged to `main`).
 - Ubuntu latest / Python 3.12: passed.
 - Windows latest / Python 3.12: passed.
 - Python tests, JavaScript syntax and Node catalog tests: passed on both runners.
 
-Run: https://github.com/s2005on/-math-book-store/actions/runs/43870410048
+Run: https://github.com/s2005on/LTDs-Book-Store/actions/runs/43870410048
 
 ## Scope and limitations
 Kết quả trên xác minh UI Foundation và workflow tự động. Chưa xác minh production VPS, đơn hàng thật, xác thực, database, thanh toán hoặc backup/restore.
