@@ -1,3 +1,17 @@
+# Changelog — Math Book Store
+
+## v0.5.1 — Sửa khởi chạy Windows (mã nguồn GitHub hiện tại, chưa phát hành tag)
+
+- Chạy lại `start.py` trong môi trường `.venv` sau khi cài thư viện để khắc phục lỗi thiếu `dotenv`.
+- Thêm đăng nhập/đăng ký, quản trị sách, upload ảnh, SQLite và trạng thái còn hàng/hết hàng/sắp ra mắt từ các lượt nâng cấp v0.4–v0.5.
+- Hệ thống checkout trên nhánh hiện tại vẫn là **demo**, chưa nhận đơn hàng thực.
+
+## Quy trình phát hành (đang triển khai)
+
+- Sửa CI tự đóng gói ZIP theo `VERSION`, tránh sai tên v0.5.0/v0.5.1.
+- Thêm xác minh tính toàn vẹn ZIP và bước phát hành sau tag.
+- **Bản ZIP local v0.6.0 chưa đồng bộ mã nguồn lên GitHub**; không tuyên bố mã hiện tại đã có module đơn hàng của bản ZIP.
+
 ## v0.3.0 — Book mockup storefront
 
 - Hoàn thiện nhận diện cửa hàng sách theo tông xanh navy – kem – đồng.
@@ -7,7 +21,6 @@
 - Chuẩn bị workflow xuất bản giao diện tĩnh lên GitHub Pages.
 - Chạy lại 9 bài kiểm thử tự động: 5 Python smoke tests và 4 Node catalog tests.
 
-# Changelog
 
 ## v0.2.0 — UI Foundation
 - Storefront sách Toán, danh mục, tìm kiếm, lọc, sắp xếp.
