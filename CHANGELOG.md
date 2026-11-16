@@ -1,3 +1,11 @@
+## v0.4.1 — Sharp book images and upload quality
+
+- Chuẩn hóa hiển thị ảnh bìa với khung lớn hơn, giữ nguyên tỷ lệ và không cắt nội dung bìa.
+- Nâng chất lượng ảnh upload từ WebP quality 85 lên quality 96, method 6.
+- Ưu tiên tải ảnh sách chính ở hero để hạn chế ảnh hiện mờ khi trang vừa mở.
+- Đồng bộ kiểm thử giá sách “63 đề ôn thi vào lớp 10” ở mức 139.000đ.
+- Cung cấp bộ ảnh WebP độ phân giải cao riêng để thay thế thumbnail cũ.
+
 ## v0.3.0 — Book mockup storefront
 
 - Hoàn thiện nhận diện cửa hàng sách theo tông xanh navy – kem – đồng.
