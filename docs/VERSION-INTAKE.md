@@ -26,7 +26,7 @@ Mỗi lần nhận bản ZIP mới, xử lý như một **đầu vào cần ki�
 3. **Chuẩn hóa nhận diện:** LTD's Book Store, tên repo `LTDs-Book-Store`, đường dẫn/asset, không sửa nội dung bìa gốc.
 4. **Kiểm tra nghiệp vụ:** giá, ảnh, tình trạng sách, banner, tài khoản, giỏ/đơn; tuyệt đối không tự đoán dữ liệu bán hàng.
 5. **Kiểm thử:** Python/Node; thử trên Chromium desktop, mobile và Windows nếu khả dụng; lưu kết quả theo [evidence/README.md](evidence/README.md).
-6. **Nhánh + PR:** thêm mã/ảnh/test/tài liệu trong nhánh riêng; chỉ merge khi CI Windows/Ubuntu đạt và kiểm tra diff.
+6. **Nhánh + Pull Request (PR):** thêm mã/ảnh/test/tài liệu trong nhánh riêng; chỉ merge khi CI Windows/Ubuntu đạt và kiểm tra diff.
 7. **Phiên bản:** `VERSION`, CHANGELOG, README và tên ZIP cùng phiên bản; tạo tag từ commit đã được merge vào `main`, không tái sử dụng tag cũ.
 8. **Bàn giao:** lưu biên bản kiểm thử, link Issue/PR/CI/Release và các giới hạn còn lại; **không triển khai VPS** khi chưa có yêu cầu.
 
