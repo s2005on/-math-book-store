@@ -9,8 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=0.4.0">
-  <script src="app.js?v=0.4.0" defer></script>
+  <link rel="stylesheet" href="styles.css?v=0.5.0">
+  <script src="app.js?v=0.5.0" defer></script>
 </head>
 <body>
   <div class="announcement"><span class="announcement-dot"></span> TỦ SÁCH TOÁN 6–10 <span class="announcement-separator">/</span> HỌC TẬP & LUYỆN THI</div>
@@ -22,7 +22,7 @@
       </a>
       <nav class="main-nav" aria-label="Điều hướng chính">
         <a class="nav-link active" href="#top">Trang chủ</a>
-        <a class="nav-link" href="#catalog">Sách Toán</a>
+        <a class="nav-link" href="#catalog">Sách Toán</a><a class="nav-link" href="#coming-soon">Sắp ra mắt</a>
         <a class="nav-link" href="#about">Về chúng tôi</a>
         <a class="nav-link" href="#contact">Liên hệ</a>
       </nav>
@@ -41,7 +41,7 @@
       </div>
     </header>
     <div class="mobile-nav" id="mobileNav" hidden>
-      <a href="#top">Trang chủ</a><a href="#catalog">Sách Toán</a><a href="#about">Về chúng tôi</a><a href="#contact">Liên hệ</a><a href="login.html">Đăng nhập</a>
+      <a href="#top">Trang chủ</a><a href="#catalog">Sách Toán</a><a href="#coming-soon">Sắp ra mắt</a><a href="#about">Về chúng tôi</a><a href="#contact">Liên hệ</a><a href="login.html">Đăng nhập</a>
     </div>
   </div>
 
@@ -70,6 +70,17 @@
       <article class="benefit-item"><span class="benefit-icon orange-icon">↗</span><div><b>Chọn sách dễ dàng</b><small>Tìm theo lớp và mục tiêu học tập</small></div></article>
       <article class="benefit-item"><span class="benefit-icon green-icon">▤</span><div><b>Thông tin minh bạch</b><small>Ảnh bìa và giá được cập nhật rõ ràng</small></div></article>
       <article class="benefit-item"><span class="benefit-icon blue-icon">✳</span><div><b>Đồng hành học tập</b><small>Tài liệu ôn tập và nâng cao kiến thức</small></div></article>
+    </section>
+
+    <section class="coming-soon-section shell" id="coming-soon" aria-labelledby="comingSoonTitle" hidden>
+      <div class="coming-soon-heading">
+        <div><div class="eyebrow"><span class="eyebrow-line"></span> ĐÓN ĐẦU KIẾN THỨC</div>
+          <h2 id="comingSoonTitle">Sách <span>sắp ra mắt.</span></h2>
+          <p>Khám phá những đầu sách đang chuẩn bị phát hành. Thông tin và hình ảnh được cập nhật tại cửa hàng.</p>
+        </div>
+        <span class="coming-soon-deco" aria-hidden="true">✦ SẮP PHÁT HÀNH</span>
+      </div>
+      <div class="coming-soon-grid" id="comingSoonGrid"></div>
     </section>
 
     <section class="catalog-section shell" id="catalog" aria-labelledby="catalogTitle">
