@@ -15,8 +15,8 @@
 | US04 | Tôi muốn xem thông tin chi tiết một sản phẩm. | Must | UI có |
 | US05 | Tôi muốn thêm, xóa và đổi số lượng trong giỏ. | Must | Demo có |
 | US06 | Tôi muốn gửi đơn và nhận mã đơn. | Must | Chưa có backend; form demo |
-| US07 | Quản trị viên muốn đăng nhập để quản lý hệ thống. | Must | Chưa triển khai |
-| US08 | Quản trị viên muốn thêm, sửa, ẩn sản phẩm và cập nhật giá. | Must | Admin UI preview |
+| US07 | Quản trị viên muốn đăng nhập để quản lý hệ thống. | Must | Có API và UI trên `main` v0.5.1 |
+| US08 | Quản trị viên muốn thêm, sửa, ẩn sản phẩm và cập nhật giá. | Must | Có CRUD/ảnh/trạng thái trên `main` v0.5.1; cần test thủ công |
 | US09 | Quản trị viên muốn xem và cập nhật trạng thái đơn hàng. | Must | Chưa triển khai |
 | US10 | Người mua muốn thanh toán trực tuyến. | Could | Ngoài phạm vi Sprint 0 |
 
@@ -37,3 +37,7 @@
 - Không đưa secret vào repository.
 - Không lưu thông tin liên hệ thật ở frontend demo.
 - Bản production phải dùng HTTPS, backup và kiểm tra dữ liệu phía server.
+
+## Ghi chú kiểm soát phạm vi và nghiệm thu
+
+Các trạng thái **UI có** và **Demo có** chỉ nói về mô-đun giao diện; không chứng nhận luồng đặt đơn lưu thật. Ở `main` v0.5.1, US06 và US09 **chưa có backend đơn hàng**. Bản ZIP local v0.9.0 có mã mới nhưng chưa đồng bộ vào repo; chỉ cập nhật bảng khi có PR/CI trên đúng commit và minh chứng trong [evidence](evidence/README.md).
