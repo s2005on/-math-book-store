@@ -1,31 +1,32 @@
-# Trạng thái đồng bộ GitHub ↔ bản chạy Windows
+# Trạng thái đồng bộ repository và gói Windows
 
-**Ngày đối chiếu: 17/11/2026**. Đây là tình trạng được kiểm tra từ repo; không thay cho biên bản nghiệm thu của giảng viên.
+**Đối chiếu: 17/11/2026**
 
-| Mục | GitHub `main` trước PR quy trình | ZIP local người dùng đã nhận |
+| Thành phần | GitHub `main` hiện tại | ZIP LTD v0.9.0 |
 |---|---|---|
-| Phiên bản | `VERSION=0.5.1` | `v0.6.0` |
-| Tài khoản, quản trị sách | Có | Có |
-| Banner sách sắp ra mắt | Có | Có |
-| Đơn hàng lưu trong SQLite | **Chưa có trong phiên bản GitHub hiện tại** | Có trong ZIP local |
-| Quản lý trạng thái đơn | **Chưa có trong phiên bản GitHub hiện tại** | Có trong ZIP local |
-| Ảnh catalog | Thumbnail nhỏ, khoảng 131–240 px cạnh ngang | Có bộ ảnh WebP chất lượng cao |
-| Pipeline ZIP | Trước PR bị sai tên file khi upload | ZIP local đã được tạo riêng |
+| Repository | [s2005on/LTDs-Book-Store](https://github.com/s2005on/LTDs-Book-Store), đã đổi tên | `LTDs-Book-Store` |
+| Phiên bản mã nguồn | `VERSION=0.5.1` | `VERSION=0.9.0` |
+| Nhận diện thương hiệu | Đã có LTD's | Đã có LTD's |
+| Đăng nhập và quản trị sách | Có | Có |
+| Banner sắp ra mắt | Có | Có |
+| Đặt hàng/hủy đơn/lịch sử | Chưa đầy đủ như ZIP | Có, lưu SQLite |
+| Quản trị đơn hàng | Chưa có như ZIP | Có |
+| Ảnh bìa | Thumbnail có ảnh chỉ vài KB | WebP chất lượng cao và ảnh gốc |
+| Giá HSG Toán 8 | Cần kiểm tra sau nhập | 198.000đ |
+| Sách Toán tổ hợp và tư duy logic | Chưa đầy đủ | 280.000đ, sắp ra mắt |
+| Kiểm thử | CI hiện tại kiểm thử bản cũ | 16 Python + 4 JavaScript test đạt tại máy làm việc |
 
-## Việc cần làm trước khi tạo release v0.6.0 trên GitHub
+**Lưu ý:** bản ZIP v0.9.0 đã được kiểm thử riêng, không có nghĩa là CI của phiên bản v0.9.0 trên GitHub đã đạt. Chưa có Release chính thức cho v0.9.0.
 
-1. Đối chiếu nguồn từ `LTDs-Book-Store-v0.6.0-Hoan-Chinh.zip` với `main` của GitHub (đặc biệt `server/app.py`, `server/web/*`, `tests/*`).
-2. Nhập **cả mã nguồn và ảnh sách độ phân giải cao**, không chỉ đổi số phiên bản. Giữ bìa nguyên bản.
-3. Xác minh giá: HSG Toán 8 **198.000đ**; Toán tổ hợp và tư duy logic **280.000đ**, trạng thái **sắp ra mắt**; xác nhận các giá khác với dữ liệu người bán.
-4. Chạy test Python/Node, thêm test cho tạo đơn, lịch sử, quyền truy cập, giá/tồn kho. Chụp minh chứng desktop và mobile.
-5. Xem lại [PR #2](https://github.com/s2005on/LTDs-Book-Store/pull/2) từ bản cải thiện ảnh 0.4.1; không merge nguyên PR cũ nếu sẽ ghi đè mã mới.
-6. Chỉ sau khi PR đồng bộ mã nguồn được merge và CI đạt mới cập nhật VERSION, CHANGELOG và công bố tag/release **v0.6.0**.
+## Tiêu chí cho PR nhập v0.9.0
 
-## Các điều không nên làm
+- [x] Đổi tên repository mà không xóa lịch sử.
+- [x] Chuẩn hóa ZIP nguồn, kiểm thử nội bộ 16 Python + 4 JavaScript.
+- [ ] Push toàn bộ mã nguồn `server/`, `tests/`, `start.py`, `VERSION`, README.
+- [ ] Push ảnh WebP chất lượng cao và thư mục `anh-goc/`.
+- [ ] Không đẩy `.env`, `server/data/`, `.venv`, SQLite có thông tin khách hàng.
+- [ ] Kiểm thử chức năng và giao diện desktop/mobile theo checklist.
+- [ ] CI Ubuntu/Windows trên chính PR nhập v0.9.0 đạt.
+- [ ] Merge PR, xác minh `main`, sau đó mới tag/release `v0.9.0`.
 
-- Không copy `server/data/` từ máy sử dụng thực tế vào GitHub.
-- Không đẩy `.env`, mật khẩu, số điện thoại hoặc địa chỉ khách hàng lên Git.
-- Không tuyên bố phiên bản mới đã chạy trên VPS; hiện ưu tiên bản chạy Windows local.
-- Không gắn tag mới lên mã GitHub cũ rồi gọi đó là bản 0.6.0.
-
-**Nguồn:** cây file, VERSION và CI của LTD's Book Store; bản ZIP v0.9.0 được cung cấp trong cuộc trò chuyện.
+Hướng dẫn: [LTD-RENAME-AND-SYNC.md](LTD-RENAME-AND-SYNC.md) · [Issue #3](https://github.com/s2005on/LTDs-Book-Store/issues/3).
