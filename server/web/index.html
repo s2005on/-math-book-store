@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f7f2">
+  <meta name="description" content="Math Book Store – cửa hàng sách tham khảo Toán, sách bài tập và luyện thi từ lớp 6 đến lớp 10.">
+  <title>Math Book Store — Mở trang sách, mở lối tư duy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=0.2.0">
+  <script src="app.js?v=0.2.0" defer></script>
+</head>
+<body>
+  <div class="announcement"><span class="announcement-dot"></span> TỦ SÁCH TOÁN 6–10 <span class="announcement-separator">/</span> HỌC TẬP & LUYỆN THI</div>
+  <div class="customer-header" id="top">
+    <header class="topbar shell">
+      <a class="brand" href="#top" aria-label="Math Book Store – Trang chủ">
+        <span class="brand-mark">∑</span>
+        <span class="brand-copy"><strong>Math Book <em>Store</em></strong><small>Mở trang sách, mở lối tư duy</small></span>
+      </a>
+      <nav class="main-nav" aria-label="Điều hướng chính">
+        <a class="nav-link active" href="#top">Trang chủ</a>
+        <a class="nav-link" href="#catalog">Sách Toán</a>
+        <a class="nav-link" href="#about">Về chúng tôi</a>
+        <a class="nav-link" href="#contact">Liên hệ</a>
+      </nav>
+      <div class="top-actions">
+        <label class="header-search" for="searchInput">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.6"></circle><path d="m16 16 4.2 4.2"></path></svg>
+          <input id="searchInput" type="search" placeholder="Tìm sách, lớp học…" autocomplete="off">
+          <kbd>/</kbd>
+        </label>
+        <button class="cart-trigger" id="cartOpen" type="button" aria-haspopup="dialog" aria-controls="cartDialog">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.1 10.1a2 2 0 0 0 2 1.6h8.5a2 2 0 0 0 1.9-1.4L21 8H6"></path><circle cx="9.5" cy="19" r="1.2"></circle><circle cx="18" cy="19" r="1.2"></circle></svg>
+          <span>Giỏ hàng</span><b id="cartCount">0</b>
+        </button>
+        <button class="mobile-menu" id="mobileMenu" type="button" aria-label="Mở điều hướng" aria-expanded="false"><span></span><span></span></button>
+      </div>
+    </header>
+    <div class="mobile-nav" id="mobileNav" hidden>
+      <a href="#top">Trang chủ</a><a href="#catalog">Sách Toán</a><a href="#about">Về chúng tôi</a><a href="#contact">Liên hệ</a>
+    </div>
+  </div>
+
+  <main>
+    <section class="hero shell" aria-labelledby="heroTitle">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="eyebrow-line"></span> CHỌN SÁCH ĐÚNG · HỌC TOÁN TỐT</div>
+        <h1 id="heroTitle">Mỗi trang sách,<br><span>mở một lối tư duy.</span></h1>
+        <p>Sách bài tập, luyện thi và bồi dưỡng Toán được chọn theo từng khối lớp. Tìm cuốn sách phù hợp cho hành trình học tập của bạn.</p>
+        <div class="hero-actions"><a class="button button-primary" href="#catalog">Khám phá tủ sách <span aria-hidden="true">↗</span></a><a class="text-link" href="#about">Tìm hiểu cửa hàng <span aria-hidden="true">→</span></a></div>
+        <div class="hero-stats" aria-label="Thông tin danh mục">
+          <div><strong>06–10</strong><span>Khối lớp</span></div><i></i><div><strong>07+</strong><span>Đầu sách mẫu</span></div><i></i><div><strong>02</strong><span>Nhóm luyện thi</span></div>
+        </div>
+      </div>
+      <div class="hero-art" aria-label="Bộ sách Toán tham khảo">
+        <div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div>
+        <span class="hero-sticker sticker-top">STUDY<br><b>SMART</b></span>
+        <div class="hero-book hero-book-back"><img src="assets/books/math7-set.webp" alt=""></div>
+        <div class="hero-book hero-book-front"><img src="assets/books/hsg8.webp" alt="Bìa sách Chinh phục đề thi học sinh giỏi Toán lớp 8"></div>
+        <div class="hero-note"><span class="note-icon">✳</span><span><b>Học chắc từng bước</b><small>Vững kiến thức · Tự tin kỳ thi</small></span></div>
+      </div>
+      <div class="hero-bottom-label"><span>01 / TỦ SÁCH THAM KHẢO</span><span>DESIGNED FOR LEARNING</span></div>
+    </section>
+
+    <section class="benefit-strip shell" aria-label="Lợi ích mua sách">
+      <article class="benefit-item"><span class="benefit-icon orange-icon">↗</span><div><b>Chọn sách dễ dàng</b><small>Tìm theo lớp và mục tiêu học tập</small></div></article>
+      <article class="benefit-item"><span class="benefit-icon green-icon">▤</span><div><b>Thông tin minh bạch</b><small>Ảnh bìa và giá được cập nhật rõ ràng</small></div></article>
+      <article class="benefit-item"><span class="benefit-icon blue-icon">✳</span><div><b>Đồng hành học tập</b><small>Tài liệu ôn tập và nâng cao kiến thức</small></div></article>
+    </section>
+
+    <section class="catalog-section shell" id="catalog" aria-labelledby="catalogTitle">
+      <div class="section-heading">
+        <div><div class="eyebrow"><span class="eyebrow-line"></span> DANH MỤC SẢN PHẨM</div><h2 id="catalogTitle">Tìm cuốn sách <span>phù hợp.</span></h2><p class="section-subtitle">Từ bài tập nền tảng đến tài liệu luyện thi chuyên sâu.</p></div>
+        <a class="all-books-link" href="#catalog" id="clearFilters">Xem tất cả sách <span>↗</span></a>
+      </div>
+      <div class="catalog-tools">
+        <div class="category-tabs" id="categoryTabs" role="group" aria-label="Lọc sách theo lớp"></div>
+        <div class="catalog-controls"><label class="catalog-search" for="catalogSearch"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.6"></circle><path d="m16 16 4.2 4.2"></path></svg><input id="catalogSearch" type="search" placeholder="Bạn đang tìm cuốn nào?"></label><select id="sortSelect" aria-label="Sắp xếp sản phẩm"><option value="featured">Gợi ý nổi bật</option><option value="price-asc">Giá thấp đến cao</option><option value="price-desc">Giá cao đến thấp</option><option value="name">Tên sách A–Z</option></select></div>
+      </div>
+      <div class="catalog-meta"><span id="resultCount" aria-live="polite">Đang tải sách…</span><span>GIÁ NIÊM YẾT THEO THÔNG TIN NGƯỜI BÁN</span></div>
+      <div class="product-grid" id="productGrid"></div>
+      <div class="empty-state" id="emptyState" hidden><span>⌕</span><h3>Chưa tìm thấy cuốn sách phù hợp</h3><p>Thử thay đổi từ khóa hoặc chọn lại danh mục.</p><button class="button button-outline" id="resetSearch" type="button">Xóa bộ lọc</button></div>
+    </section>
+
+    <section class="study-banner shell" id="about">
+      <div class="study-mark">∑</div><div class="study-copy"><div class="eyebrow light-eyebrow">MATH BOOK STORE · STUDY CORNER</div><h2>Kiến thức vững vàng<br><em>bắt đầu từ lựa chọn đúng.</em></h2><p>Math Book Store là mô hình website bán sách tham khảo Toán, được xây dựng trong khuôn khổ đồ án học phần. Giao diện ưu tiên trải nghiệm chọn sách nhanh, rõ ràng trên cả máy tính và điện thoại.</p><a class="button button-light" href="#catalog">Chọn sách ngay <span>→</span></a></div>
+      <div class="study-decoration"><span>THINK</span><b>BEYOND<br>THE PAGE.</b><small>LEARN · PRACTICE · GROW</small></div>
+    </section>
+
+    <section class="contact-section shell" id="contact">
+      <div><div class="eyebrow"><span class="eyebrow-line"></span> CẦN HỖ TRỢ?</div><h2>Chưa biết bắt đầu<br><span>từ cuốn sách nào?</span></h2><p>Hãy xem danh mục theo lớp học hoặc gửi yêu cầu tư vấn. Thông tin liên hệ chính thức sẽ được cập nhật khi hoàn thiện dự án.</p></div>
+      <a class="contact-card" href="#catalog"><span class="contact-card-icon">↗</span><b>Khám phá danh mục sách</b><small>Tìm sách theo lớp và mục tiêu học tập</small><span class="contact-arrow">→</span></a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-main shell"><a class="brand footer-brand" href="#top"><span class="brand-mark">∑</span><span class="brand-copy"><strong>Math Book <em>Store</em></strong><small>Mở trang sách, mở lối tư duy</small></span></a><p>Website mô hình bán sách Toán lớp 6–10.<br>Đồ án cuối kỳ · Phiên bản giao diện 0.2.0</p><div class="footer-links"><a href="#catalog">Sách Toán</a><a href="#about">Giới thiệu</a><a href="#contact">Liên hệ</a></div></div>
+    <div class="footer-bottom shell"><span>© 2026 Math Book Store. All rights reserved.</span><span>DESIGNED WITH CARE · VIET NAM</span></div>
+  </footer>
+
+  <div class="sticky-cart" id="stickyCart" hidden>
+    <div class="sticky-cart-info"><span class="sticky-cart-icon">▣</span><span><b><span id="stickyCount">0</span> sản phẩm trong giỏ</b><small>Tạm tính: <strong id="stickyTotal">0đ</strong></small></span></div>
+    <button class="button button-primary" id="stickyCartOpen" type="button">Xem giỏ hàng <span>→</span></button>
+  </div>
+
+  <dialog class="product-dialog" id="productDialog" aria-labelledby="productDialogTitle"><button class="dialog-close" id="productDialogClose" type="button" aria-label="Đóng">×</button><div id="productDialogContent"></div></dialog>
+  <dialog class="cart-dialog" id="cartDialog" aria-labelledby="cartTitle"><div class="cart-panel-head"><div><div class="eyebrow"><span class="eyebrow-line"></span> ĐƠN HÀNG CỦA BẠN</div><h2 id="cartTitle">Giỏ sách</h2></div><button class="dialog-close" id="cartClose" type="button" aria-label="Đóng giỏ hàng">×</button></div><div class="cart-lines" id="cartLines"></div><div class="cart-panel-bottom"><div class="cart-total-line"><span>Tổng tạm tính</span><strong id="cartTotal">0đ</strong></div><p class="demo-disclaimer">Bản giao diện học phần: đặt hàng hiện chỉ là mô phỏng, chưa gửi thông tin đến người bán.</p><button class="button button-primary button-full" id="checkoutOpen" type="button">Tiếp tục đặt hàng <span>→</span></button></div></dialog>
+  <dialog class="checkout-dialog" id="checkoutDialog" aria-labelledby="checkoutTitle"><form id="checkoutForm"><div class="checkout-head"><div><div class="eyebrow"><span class="eyebrow-line"></span> THÔNG TIN NHẬN SÁCH</div><h2 id="checkoutTitle">Hoàn tất đơn hàng</h2></div><button class="dialog-close" id="checkoutClose" type="button" aria-label="Đóng">×</button></div><p class="demo-disclaimer">Đây là biểu mẫu minh họa. Không nhập thông tin cá nhân thật ở phiên bản demo này.</p><label>Họ và tên<input name="name" required maxlength="80" placeholder="Tên người nhận (thông tin thử)" autocomplete="off"></label><label>Số điện thoại<input name="phone" required inputmode="tel" pattern="[0-9]{9,11}" maxlength="16" placeholder="Số điện thoại thử" autocomplete="off"></label><label>Địa chỉ nhận sách<textarea name="address" required maxlength="240" rows="2" placeholder="Địa chỉ minh họa"></textarea></label><label>Ghi chú <span>(không bắt buộc)</span><textarea name="note" maxlength="240" rows="2" placeholder="Yêu cầu thêm"></textarea></label><div class="cart-total-line"><span>Tổng thanh toán</span><strong id="checkoutTotal">0đ</strong></div><button class="button button-primary button-full" type="submit">Tạo đơn hàng demo <span>→</span></button></form></dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
