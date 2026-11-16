@@ -8,8 +8,10 @@ from fastapi.responses import JSONResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 from PIL import Image, UnidentifiedImageError
+from dotenv import load_dotenv
 
 HERE = Path(__file__).resolve().parent
+load_dotenv(HERE.parent / ".env")
 WEB = HERE / "web"
 DATA = Path(os.getenv("MBS_DATA_DIR", str(HERE / "data")))
 UPLOADS = DATA / "uploads"
@@ -113,7 +115,10 @@ class Book(BaseModel):
     description: str = Field(default="",max_length=1200)
     label: str = Field(default="",max_length=80)
     in_stock: bool = True
-    status: str = "available"
+    status: str | None = None
+
+def resolved_status(book):
+    return book.status or ("available" if book.in_stock else "sold_out")
 
 def as_book(row):
     book = dict(row)
@@ -122,7 +127,7 @@ def as_book(row):
 
 @app.get("/health")
 def health():
-    return {"status":"ok","project":"math-book-store","stage":"inventory-v0.4","api_ready":True}
+    return {"status":"ok","project":"math-book-store","stage":"inventory-v0.5","api_ready":True}
 
 @app.get("/api/books")
 def books():
@@ -177,7 +182,7 @@ def logout(request:Request):
 
 def validate(book):
     if book.category not in CATEGORIES: raise HTTPException(400,"Danh mục không hợp lệ")
-    if book.status not in {"available","sold_out","coming_soon"}: raise HTTPException(400,"Trạng thái không hợp lệ")
+    if resolved_status(book) not in {"available","sold_out","coming_soon"}: raise HTTPException(400,"Trạng thái không hợp lệ")
     if not (book.image.startswith("assets/books/") or book.image.startswith("/api/images/")):
         raise HTTPException(400,"Ảnh phải là ảnh trong thư viện hoặc ảnh đã tải lên")
     if ".." in book.image: raise HTTPException(400,"Đường dẫn ảnh không hợp lệ")
@@ -188,7 +193,7 @@ def add_book(body:Book,request:Request):
     book_id=uuid4().hex[:12]
     with database() as db:
         sort_order=db.execute("SELECT COALESCE(MAX(sortOrder),0)+1 FROM books").fetchone()[0]
-        db.execute("INSERT INTO books(id,name,category,price,image,description,label,sortOrder,in_stock,status) VALUES (?,?,?,?,?,?,?,?,?,?)",(book_id,body.name,body.category,body.price,body.image,body.description,body.label,sort_order,int(body.status=="available"),body.status))
+        db.execute("INSERT INTO books(id,name,category,price,image,description,label,sortOrder,in_stock,status) VALUES (?,?,?,?,?,?,?,?,?,?)",(book_id,body.name,body.category,body.price,body.image,body.description,body.label,sort_order,int(resolved_status(body)=="available"),resolved_status(body)))
     return {"ok":True,"id":book_id}
 
 @app.put("/api/admin/books/{book_id}")
@@ -196,7 +201,7 @@ def edit_book(book_id:str,body:Book,request:Request):
     require(request,admin=True,write=True);validate(body)
     with database() as db:
         if not db.execute("SELECT 1 FROM books WHERE id=?",(book_id,)).fetchone(): raise HTTPException(404,"Không tìm thấy sách")
-        db.execute("UPDATE books SET name=?, category=?, price=?, image=?, description=?, label=?, in_stock=?, status=? WHERE id=?",(body.name,body.category,body.price,body.image,body.description,body.label,int(body.status=="available"),body.status,book_id))
+        db.execute("UPDATE books SET name=?, category=?, price=?, image=?, description=?, label=?, in_stock=?, status=? WHERE id=?",(body.name,body.category,body.price,body.image,body.description,body.label,int(resolved_status(body)=="available"),resolved_status(body),book_id))
     return {"ok":True}
 
 @app.delete("/api/admin/books/{book_id}")
