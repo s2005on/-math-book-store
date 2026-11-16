@@ -49,11 +49,15 @@ def init_db():
         db.executescript("""
         CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, username TEXT UNIQUE NOT NULL, password TEXT NOT NULL, role TEXT NOT NULL);
         CREATE TABLE IF NOT EXISTS sessions (token_hash TEXT PRIMARY KEY, user_id INTEGER NOT NULL, csrf TEXT NOT NULL, expires INTEGER NOT NULL);
-        CREATE TABLE IF NOT EXISTS books (id TEXT PRIMARY KEY, name TEXT NOT NULL, category TEXT NOT NULL, price INTEGER, image TEXT NOT NULL, description TEXT NOT NULL DEFAULT '', label TEXT NOT NULL DEFAULT '', sortOrder INTEGER NOT NULL DEFAULT 100, in_stock INTEGER NOT NULL DEFAULT 1);
+        CREATE TABLE IF NOT EXISTS books (id TEXT PRIMARY KEY, name TEXT NOT NULL, category TEXT NOT NULL, price INTEGER, image TEXT NOT NULL, description TEXT NOT NULL DEFAULT '', label TEXT NOT NULL DEFAULT '', sortOrder INTEGER NOT NULL DEFAULT 100, in_stock INTEGER NOT NULL DEFAULT 1, status TEXT NOT NULL DEFAULT 'available');
         """)
+        existing_columns = {row["name"] for row in db.execute("PRAGMA table_info(books)")}
+        if "status" not in existing_columns:
+            db.execute("ALTER TABLE books ADD COLUMN status TEXT NOT NULL DEFAULT 'available'")
+            db.execute("UPDATE books SET status='sold_out' WHERE in_stock=0")
         if not db.execute("SELECT 1 FROM books LIMIT 1").fetchone():
             for book in json.loads((WEB / "catalog.json").read_text(encoding="utf-8")):
-                db.execute("INSERT INTO books VALUES (?,?,?,?,?,?,?,?,?)", (book["id"],book["name"],book["category"],book.get("price"),book["image"],book.get("description",""),book.get("label",""),book.get("sortOrder",100),1))
+                db.execute("INSERT INTO books(id,name,category,price,image,description,label,sortOrder,in_stock,status) VALUES (?,?,?,?,?,?,?,?,?,?)", (book["id"],book["name"],book["category"],book.get("price"),book["image"],book.get("description",""),book.get("label",""),book.get("sortOrder",100),int(book.get("in_stock",True)),book.get("status","available"))))
         admin_user = os.getenv("MBS_ADMIN_USER", "").strip().lower()
         admin_password = os.getenv("MBS_ADMIN_PASSWORD", "")
         if admin_user and len(admin_password) >= 12:
@@ -100,10 +104,11 @@ class Book(BaseModel):
     description: str = Field(default="",max_length=1200)
     label: str = Field(default="",max_length=80)
     in_stock: bool = True
+    status: str = "available"
 
 def as_book(row):
     book = dict(row)
-    book["in_stock"] = bool(book["in_stock"])
+    book["in_stock"] = book["status"] == "available"
     return book
 
 @app.get("/health")
@@ -163,6 +168,7 @@ def logout(request:Request):
 
 def validate(book):
     if book.category not in CATEGORIES: raise HTTPException(400,"Danh mục không hợp lệ")
+    if book.status not in {"available","sold_out","coming_soon"}: raise HTTPException(400,"Trạng thái không hợp lệ")
     if not (book.image.startswith("assets/books/") or book.image.startswith("/api/images/")):
         raise HTTPException(400,"Ảnh phải là ảnh trong thư viện hoặc ảnh đã tải lên")
     if ".." in book.image: raise HTTPException(400,"Đường dẫn ảnh không hợp lệ")
@@ -173,7 +179,7 @@ def add_book(body:Book,request:Request):
     book_id=uuid4().hex[:12]
     with database() as db:
         sort_order=db.execute("SELECT COALESCE(MAX(sortOrder),0)+1 FROM books").fetchone()[0]
-        db.execute("INSERT INTO books VALUES (?,?,?,?,?,?,?,?,?)",(book_id,body.name,body.category,body.price,body.image,body.description,body.label,sort_order,int(body.in_stock)))
+        db.execute("INSERT INTO books(id,name,category,price,image,description,label,sortOrder,in_stock,status) VALUES (?,?,?,?,?,?,?,?,?,?)",(book_id,body.name,body.category,body.price,body.image,body.description,body.label,sort_order,int(body.status=="available"),body.status))
     return {"ok":True,"id":book_id}
 
 @app.put("/api/admin/books/{book_id}")
@@ -181,7 +187,7 @@ def edit_book(book_id:str,body:Book,request:Request):
     require(request,admin=True,write=True);validate(body)
     with database() as db:
         if not db.execute("SELECT 1 FROM books WHERE id=?",(book_id,)).fetchone(): raise HTTPException(404,"Không tìm thấy sách")
-        db.execute("UPDATE books SET name=?, category=?, price=?, image=?, description=?, label=?, in_stock=? WHERE id=?",(body.name,body.category,body.price,body.image,body.description,body.label,int(body.in_stock),book_id))
+        db.execute("UPDATE books SET name=?, category=?, price=?, image=?, description=?, label=?, in_stock=?, status=? WHERE id=?",(body.name,body.category,body.price,body.image,body.description,body.label,int(body.status=="available"),body.status,book_id))
     return {"ok":True}
 
 @app.delete("/api/admin/books/{book_id}")
