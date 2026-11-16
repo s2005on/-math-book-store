@@ -10,7 +10,9 @@
 | 1.5 | Cart demo | Cart drawer, quantity, total | Hoàn thành demo |
 | 1.6 | Admin preview | Dashboard tĩnh | Hoàn thành UI |
 | 1.7 | Test và CI | Python/Node checks, GitHub Actions | Hoàn thành bản đầu |
-| 2.0 | Catalog API + database | CRUD sách | Kế hoạch Sprint 1 |
-| 2.1 | Admin authentication | Đăng nhập, phân quyền | Kế hoạch Sprint 1 |
-| 3.0 | Order API | Tạo và tra cứu đơn | Kế hoạch Sprint 2 |
-| 4.0 | Release hardening | Security, backup, deploy, acceptance | Kế hoạch Sprint 3 |
+| 2.0 | Catalog API + database | CRUD sách | Có trong `main` v0.5.1; cần bằng chứng cập nhật |
+| 2.1 | Admin authentication | Đăng nhập, phân quyền | Có trong `main` v0.5.1; cần bằng chứng cập nhật |
+| 3.0 | Order API | Tạo và tra cứu đơn | Có trong ZIP local v0.9.0; chưa lên `main` |
+| 4.0 | Release hardening | Security, backup, deploy, acceptance | CI/ZIP có trên `main`; VPS tạm hoãn |
+
+> Trạng thái trên dựa vào mã GitHub và sự khác biệt với ZIP local; để đánh dấu **đã nghiệm thu** cần evidence và kiểm thử của đúng commit. Theo dõi [SPRINT-TRACKER.md](SPRINT-TRACKER.md).
