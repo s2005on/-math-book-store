@@ -1,21 +1,26 @@
-# Test Plan
+# 05 — Kế hoạch kiểm thử
 
-## Scope
-Storefront static hosting, catalog loading, image references, product search/filter/sort, cart demo and admin preview.
+## Phạm vi kiểm thử hiện tại
 
-## Automated checks
-- Python smoke tests: /health, storefront, admin preview, catalog JSON and image paths.
-- Node tests: unique product IDs, required fields, valid sample prices, image files and asset references.
-- Syntax: node --check server/web/app.js.
+- Dữ liệu catalog đúng cấu trúc và không trùng ID.
+- Giá có dạng số dương hoặc `null`.
+- Tất cả đường dẫn ảnh trong catalog tồn tại.
+- Ảnh được tham chiếu từ UI đúng tên file.
+- FastAPI trả health status và phục vụ trang chủ.
+- Node kiểm tra dữ liệu catalog và asset references.
 
-## Manual scenarios
-1. Desktop and mobile navigation.
-2. Search with and without Vietnamese diacritics.
-3. Filter by class and reset filters.
-4. Sort by price and name.
-5. Add, increment, decrement and remove cart lines.
-6. Verify zero-price/unknown-price item cannot be added.
-7. Submit demo checkout and verify explicit demo message.
+## Kiểm thử thủ công UI
 
-## Not covered
-Production security, real order persistence, payment, inventory concurrency, email/SMS and VPS recovery.
+1. Mở trang trên desktop, tablet và điện thoại.
+2. Cuộn trang để kiểm tra header sticky và thanh giỏ hàng.
+3. Tìm kiếm bằng từ khóa có dấu và không dấu.
+4. Lọc theo từng lớp, reset bộ lọc và sắp xếp giá.
+5. Mở chi tiết sách, thêm vào giỏ, tăng/giảm số lượng, xóa sản phẩm.
+6. Tải lại trang để kiểm tra giỏ hàng còn nguyên trên cùng trình duyệt.
+7. Thử checkout bằng dữ liệu giả; xác nhận chỉ hiện thông báo demo.
+8. Kiểm tra sản phẩm chưa có giá không thể thêm vào giỏ.
+9. Kiểm tra admin preview và nhãn dữ liệu minh họa.
+
+## Chưa kiểm thử
+
+Chưa có API đơn hàng, database, đăng nhập, thanh toán và quản lý tồn kho; các nội dung này không thuộc phạm vi nghiệm thu Sprint 0.
