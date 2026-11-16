@@ -1,17 +1,17 @@
-[![Math Book Store CI](https://github.com/s2005on/-math-book-store/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/s2005on/-math-book-store/actions/workflows/ci.yml)
+[![LTD's Book Store CI](https://github.com/s2005on/LTDs-Book-Store/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/s2005on/LTDs-Book-Store/actions/workflows/ci.yml)
 
-# Math Book Store — bản chạy máy cá nhân v0.5.1
+# LTD's Book Store — bản chạy máy cá nhân v0.5.1
 
 Website cửa hàng sách Toán với đăng nhập, quản lý kho sách và banner sách sắp ra mắt. Không cần VPS để chạy local.
 
-> **Trạng thái mã nguồn:** nhánh `main` đang chứa v0.5.1; bản ZIP local v0.6.0 (có quản lý đơn hàng và ảnh nét cao) **chưa được đồng bộ đầy đủ lên GitHub**. Xem [đối chiếu](docs/REPO-SYNC-STATUS.md) trước khi tải source từ GitHub thay cho bản ZIP local.
+> **Trạng thái mã nguồn:** nhánh `main` đang chứa v0.5.1; bản ZIP local v0.9.0 (có quản lý đơn hàng và ảnh nét cao) **chưa được đồng bộ đầy đủ lên GitHub**. Xem [đối chiếu](docs/REPO-SYNC-STATUS.md) trước khi tải source từ GitHub thay cho bản ZIP local.
 
-[Quy trình làm đồ án](docs/WORKFLOW.md) · [GitHub Actions](https://github.com/s2005on/-math-book-store/actions) · [Phiên bản và release](docs/VERSIONING.md)
+[Quy trình làm đồ án](docs/WORKFLOW.md) · [GitHub Actions](https://github.com/s2005on/LTDs-Book-Store/actions) · [Phiên bản và release](docs/VERSIONING.md)
 
 ## Cách chạy nhanh trên Windows
 
 1. Cài **Python 3.11 trở lên** từ https://www.python.org/downloads/ (khi cài, chọn **Add Python to PATH**).
-2. Giải nén toàn bộ file ZIP vào một thư mục, ví dụ `Desktop\\Math-Book-Store`.
+2. Giải nén toàn bộ file ZIP vào một thư mục, ví dụ `Desktop\\LTDs-Book-Store`.
 3. Nhấn đúp **RUN-WINDOWS.bat**.
 4. Lần đầu chạy, cửa sổ sẽ hỏi tên đăng nhập và mật khẩu quản trị (ít nhất 12 ký tự). Mật khẩu được lưu trong file `.env` trên máy.
 5. Website tự mở tại http://127.0.0.1:8017/
@@ -58,3 +58,7 @@ chmod +x run.sh
 
 ## Bản sửa v0.5.1
 - Bộ khởi chạy chuyển sang Python của `.venv` sau khi cài thư viện, xử lý lỗi `No module named 'dotenv'` trên Windows.
+
+## Chuyển thương hiệu thành LTD's Book Store
+
+Tên repository mong muốn: `s2005on/LTDs-Book-Store`. Chủ repository đổi tại **GitHub Settings → General → Repository name** để giữ toàn bộ lịch sử. Lưu ý: mã nguồn trên nhánh `main` hiện vẫn là **v0.5.1**; bản ZIP **v0.9.0** đã được chỉnh tên đồng bộ nhưng chưa nhập đầy đủ mã mới và ảnh độ phân giải cao lên GitHub. Xem [kế hoạch đồng bộ](docs/LTD-RENAME-AND-SYNC.md) trước khi tạo Release.
