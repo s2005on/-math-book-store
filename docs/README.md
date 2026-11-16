@@ -10,6 +10,7 @@ The documentation layout follows the project-management structure used in VNU Fo
 | VERSION-INTAKE.md | Quy trình nhập mỗi ZIP phiên bản mới |
 | SPRINT-TRACKER.md | Theo dõi Sprint/Issue/PR và tình trạng thực tế |
 | MIDTERM.md | Khung báo cáo giữa kỳ, không tự nhận đã được chấm |
+| B2-REPORT.md | Hồ sơ B2 theo cấu trúc VNU Food Hola, chưa tạo minh chứng giả |
 | evidence/README.md | Quy tắc lưu ảnh/log minh chứng thật |
 | 01-project-charter.md | Project goals, scope and success criteria |
 | 02-requirements.md | Functional and non-functional requirements |
