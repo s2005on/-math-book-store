@@ -1,4 +1,4 @@
-"""API integration checks for Math Book Store v0.4."""
+"""API integration checks for LTD's Book Store v0.4."""
 import io
 import unittest
 from fastapi.testclient import TestClient
