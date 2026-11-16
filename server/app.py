@@ -1,4 +1,4 @@
-"""Math Book Store: authenticated inventory API. No payment/order processing."""
+"""LTD's Book Store: authenticated inventory API. No payment/order processing."""
 import hashlib, hmac, io, json, os, secrets, sqlite3, time
 from contextlib import contextmanager
 from pathlib import Path
@@ -13,15 +13,15 @@ from dotenv import load_dotenv
 HERE = Path(__file__).resolve().parent
 load_dotenv(HERE.parent / ".env")
 WEB = HERE / "web"
-DATA = Path(os.getenv("MBS_DATA_DIR", str(HERE / "data")))
+DATA = Path((os.getenv("LTDS_DATA_DIR") or os.getenv("MBS_DATA_DIR", str(HERE / "data"))))
 UPLOADS = DATA / "uploads"
 DATA.mkdir(parents=True, exist_ok=True)
 UPLOADS.mkdir(parents=True, exist_ok=True)
 DB = DATA / "shop.sqlite3"
-COOKIE = "mbs_session"
+COOKIE = "ltds_session"
 SESSION_TTL = 7 * 86400
 CATEGORIES = {"Lớp 6","Lớp 7","Lớp 8","Lớp 9","Ôn thi lớp 10","Khác"}
-app = FastAPI(title="Math Book Store", docs_url=None, redoc_url=None, openapi_url=None)
+app = FastAPI(title="LTD's Book Store", docs_url=None, redoc_url=None, openapi_url=None)
 attempts = {}
 
 @contextmanager
@@ -69,8 +69,8 @@ def init_db():
                  "Bồi dưỡng học sinh giỏi, rèn tư duy tổ hợp và logic. Chưa có ngày phát hành chính thức.",
                  "SẮP RA MẮT",0,0,"coming_soon"))
             db.execute("INSERT INTO seed_history(key) VALUES ('upcoming-logic-v1')")
-        admin_user = os.getenv("MBS_ADMIN_USER", "").strip().lower()
-        admin_password = os.getenv("MBS_ADMIN_PASSWORD", "")
+        admin_user = (os.getenv("LTDS_ADMIN_USER") or os.getenv("MBS_ADMIN_USER", "")).strip().lower()
+        admin_password = (os.getenv("LTDS_ADMIN_PASSWORD") or os.getenv("MBS_ADMIN_PASSWORD", ""))
         if admin_user and len(admin_password) >= 12:
             if not db.execute("SELECT 1 FROM users WHERE username=?", (admin_user,)).fetchone():
                 db.execute("INSERT INTO users(username,password,role) VALUES (?,?,?)",(admin_user,pw_hash(admin_password),"admin"))
@@ -127,7 +127,7 @@ def as_book(row):
 
 @app.get("/health")
 def health():
-    return {"status":"ok","project":"math-book-store","stage":"inventory-v0.5","api_ready":True}
+    return {"status":"ok","project":"ltds-book-store","stage":"inventory-v0.5","api_ready":True}
 
 @app.get("/api/books")
 def books():
@@ -168,7 +168,7 @@ def login(body:Login,request:Request):
         db.execute("DELETE FROM sessions WHERE expires<?",(int(now),))
         db.execute("INSERT INTO sessions VALUES (?,?,?,?)",(hashlib.sha256(raw.encode()).hexdigest(),user["id"],csrf,int(now)+SESSION_TTL))
     response=JSONResponse({"ok":True,"username":user["username"],"role":user["role"],"csrf":csrf})
-    response.set_cookie(COOKIE,raw,httponly=True,secure=os.getenv("MBS_SECURE_COOKIES","0")=="1",samesite="lax",max_age=SESSION_TTL,path="/")
+    response.set_cookie(COOKIE,raw,httponly=True,secure=(os.getenv("LTDS_SECURE_COOKIES") or os.getenv("MBS_SECURE_COOKIES","0"))=="1",samesite="lax",max_age=SESSION_TTL,path="/")
     return response
 
 @app.post("/api/logout")

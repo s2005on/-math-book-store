@@ -5,8 +5,8 @@ from zipfile import ZipFile
 
 ROOT = Path(__file__).resolve().parents[1]
 VERSION = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
-ARCHIVE = ROOT / "dist" / f"Math-Book-Store-v{VERSION}.zip"
-PREFIX = "Math-Book-Store/"
+ARCHIVE = ROOT / "dist" / f"LTDs-Book-Store-v{VERSION}.zip"
+PREFIX = "LTDs-Book-Store/"
 REQUIRED = {
     "VERSION", "README.md", "start.py", "RUN-WINDOWS.bat",
     "server/app.py", "server/requirements.txt", "server/web/index.html",

@@ -1,4 +1,4 @@
-# Checklist phát hành Math Book Store
+# Checklist phát hành LTD's Book Store
 
 **Áp dụng cho mỗi release; đây là checklist, không phải chứng nhận đã hoàn tất.**
 

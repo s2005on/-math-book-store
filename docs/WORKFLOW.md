@@ -1,4 +1,4 @@
-# Quy trình phát triển Math Book Store (áp dụng từ VNU Food Hola)
+# Quy trình phát triển LTD's Book Store (áp dụng từ VNU Food Hola)
 
 Áp dụng cho đồ án cuối kỳ, ưu tiên **bản chạy Windows** và dữ liệu an toàn. Quy trình tham khảo VNU Food Hola: Scrum rút gọn, Git/PR, CI hai hệ điều hành, SemVer, changelog và lưu minh chứng; không sao chép nghiệp vụ đặt đồ ăn sang cửa hàng sách.
 
@@ -36,7 +36,7 @@ Khi lưu bằng chứng: ghi ngày, commit/tag, hệ điều hành, bước th�
 
 ## 4. Phiên bản và release
 
-- `VERSION` là nguồn duy nhất xác định tên gói `Math-Book-Store-vX.Y.Z.zip`.
+- `VERSION` là nguồn duy nhất xác định tên gói `LTDs-Book-Store-vX.Y.Z.zip`.
 - Với tính năng mới dùng tăng **MINOR**; sửa lỗi tương thích tăng **PATCH**; thay đổi không tương thích tăng **MAJOR**.
 - Cập nhật `CHANGELOG.md` và ghi chú release, chạy CI trên nhánh trước.
 - Sau khi PR được merge và xác nhận `main` xanh, gắn tag `vX.Y.Z` vào đúng commit trên `main`. Workflow `release.yml` chạy lại kiểm thử, kiểm tra tên tag khớp VERSION, đóng gói ZIP và xuất bản GitHub Release.
@@ -51,4 +51,4 @@ Khi lưu bằng chứng: ghi ngày, commit/tag, hệ điều hành, bước th�
 
 ## 6. Trạng thái đồng bộ
 
-Xem [REPO-SYNC-STATUS.md](REPO-SYNC-STATUS.md). **Bản ZIP v0.6.0 đang dùng trên máy chưa đồng nghĩa với mã nguồn `main` hiện tại (v0.5.1)**. Cần đối chiếu, nhập và kiểm thử trước khi phát hành phiên bản 0.6.0 từ GitHub.
+Xem [REPO-SYNC-STATUS.md](REPO-SYNC-STATUS.md). **Bản ZIP v0.9.0 đang dùng trên máy chưa đồng nghĩa với mã nguồn `main` hiện tại (v0.5.1)**. Cần đối chiếu, nhập và kiểm thử trước khi phát hành phiên bản 0.6.0 từ GitHub.

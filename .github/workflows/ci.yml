@@ -1,4 +1,4 @@
-name: Math Book Store CI
+name: LTD's Book Store CI
 on:
   push:
     branches: [main, "feat/**", "fix/**", "docs/**", "test/**", "chore/**"]
@@ -40,7 +40,7 @@ jobs:
         if: runner.os == 'Linux'
         uses: actions/upload-artifact@v4
         with:
-          name: Math-Book-Store-local
-          path: dist/Math-Book-Store-*.zip
+          name: LTDs-Book-Store-local
+          path: dist/LTDs-Book-Store-*.zip
           if-no-files-found: error
           retention-days: 14

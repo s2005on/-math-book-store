@@ -3,7 +3,7 @@
 ## Thông tin dự án
 
 - **Tên đề tài:** Xây dựng website thương mại điện tử bán sách tham khảo Toán.
-- **Tên dự án:** Math Book Store.
+- **Tên dự án:** LTD's Book Store.
 - **Loại sản phẩm:** Website responsive, mô hình cửa hàng đơn lẻ.
 - **Trạng thái:** UI Foundation — Sprint 0.
 - **Nguồn tham khảo quy trình:** VNU Food Hola (`s2005on/vnu-food-hola`).

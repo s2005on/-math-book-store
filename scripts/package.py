@@ -7,7 +7,7 @@ DIST = ROOT / "dist"
 VERSION = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
 if not VERSION or any(ch not in "0123456789." for ch in VERSION):
     raise ValueError("VERSION không hợp lệ")
-ARCHIVE = DIST / f"Math-Book-Store-v{VERSION}.zip"
+ARCHIVE = DIST / f"LTDs-Book-Store-v{VERSION}.zip"
 EXCLUDED_DIRS = {".git", ".venv", "__pycache__", "node_modules", "dist", ".pytest_cache"}
 EXCLUDED_FILES = {".env", "shop.sqlite3"}
 EXCLUDED_SUFFIXES = {".pyc", ".pyo"}
@@ -28,7 +28,7 @@ def main() -> None:
                 continue
             if rel.parts and rel.parts[0] == "server" and len(rel.parts) > 1 and rel.parts[1] == "data":
                 continue
-            archive.write(path, Path("Math-Book-Store") / rel)
+            archive.write(path, Path("LTDs-Book-Store") / rel)
             count += 1
     print(f"Created {ARCHIVE} with {count} files ({ARCHIVE.stat().st_size} bytes)")
 

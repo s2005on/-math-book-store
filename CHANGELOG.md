@@ -1,4 +1,4 @@
-# Changelog — Math Book Store
+# Changelog — LTD's Book Store
 
 ## v0.5.1 — Sửa khởi chạy Windows (mã nguồn GitHub hiện tại, chưa phát hành tag)
 

@@ -1,4 +1,4 @@
-# Final Project Report — Math Book Store
+# Final Project Report — LTD's Book Store
 
 ## Project overview
 A web storefront model for mathematics books and exam-preparation materials for grades 6–10.

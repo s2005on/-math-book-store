@@ -23,7 +23,7 @@ class ServerSmokeTests(unittest.TestCase):
     def test_storefront_is_served(self):
         response = self.client.get("/")
         self.assertEqual(response.status_code, 200)
-        self.assertIn("Math Book Store", response.text)
+        self.assertIn("LTD's Book Store", response.text)
         self.assertIn('id="productGrid"', response.text)
 
     def test_admin_preview_is_served(self):
