@@ -1,16 +1,47 @@
-# Final Project Report — LTD's Book Store
+# Báo cáo tổng kết kỹ thuật — LTD's Book Store
 
-## Project overview
-A web storefront model for mathematics books and exam-preparation materials for grades 6–10.
+**Trạng thái tài liệu:** bản nháp học thuật có đối chiếu mã nguồn, không phải báo cáo đã được giảng viên duyệt. Phiên bản mã GitHub đang được mô tả: `main` **v0.5.1**; ZIP chạy local **v0.9.0 chưa đồng bộ hoàn toàn**.
 
-## Delivered in UI Foundation
-Responsive storefront, JSON catalog, search/filter/sort, product details, local cart demo, demo checkout, static admin preview, FastAPI static host, health endpoint, automated tests and CI configuration.
+## 1. Giới thiệu và mục tiêu
+Website thương mại điện tử bán sách Toán lớp 6–10, giúp người mua tìm sách theo khối lớp/mục tiêu; chủ cửa hàng đăng nhập và quản lý danh mục, bìa, giá, trạng thái sách.
 
-## Architecture
-Browser UI (HTML/CSS/JavaScript) loads catalog JSON and book-cover assets from FastAPI StaticFiles. Cart state is stored in browser localStorage. No order or user data is sent to a backend in this phase.
+Nguồn tham khảo tổ chức đồ án: [VNU Food Hola](https://github.com/s2005on/vnu-food-hola). Hai ứng dụng có domain nghiệp vụ khác nhau; chỉ dùng chung cách chia thư mục và kiểm soát chất lượng Git.
 
-## Verification
-Local verification: 5 Python tests and 4 Node tests passed. GitHub Actions and VPS deployment must be verified separately after repository sync.
+## 2. Hồ sơ phân tích và quản lý
+- Charter và yêu cầu: [01-project-charter.md](01-project-charter.md), [02-requirements.md](02-requirements.md).
+- WBS, lịch, Scrum, backlog: [04-wbs.md](04-wbs.md) đến [07-sprint-0-backlog.md](07-sprint-0-backlog.md), [SPRINT-TRACKER.md](SPRINT-TRACKER.md).
+- Ma trận minh chứng: [ACADEMIC-TRACEABILITY.md](ACADEMIC-TRACEABILITY.md).
+- Git/PR/CI/Release: [WORKFLOW.md](WORKFLOW.md), [VERSIONING.md](VERSIONING.md).
 
-## Limitations and future work
-Database, admin authentication, catalog CRUD, order API, payment, inventory, shipping, notifications, security hardening and production backup are not implemented in this release.
+## 3. Kiến trúc và chức năng ở mã GitHub
+- Frontend HTML/CSS/JavaScript trong `server/web/`, backend FastAPI `server/app.py`, SQLite `server/data/shop.sqlite3` khi chạy.
+- Có đăng ký/đăng nhập khách và admin; quản trị có CRUD sản phẩm và upload ảnh, phân loại theo tình trạng; cửa hàng có tìm kiếm, lọc, chi tiết, giỏ demo.
+- Chưa có backend tạo đơn hàng và quản lý trạng thái đơn trên `main` v0.5.1.
+- Bản ZIP local v0.9.0 đã được phát triển thêm, nhưng phải nhập/test trên GitHub trước khi coi là sản phẩm source chính thức.
+- VPS và thanh toán trực tuyến không thuộc bản nghiệm thu hiện tại.
+
+## 4. Kiểm thử
+- Bộ test hiện có: `tests/` (Python unit/API, Node tests); CI chạy Windows và Ubuntu.
+- Chưa suy ra UI hoàn hảo chỉ từ CI: cần ảnh/screen thực của đúng commit tại [evidence/README.md](evidence/README.md).
+- Kế hoạch kiểm thử theo chức năng: [TEST-PLAN.md](TEST-PLAN.md).
+- Mỗi bản mới có báo cáo nhận ZIP: [VERSION-INTAKE.md](VERSION-INTAKE.md).
+
+## 5. Vấn đề và phương án xử lý
+- Chênh lệch bản ZIP v0.9.0 và mã trên GitHub: theo dõi [Issue #3](https://github.com/s2005on/LTDs-Book-Store/issues/3).
+- Ảnh sách trên GitHub còn nhỏ: nhập ảnh gốc nét cao và test responsive trước release.
+- Tài liệu từng giai đoạn có thể giữ trạng thái lịch sử, nhưng bản tổng kết phải nói rõ trạng thái thời điểm viết.
+
+## 6. Hạn chế / việc cần hoàn thành trước bảo vệ
+- [ ] Đồng bộ mã, ảnh, test của ZIP v0.9.0 vào PR.
+- [ ] Kiểm tra quyền và quy trình order, nếu đã nhập backend đơn hàng.
+- [ ] Ảnh minh chứng desktop/mobile/admin và log test, kèm SHA commit.
+- [ ] Chốt phạm vi nghiệm thu cùng giảng viên và ghi phản hồi nếu có.
+- [ ] Tạo tag và GitHub Release đúng mã sau CI.
+
+## 7. Kết luận (điền sau khi nghiệm thu)
+- Ngày bảo vệ:
+- Commit/tag phiên bản trình diễn:
+- Những yêu cầu đã đạt:
+- Những yêu cầu chưa đạt:
+- Phản hồi giảng viên:
+- Hướng phát triển tiếp:
