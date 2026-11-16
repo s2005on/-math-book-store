@@ -67,7 +67,7 @@ def origin_check(request):
     if origin:
         from urllib.parse import urlsplit
         target = urlsplit(origin)
-        if target.netloc != request.headers.get("host") or target.scheme != request.url.scheme:
+        if target.netloc != request.headers.get("host") or target.scheme not in ("http", "https"):
             raise HTTPException(403, "Origin không hợp lệ")
 
 def session(request):
