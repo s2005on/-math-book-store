@@ -11,6 +11,8 @@ let cart = {};
 let toastTimer = null;
 const categories = ['Tất cả', 'Lớp 6', 'Lớp 7', 'Lớp 8', 'Lớp 9', 'Ôn thi lớp 10'];
 const CART_KEY = 'math-book-store-cart-v020';
+const isAvailable = p => (p.status ? p.status === 'available' : p.in_stock !== false) && p.price !== null;
+const statusText = p => p.status === 'coming_soon' ? 'Sắp ra mắt' : p.status === 'sold_out' || p.in_stock === false ? 'Hết hàng' : '';
 
 function loadCart() {
   try {
@@ -55,6 +57,7 @@ function getVisibleProducts() {
   const query = normalize($('catalogSearch').value || $('searchInput').value);
   const sort = $('sortSelect').value;
   const found = products.filter((product) => {
+    if (product.status === 'coming_soon') return false;
     const categoryMatch = activeCategory === 'Tất cả' || product.category === activeCategory;
     const text = normalize(`${product.name} ${product.category} ${product.description} ${product.label}`);
     return categoryMatch && (!query || text.includes(query));
@@ -69,13 +72,13 @@ function getVisibleProducts() {
 function productCard(product) {
   const price = product.price === null ? 'Liên hệ báo giá' : money(product.price);
   const priceClass = product.price === null ? ' contact-price' : '';
-  const available = product.in_stock !== false && product.price !== null;
+  const available = isAvailable(product);
   const badgeClass = product.category === 'Ôn thi lớp 10' ? 'product-badge orange' : 'product-badge';
   const article = document.createElement('article');
   article.className = 'product-card';
   article.innerHTML = `
     <div class="product-visual">
-      <span class="${badgeClass}">${escapeHTML(product.category)}</span>${product.in_stock === false ? '<span class="soldout">Hết hàng</span>' : ''}
+      <span class="${badgeClass}">${escapeHTML(product.category)}</span>${statusText(product) ? '<span class="soldout">'+escapeHTML(statusText(product))+'</span>' : ''}
       <img src="${escapeHTML(product.image)}" alt="${escapeHTML(product.name)}" loading="lazy" width="420" height="320">
     </div>
     <div class="product-body">
@@ -83,7 +86,7 @@ function productCard(product) {
       <h3 class="product-title">${escapeHTML(product.name)}</h3>
       <p class="product-description">${escapeHTML(product.description)}</p>
       <div class="product-bottom"><strong class="product-price${priceClass}">${price}</strong><button class="detail-button" type="button" data-detail="${escapeHTML(product.id)}" aria-label="Xem chi tiết ${escapeHTML(product.name)}">↗</button></div>
-      <button class="add-button" type="button" data-add="${escapeHTML(product.id)}" ${!available ? 'disabled' : ''}>${product.in_stock === false ? 'Hết hàng' : product.price === null ? 'Giá đang cập nhật' : '<span aria-hidden="true">＋</span> Thêm vào giỏ'}</button>
+      <button class="add-button" type="button" data-add="${escapeHTML(product.id)}" ${!available ? 'disabled' : ''}>${!available ? statusText(product) || 'Giá đang cập nhật' : '<span aria-hidden="true">＋</span> Thêm vào giỏ'}</button>
     </div>`;
   return article;
 }
@@ -97,7 +100,7 @@ function renderProducts() {
 
 function addToCart(id) {
   const product = products.find((item) => item.id === id);
-  if (!product || product.price === null || product.in_stock === false) return;
+  if (!product || !isAvailable(product)) return;
   cart[id] = Math.min(99, (cart[id] || 0) + 1);
   persistCart();
   showToast('Đã thêm sách vào giỏ hàng');
@@ -112,7 +115,7 @@ function cartTotal() {
 }
 
 function renderCart() {
-  for (const id of Object.keys(cart)) { const book=products.find(x=>x.id===id); if (!book || book.price===null || book.in_stock===false) delete cart[id]; }
+  for (const id of Object.keys(cart)) { const book=products.find(x=>x.id===id); if (!book || !isAvailable(book)) delete cart[id]; }
   const count = cartQuantity();
   const total = money(cartTotal());
   $('cartCount').textContent = count;
@@ -123,7 +126,7 @@ function renderCart() {
   $('stickyCart').hidden = count === 0;
   $('checkoutOpen').disabled = count === 0;
 
-  const lines = products.filter((product) => cart[product.id] && product.price !== null && product.in_stock !== false);
+  const lines = products.filter((product) => cart[product.id] && isAvailable(product));
   if (!lines.length) {
     $('cartLines').innerHTML = '<div class="cart-empty"><span>▤</span><b>Giỏ sách đang trống</b><small>Hãy chọn một vài cuốn sách bạn cần nhé.</small></div>';
     return;
@@ -141,7 +144,7 @@ function renderCart() {
 function showProductDetails(id) {
   const product = products.find((item) => item.id === id);
   if (!product) return;
-  const price = product.in_stock === false ? 'Hết hàng' : product.price === null ? 'Đang cập nhật' : money(product.price);
+  const price = statusText(product) || (product.price === null ? 'Đang cập nhật' : money(product.price));
   $('productDialogContent').innerHTML = `
     <div class="product-detail-layout">
       <div class="product-detail-image"><img src="${escapeHTML(product.image)}" alt="${escapeHTML(product.name)}"></div>
@@ -151,10 +154,29 @@ function showProductDetails(id) {
         <p>${escapeHTML(product.description)}</p>
         <div class="detail-price">${price}</div>
         <div class="detail-meta">Ảnh bìa được xử lý từ hình ảnh sản phẩm do người bán cung cấp. Thông tin chi tiết sẽ được bổ sung khi có dữ liệu đầy đủ.</div>
-        <button class="button button-primary" type="button" data-detail-add="${escapeHTML(product.id)}" ${product.price === null || product.in_stock === false ? 'disabled' : ''}>${product.in_stock === false ? 'Hết hàng' : product.price === null ? 'Chưa có giá bán' : 'Thêm vào giỏ hàng'} <span>→</span></button>
+        <button class="button button-primary" type="button" data-detail-add="${escapeHTML(product.id)}" ${!isAvailable(product) ? 'disabled' : ''}>${!isAvailable(product) ? (statusText(product) || 'Chưa có giá bán') : 'Thêm vào giỏ hàng'} <span>→</span></button>
       </div>
     </div>`;
   $('productDialog').showModal();
+}
+
+
+function renderComingSoon() {
+  const section=$('comingSoonSection');
+  const container=$('comingSoonGrid');
+  if (!section || !container) return;
+  const upcoming=products.filter(p=>p.status==='coming_soon');
+  section.hidden=upcoming.length===0;
+  container.replaceChildren(...upcoming.map(product=>{
+    const article=document.createElement('article');
+    article.className='coming-soon-book';
+    const image=document.createElement('img');
+    image.src=product.image; image.alt=product.name; image.loading='lazy';
+    const details=document.createElement('div');
+    details.innerHTML='<span class="upcoming-tag">SẮP RA MẮT</span><h3>'+escapeHTML(product.name)+'</h3><p>'+escapeHTML(product.description)+'</p><span class="upcoming-note">Ngày phát hành và giá sẽ được cập nhật</span>';
+    article.append(image,details);
+    return article;
+  }));
 }
 
 function resetFilters() {
@@ -185,6 +207,7 @@ async function init() {
   loadCart();
   renderCategories();
   renderProducts();
+  renderComingSoon();
   renderCart();
 
   $('categoryTabs').addEventListener('keydown', (event) => {
