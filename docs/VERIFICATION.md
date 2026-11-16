@@ -3,14 +3,23 @@
 ## Local verification
 - Python unittest: 5/5 passed.
 - Node catalog tests: 4/4 passed.
-- Python syntax and JavaScript syntax: passed.
-- Catalog image references: verified locally.
+- Python and JavaScript syntax checks: passed.
+- Catalog image references: all 7 product assets exist.
 
-## Scope
-Các kết quả trên xác minh bộ mã nguồn UI Foundation trong môi trường phát triển. CI GitHub Actions cần chạy lại sau khi merge/push. Chưa xác minh production VPS, đơn hàng thật, xác thực, database hoặc thanh toán.
+## GitHub Actions verification
+- Workflow: Math Book Store CI.
+- Commit: `d987f5e69d9726cc358926f6f8c610e3569c04ad` (merged to `main`).
+- Ubuntu latest / Python 3.12: passed.
+- Windows latest / Python 3.12: passed.
+- Python tests, JavaScript syntax and Node catalog tests: passed on both runners.
+
+Run: https://github.com/s2005on/-math-book-store/actions/runs/43870410048
+
+## Scope and limitations
+Kết quả trên xác minh UI Foundation và workflow tự động. Chưa xác minh production VPS, đơn hàng thật, xác thực, database, thanh toán hoặc backup/restore.
 
 ## Limitations
-- Checkout chỉ là demo.
+- Checkout chỉ là demo, không gửi hoặc lưu đơn hàng.
 - Cart lưu local trên trình duyệt.
 - Admin chỉ là giao diện preview, chưa có phân quyền.
 - Chưa có API CRUD và database.
