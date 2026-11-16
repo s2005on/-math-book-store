@@ -181,7 +181,7 @@ async function init() {
     return;
   }
 
-  try { const me=await fetch('/api/me').then(r=>r.json()); if (me.authenticated) { const link=$('accountLink');if(link){link.textContent=me.role==='admin'?'Quản trị':'Xin chào, '+me.username;link.href=me.role==='admin'?'/admin.html':'/login.html';} } } catch {}
+  try { const me=await fetch('/api/me').then(r=>r.json()); if (me.authenticated) { const link=$('accountLink');if(link){link.textContent=me.role==='admin'?'Quản trị':'Xin chào, '+me.username;link.href=me.role==='admin'?'/admin.html':'/account.html';} } } catch {}
   loadCart();
   renderCategories();
   renderProducts();
