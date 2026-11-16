@@ -1,46 +1,36 @@
-# Đổi tên repository và đồng bộ LTD's Book Store
+# Xác nhận đổi tên và đồng bộ LTD's Book Store v0.9.0
 
 **Tên hiển thị:** LTD's Book Store  
-**Tên repository mục tiêu:** `s2005on/LTDs-Book-Store`  
-**ZIP người dùng cung cấp:** `LTDs-Book-Store-v0.9.0.zip` (tên bên trong còn `Math-Book-Store`, VERSION cũ `0.6.0`).
+**Repository chính thức:** [s2005on/LTDs-Book-Store](https://github.com/s2005on/LTDs-Book-Store)  
+**Trạng thái tên repo:** Đã đổi tên thành công và đã xác minh quyền ghi trên GitHub. Không cần đổi tên lại.
 
-## 1. Đổi tên repository mà không mất lịch sử
+## Đã hoàn tất
+- Repository vẫn giữ lịch sử Git, Pull Request và Issues.
+- Nhận diện LTD's Book Store trong phần frontend/backend hiện có trên `main`.
+- Quy trình branch/PR/CI Windows + Ubuntu và đóng gói ZIP theo phiên bản.
+- Bản ZIP chuẩn hóa `LTDs-Book-Store-v0.9.0` đã được kiểm thử tại máy làm việc: **16 Python tests + 4 JavaScript tests đạt**. Đây là kiểm thử mã trong ZIP, chưa phải CI của commit `main` v0.9.0.
 
-Kết nối GitHub hiện có hỗ trợ đọc/ghi mã nguồn, tạo nhánh/PR/merge, **không hỗ trợ thao tác Settings đổi repository name**. Chủ tài khoản cần mở:
+## Phần CHƯA đồng bộ vào main
+`main` hiện có `VERSION=0.5.1` và một số ảnh thumbnail rất nhỏ. ZIP v0.9.0 có các chức năng quản lý đơn hàng và ảnh bìa WebP nét cao, cùng `anh-goc` là các tệp ảnh gốc; **chưa thể gọi mã GitHub là v0.9.0 cho đến khi toàn bộ được nhập và CI đạt**.
 
-[Repository Settings](https://github.com/s2005on/-math-book-store/settings) → **General** → **Repository name** → nhập `LTDs-Book-Store` → **Rename**.
+## Nhập ZIP v0.9.0 lên repo mới, giữ lịch sử Git
 
-GitHub thường tự chuyển hướng URL repository cũ sang URL mới. Dù vậy hãy cập nhật remote của bản clone cục bộ:
+Bản ZIP đã chuẩn hóa có công cụ `IMPORT-LTD-GITHUB.bat`. Thao tác trên Windows:
 
-```bash
-git remote set-url origin https://github.com/s2005on/LTDs-Book-Store.git
-git remote -v
-```
+1. Cài **Git for Windows**, đăng nhập GitHub để có quyền push repo.
+2. Giải nén ZIP, mở thư mục `LTDs-Book-Store`, nhấn đúp **`IMPORT-LTD-GITHUB.bat`**.
+3. Công cụ clone `https://github.com/s2005on/LTDs-Book-Store.git`, tạo nhánh riêng `feat/import-ltd-v0.9.0-...`, sao chép tệp ứng dụng/ảnh và push.
+4. Nhấn **Create pull request** trên trang được tự mở, kiểm tra **Files changed** trước khi merge.
+5. Đợi CI **Windows + Ubuntu** đạt. Kiểm tra lần cuối rằng giá HSG Toán 8 là **198.000đ**, sách Toán tổ hợp và tư duy logic là **280.000đ** và **sắp ra mắt** (không thể mua).
+6. Khi CI xanh và PR được nhập vào `main`, kiểm tra `VERSION=0.9.0` và nội dung ZIP trước khi gắn tag/release `v0.9.0`.
 
-Nếu tên bị trùng/không hợp lệ, GitHub sẽ báo tại giao diện. Không tạo repository mới rồi xóa repository cũ: sẽ mất liên kết lịch sử PR/issue.
+Công cụ nhập **không sửa `main` ngay**, chỉ đẩy nhánh mới để review. Nó giữ lại thư mục `.github/`, `docs/` và quy trình phát hành đã có trên repo.
 
-## 2. Điều đã đồng bộ trong PR nhận diện
+## Bảo vệ dữ liệu
+- Tuyệt đối không commit `.env`, `.venv`, `server/data/`, SQLite có khách hàng, mật khẩu, đơn hàng, hoặc cache Python.
+- Không đẩy các thay đổi nhạy cảm trước khi xem diff.
+- Giữ nguyên thiết kế bìa gốc, chỉ nâng độ phân giải hiển thị.
+- COD/VietQR/MoMo/VNPAY trong đồ án là **mô phỏng**, chưa tích hợp thanh toán thực.
+- Chưa triển khai VPS; phạm vi hiện tại là chạy local Windows.
 
-- Tên **LTD's Book Store** trên trang chủ, login, tài khoản, admin, FastAPI và tài liệu.
-- Tên ZIP trong script `LTDs-Book-Store-v<VERSION>.zip`; CI và release workflow tương ứng.
-- Slug `ltds-book-store` ở các chỗ dùng làm định danh dự án.
-- Biến môi trường chính thức `LTDS_*` cho backend; hỗ trợ đọc các biến `MBS_*` cũ để tránh phá đường dẫn dữ liệu.
-- Giỏ hàng dùng khóa localStorage LTD mới; khi chưa có dữ liệu mới sẽ đọc khóa cũ để giữ giỏ hàng.
-
-## 3. Phân biệt **đổi thương hiệu** với **đồng bộ phiên bản**
-
-GitHub `main` vẫn chứa mã v0.5.1 và thumbnail cũ. File ZIP của người dùng chứa v0.9.0 với các tính năng/ảnh mới. Đổi tên hiển thị không biến mã v0.5.1 thành v0.9.0.
-
-Để thực sự nhập bản v0.9.0 vào repo:
-1. Giữ nguyên lịch sử Git và cấu trúc `.github/`, `docs/` đã có.
-2. Tạo nhánh `feat/import-ltd-v0.9.0` từ `main`.
-3. Chép các tệp ứng dụng, thử nghiệm, ảnh WebP độ phân giải cao và thư mục `anh-goc` từ ZIP đã chuẩn hóa vào nhánh, **không chép `server/data/`, `.env`, `.venv`, `__pycache__`**.
-4. Chạy Python unittest và Node tests; kiểm thử đăng nhập, thêm sách, giỏ hàng, đặt đơn, quản trị đơn, banner.
-5. Cập nhật `VERSION` thành `0.9.0` **khi source đã đầy đủ**; giữ tên branding LTD, kiểm tra chính xác tên ZIP và CI.
-6. Mở Pull Request, đợi CI cả Windows/Ubuntu đạt, merge rồi mới công bố tag/release `v0.9.0`.
-
-Xem [Issue đồng bộ mã](https://github.com/s2005on/-math-book-store/issues/3). Chưa có VPS, không công bố địa chỉ web public hoặc tuyên bố đã xử lý giao dịch thật.
-
-## 4. Dữ liệu và thanh toán
-
-Giữ các đầu sách, giá và trạng thái từ ZIP nguồn. Bản đồ án có nội dung VietQR/MoMo/VNPAY **mô phỏng**, không xác nhận thanh toán thật; không commit tài khoản ngân hàng, mật khẩu, khách hàng hoặc bản sao SQLite lên repo công khai.
+Theo dõi tiến độ nhập mã nguồn và ảnh: [Issue #3](https://github.com/s2005on/LTDs-Book-Store/issues/3).
