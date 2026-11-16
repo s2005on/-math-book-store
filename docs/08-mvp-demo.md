@@ -1,3 +1,9 @@
+# Lưu ý: Tài liệu lịch sử Sprint 0
+
+Phần dưới lưu kịch bản giao diện ban đầu, **không** mô tả toàn bộ khả năng trên `main` v0.5.1. Chức năng đăng nhập và CRUD sách đã có, nhưng lưu đơn thật chưa có trên mã GitHub. Để demo bản hiện tại, xem [TEST-PLAN.md](TEST-PLAN.md), [SPRINT-TRACKER.md](SPRINT-TRACKER.md) và [ACADEMIC-TRACEABILITY.md](ACADEMIC-TRACEABILITY.md).
+
+---
+
 # 08 — Kịch bản demo trình bày đồ án
 
 ## Chuẩn bị
