@@ -1,64 +1,50 @@
-# Math Book Store — Website bán sách Toán
+# Math Book Store v0.3.0
 
-![CI](https://github.com/s2005on/-math-book-store/actions/workflows/ci.yml/badge.svg?branch=main)
+Website demo bán sách tham khảo Toán lớp 6–9 và tài liệu ôn thi vào lớp 10. Dự án độc lập, tham khảo cấu trúc tổ chức repository và luồng mua hàng của [VNU Food Hola](https://github.com/s2005on/vnu-food-hola), không sao chép giao diện hay mã nguồn.
 
-Website bán sách tham khảo Toán lớp 6–9 và tài liệu ôn thi vào lớp 10. Dự án độc lập, tham khảo quy trình tổ chức repository, tài liệu, kiểm thử và release của [VNU Food Hola](https://github.com/s2005on/vnu-food-hola), không sao chép mã nguồn.
+## Giao diện và chức năng
+- Nhận diện riêng tông xanh navy – kem – đồng, phong cách cửa hàng sách.
+- Header điều hướng cố định khi cuộn, responsive trên điện thoại.
+- Danh mục sách theo lớp, tìm kiếm tiếng Việt không dấu, lọc và sắp xếp.
+- Thẻ sản phẩm, xem chi tiết, giỏ hàng, thay đổi số lượng và tổng tiền.
+- Giỏ hàng lưu trong localStorage; biểu mẫu checkout chỉ tạo đơn demo.
+- Ảnh mockup sách dạng cuốn; giữ nguyên thiết kế bìa sách gốc.
+- FastAPI static host, health endpoint, trang admin preview, CI và tài liệu đồ án.
 
-> **Trạng thái: v0.2.0 — UI Foundation.** Bản hiện tại là storefront và giỏ hàng demo; chưa có API đơn hàng, database, đăng nhập quản trị hoặc thanh toán. Không sử dụng để nhận đơn thật.
-
-## Chạy nhanh
+## Chạy local
 Yêu cầu Python 3.11+.
 
-**Windows:** chạy `RUN-WINDOWS.bat`, sau đó mở http://127.0.0.1:8017/
+Windows: chạy `RUN-WINDOWS.bat`, sau đó mở http://127.0.0.1:8017/
 
-**macOS / Linux:**
+macOS / Linux:
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r server/requirements.txt
 python -m uvicorn server.app:app --host 127.0.0.1 --port 8017
 ```
-Không mở HTML trực tiếp bằng `file://`; cần server để tải catalog.
-
-## Chức năng UI Foundation
-- Danh mục sách theo lớp, tìm kiếm, lọc và sắp xếp.
-- Chi tiết sách, giỏ hàng lưu trên trình duyệt, tính tổng.
-- Checkout minh họa, không gửi/lưu đơn hàng.
-- Header và thanh giỏ hàng cố định, responsive.
-- Admin UI preview, health endpoint.
-- Ảnh bìa mockup được xử lý từ ảnh sách do người dùng cung cấp.
 
 ## Kiểm thử
 ```bash
 python -m pip install -r server/requirements-test.txt
 python -m unittest discover -s tests -v
+node --check server/web/app.js
 node --test tests/*.test.cjs
 ```
 
-## Cấu trúc
-```text
-.github/       CI, issue/PR templates
-deploy/        Nginx, systemd, hướng dẫn VPS
-docs/          Charter, requirements, design, WBS, tests, sprint, release
-server/        FastAPI static host và storefront
-  web/         HTML, CSS, JS, catalog JSON, ảnh bìa
-tests/         Python smoke tests và Node catalog tests
-```
+## GitHub Pages
+Workflow `.github/workflows/pages.yml` xuất bản thư mục `server/web`. Trong Settings → Pages, chọn Build and deployment → Source: GitHub Actions. GitHub Pages chỉ chạy giao diện tĩnh; API `/health` chỉ có trên FastAPI/VPS.
 
-## Dữ liệu sách mẫu
-| Sản phẩm | Giá tham khảo |
-|---|---:|
-| Bài tập thực hành Toán 6–9, mỗi bộ 2 tập | 80.000đ/bộ |
-| Luyện thi vào lớp 10 – Đại số & Hình học | 270.000đ/bộ |
-| Chinh phục đề thi học sinh giỏi Toán 8 | 198.000đ |
-| 63 đề ôn thi vào lớp 10 môn Toán | Chưa xác nhận |
+## Giới hạn bản demo
+Checkout không gửi hoặc lưu đơn hàng ở máy chủ. Chưa có database, API đơn hàng, đăng nhập admin, thanh toán hoặc xử lý đơn thật. Không nhập dữ liệu cá nhân thật vào bản demo. Trước khi kinh doanh cần hoàn thiện backend, bảo mật, HTTPS, lưu trữ và quy trình vận hành.
 
-Giá là dữ liệu mẫu từ trao đổi ban đầu, cần xác nhận trước khi kinh doanh.
+## Triển khai VPS
+Xem `deploy/README.md`. Cần quyền truy cập VPS và cấu hình domain/HTTPS để triển khai thật. Website VNU Food Hola không bị chỉnh sửa.
 
-## Lộ trình
-1. Sprint 0: UI Foundation.
-2. Sprint 1: Catalog/Admin API, database, xác thực.
-3. Sprint 2: Đơn hàng, trạng thái, thông báo.
-4. Sprint 3: hardening, bảo mật, backup, nghiệm thu và VPS.
+## Giá tham khảo
+- Bài tập thực hành Toán 6–9, bộ 2 tập: 80.000đ/bộ.
+- Luyện thi vào lớp 10 – Đại số & Hình học: 270.000đ/bộ.
+- Chinh phục đề thi học sinh giỏi Toán 8: 198.000đ.
+- 63 đề ôn thi vào lớp 10: chưa xác nhận giá.
 
-Xem [docs/README.md](docs/README.md).
+Giá là dữ liệu mẫu từ thông tin người bán đã cung cấp, cần xác nhận trước khi sử dụng thương mại.
