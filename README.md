@@ -2,7 +2,11 @@
 
 # Math Book Store — bản chạy máy cá nhân v0.5.1
 
-Website cửa hàng sách Toán với đăng nhập, quản lý kho sách và banner sách sắp ra mắt. Không cần VPS để chạy local.\n\n> **Trạng thái mã nguồn:** nhánh `main` đang chứa v0.5.1; bản ZIP local v0.6.0 (có quản lý đơn hàng và ảnh nét cao) **chưa được đồng bộ đầy đủ lên GitHub**. Xem [đối chiếu](docs/REPO-SYNC-STATUS.md) trước khi tải source từ GitHub thay cho bản ZIP local.\n\n[Quy trình làm đồ án](docs/WORKFLOW.md) · [GitHub Actions](https://github.com/s2005on/-math-book-store/actions) · [Phiên bản và release](docs/VERSIONING.md)
+Website cửa hàng sách Toán với đăng nhập, quản lý kho sách và banner sách sắp ra mắt. Không cần VPS để chạy local.
+
+> **Trạng thái mã nguồn:** nhánh `main` đang chứa v0.5.1; bản ZIP local v0.6.0 (có quản lý đơn hàng và ảnh nét cao) **chưa được đồng bộ đầy đủ lên GitHub**. Xem [đối chiếu](docs/REPO-SYNC-STATUS.md) trước khi tải source từ GitHub thay cho bản ZIP local.
+
+[Quy trình làm đồ án](docs/WORKFLOW.md) · [GitHub Actions](https://github.com/s2005on/-math-book-store/actions) · [Phiên bản và release](docs/VERSIONING.md)
 
 ## Cách chạy nhanh trên Windows
 
