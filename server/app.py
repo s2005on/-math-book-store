@@ -57,7 +57,7 @@ def init_db():
             db.execute("UPDATE books SET status='sold_out' WHERE in_stock=0")
         if not db.execute("SELECT 1 FROM books LIMIT 1").fetchone():
             for book in json.loads((WEB / "catalog.json").read_text(encoding="utf-8")):
-                db.execute("INSERT INTO books(id,name,category,price,image,description,label,sortOrder,in_stock,status) VALUES (?,?,?,?,?,?,?,?,?,?)", (book["id"],book["name"],book["category"],book.get("price"),book["image"],book.get("description",""),book.get("label",""),book.get("sortOrder",100),int(book.get("in_stock",True)),book.get("status","available"))))
+                db.execute("INSERT INTO books(id,name,category,price,image,description,label,sortOrder,in_stock,status) VALUES (?,?,?,?,?,?,?,?,?,?)", (book["id"],book["name"],book["category"],book.get("price"),book["image"],book.get("description",""),book.get("label",""),book.get("sortOrder",100),int(book.get("in_stock",True)),book.get("status","available")))
         # Seed the announced title once; do not overwrite admin edits on subsequent starts.
         if not db.execute("SELECT 1 FROM books WHERE id='upcoming-logic'").fetchone():
             db.execute("INSERT INTO books(id,name,category,price,image,description,label,sortOrder,in_stock,status) VALUES (?,?,?,?,?,?,?,?,?,?)",
