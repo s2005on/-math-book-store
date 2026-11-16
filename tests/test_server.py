@@ -17,7 +17,7 @@ class ServerSmokeTests(unittest.TestCase):
         response = self.client.get("/health")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()["status"], "ok")
-        self.assertFalse(response.json()["api_ready"])
+        self.assertTrue(response.json()["api_ready"])\n        self.assertEqual(response.json()["stage"], "inventory-v0.5")
 
     def test_storefront_is_served(self):
         response = self.client.get("/")
@@ -28,7 +28,7 @@ class ServerSmokeTests(unittest.TestCase):
     def test_admin_preview_is_served(self):
         response = self.client.get("/admin.html")
         self.assertEqual(response.status_code, 200)
-        self.assertIn("GIAO DIỆN MINH HỌA", response.text)
+        self.assertIn("Quản lý sách", response.text)\n        self.assertIn("bookStatus", response.text)
 
     def test_catalog_json_is_served(self):
         response = self.client.get("/catalog.json")
