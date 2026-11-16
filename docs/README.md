@@ -5,7 +5,12 @@ The documentation layout follows the project-management structure used in VNU Fo
 | File | Purpose |
 |---|---|
 | WORKFLOW.md | Quy trình Scrum rút gọn, branch/PR, CI, release |
-| REPO-SYNC-STATUS.md | Theo dõi chênh lệch GitHub v0.5.1 và ZIP local v0.6.0 |
+| REPO-SYNC-STATUS.md | Theo dõi chênh lệch GitHub v0.5.1 và ZIP local v0.9.0 |
+| ACADEMIC-TRACEABILITY.md | Đối chiếu tài liệu và minh chứng theo VNU Food Hola |
+| VERSION-INTAKE.md | Quy trình nhập mỗi ZIP phiên bản mới |
+| SPRINT-TRACKER.md | Theo dõi Sprint/Issue/PR và tình trạng thực tế |
+| MIDTERM.md | Khung báo cáo giữa kỳ, không tự nhận đã được chấm |
+| evidence/README.md | Quy tắc lưu ảnh/log minh chứng thật |
 | 01-project-charter.md | Project goals, scope and success criteria |
 | 02-requirements.md | Functional and non-functional requirements |
 | 03-system-design.md | Architecture and data flow |
@@ -24,3 +29,6 @@ The documentation layout follows the project-management structure used in VNU Fo
 | RELEASE-v0.2.0.md | Release notes |
 | FINAL-REPORT.md / FINAL-HANDOVER.md | Final report and handover |
 | VERIFICATION.md | Evidence and verification boundaries |
+
+**Lưu ý:** tài liệu số 01–08 và Sprint 0 là dấu vết quá trình học; khi có chức năng mới phải cập nhật trạng thái, không tự sửa kết quả lịch sử hay ghi nhận phản hồi giảng viên chưa có. Chi tiết [ACADEMIC-TRACEABILITY.md](ACADEMIC-TRACEABILITY.md).
+
