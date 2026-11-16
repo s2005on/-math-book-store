@@ -27,3 +27,12 @@
 /* v0.4 account and stock */
 .account-link{display:inline-flex;align-items:center;justify-content:center;border:1px solid #cfddd7;border-radius:10px;padding:10px 12px;color:#1b533e;background:white;font-size:11px;font-weight:750;white-space:nowrap}
 .account-link:hover{background:#e9f3ec}.soldout{position:absolute;z-index:3;right:12px;top:12px;background:#bb3d2c;color:white;padding:6px 9px;border-radius:7px;font-weight:800;font-size:10px}.add-button:disabled{cursor:not-allowed;opacity:.75}@media(max-width:760px){.account-link{padding:8px;font-size:9px}.top-actions{gap:5px}}
+
+
+/* v0.4.1 — sharpen product photography without changing book-cover artwork */
+.product-visual{height:282px;background:linear-gradient(145deg,#f7f6f0,#ecece4)}
+.product-visual img{padding:8px 10px 6px;object-fit:contain;object-position:center;image-rendering:auto;filter:drop-shadow(0 8px 9px rgba(27,39,31,.1))}
+.hero-book img{object-fit:contain;object-position:center;image-rendering:auto}
+@media(max-width:1024px){.product-visual{height:260px}}
+@media(max-width:760px){.product-visual{height:232px}.product-visual img{padding:7px}}
+@media(max-width:390px){.product-visual{height:205px}}
