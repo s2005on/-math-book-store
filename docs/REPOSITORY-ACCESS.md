@@ -1,6 +1,6 @@
 # Repository access and workflow
 
-- Repository: `s2005on/-math-book-store`
+- Repository: `s2005on/LTDs-Book-Store`
 - Default branch: `main`
 - Project stage: UI Foundation (`v0.2.0`)
 - Reference project: [VNU Food Hola](https://github.com/s2005on/vnu-food-hola)
