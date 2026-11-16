@@ -1,4 +1,4 @@
-# Math Book Store — bản chạy máy cá nhân v0.5.0
+# Math Book Store — bản chạy máy cá nhân v0.5.1
 
 Website cửa hàng sách Toán với đăng nhập, quản lý kho sách và banner sách sắp ra mắt. Không cần VPS hay GitHub để chạy sau khi đã tải ZIP về máy.
 
@@ -49,3 +49,6 @@ chmod +x run.sh
 - Checkout hiện là bản demo, chưa gửi đơn hàng và chưa tích hợp thanh toán.
 - Cần để cửa sổ terminal chạy nền trong lúc dùng website; nhấn Ctrl+C để dừng.
 - Nếu cổng 8017 đang được ứng dụng khác sử dụng, hãy tắt ứng dụng đó rồi chạy lại.
+
+## Bản sửa v0.5.1
+- Bộ khởi chạy chuyển sang Python của `.venv` sau khi cài thư viện, xử lý lỗi `No module named 'dotenv'` trên Windows.
