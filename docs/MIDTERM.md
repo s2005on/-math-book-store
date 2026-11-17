@@ -1,6 +1,6 @@
 # Hồ sơ báo cáo giữa kỳ — LTD's Book Store
 
-Mẫu dựa trên `docs/MIDTERM.md` của VNU Food Hola. **Đây là khung báo cáo**, không phải tuyên bố dự án đã được chấm hay thầy đã duyệt.
+Đây là khung báo cáo giữa kỳ dành riêng cho **LTD's Book Store**, không phải tuyên bố dự án đã được chấm hoặc giảng viên đã duyệt.
 
 ## 1. Bối cảnh và mục tiêu
 - Đề tài: website thương mại điện tử bán sách Toán / sách luyện thi, LTD's Book Store.
@@ -13,14 +13,14 @@ Mẫu dựa trên `docs/MIDTERM.md` của VNU Food Hola. **Đây là khung báo 
 
 ## 3. Thiết kế và triển khai
 - Kiến trúc: [03-system-design.md](03-system-design.md).
-- Cấu trúc Git gần tương đương VNU Food Hola: `server/`, `tests/`, `docs/`, `.github/`, `deploy/`.
+- Cấu trúc mã nguồn LTD's Book Store: `server/`, `tests/`, `docs/`, `.github/`, `deploy/`.
 - Kiểm soát thay đổi: issue → branch → PR → CI Windows/Ubuntu → merge → release.
 - Nhận diện: LTD's Book Store; **không tự đổi bìa sách**.
 
 ## 4. Tiến độ so với kế hoạch
 - [SPRINT-TRACKER.md](SPRINT-TRACKER.md) theo dõi sprint.
 - [REPO-SYNC-STATUS.md](REPO-SYNC-STATUS.md) phân biệt mã GitHub và ZIP local.
-- Điền công việc có bằng chứng thật; không sao chép tiến độ VNU Food Hola như kết quả của LTD.
+- Chỉ ghi công việc đã có bằng chứng thật, đúng nhánh/commit của LTD's Book Store.
 
 ## 5. Kiểm thử / minh chứng
 - Tự động: liên kết Actions của commit được kiểm tra.
