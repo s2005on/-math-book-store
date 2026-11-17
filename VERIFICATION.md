@@ -1,6 +1,10 @@
 # Verification — LTD's Book Store
 
-## Đối chiếu ngày 17/11/2026
+## Trạng thái hiện tại — 18/11/2026
+
+Repository `main` vẫn ở **v0.5.1**. Bản ZIP local mới nhất là **v1.2.1 Auth Update** (đã kiểm tra VERSION=1.2.1, cấu trúc trang đăng nhập/đăng ký và tính toàn vẹn ZIP); các chức năng chưa được đồng bộ hay chạy CI trên GitHub. Xem [biên bản](docs/RELEASE-INTAKE-v1.2.1.md) và [trạng thái đồng bộ](docs/REPO-SYNC-STATUS.md). **Chưa coi ZIP v1.2.1 là GitHub Release.**
+
+## Đối chiếu lịch sử ngày 17/11/2026
 
 Mã trên GitHub `main` là v0.5.1 (chưa nhập mã nguồn ZIP v0.9.0). Không dùng kết quả kiểm thử một bản để xác nhận bản còn lại.
 
