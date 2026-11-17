@@ -6,7 +6,7 @@ Website cửa hàng sách Toán với đăng nhập, quản lý kho sách và ba
 
 > **Trạng thái mã nguồn:** nhánh `main` đang chứa v0.5.1; bản ZIP local v0.9.0 (có quản lý đơn hàng và ảnh nét cao) **chưa được đồng bộ đầy đủ lên GitHub**. Xem [đối chiếu](docs/REPO-SYNC-STATUS.md) trước khi tải source từ GitHub thay cho bản ZIP local.
 
-[Đối chiếu hồ sơ với VNU Food Hola](docs/ACADEMIC-TRACEABILITY.md) · [Nhập ZIP phiên bản mới](docs/VERSION-INTAKE.md) · [Quy trình làm đồ án](docs/WORKFLOW.md) · [GitHub Actions](https://github.com/s2005on/LTDs-Book-Store/actions) · [Phiên bản và release](docs/VERSIONING.md)
+[Đối chiếu yêu cầu và minh chứng LTD](docs/ACADEMIC-TRACEABILITY.md) · [Nhập ZIP phiên bản mới](docs/VERSION-INTAKE.md) · [Quy trình làm đồ án](docs/WORKFLOW.md) · [GitHub Actions](https://github.com/s2005on/LTDs-Book-Store/actions) · [Phiên bản và release](docs/VERSIONING.md)
 
 ## Cách chạy nhanh trên Windows
 
