@@ -1,6 +1,6 @@
 # Sprint tracker — LTD's Book Store
 
-Tham chiếu mô hình Scrum rút gọn của VNU Food Hola: **mục tiêu → backlog/issue → nhánh/PR → test → demo → retrospective**. Với đồ án cá nhân, các vai trò có thể kiêm nhiệm; người thực hiện/giảng viên điền sau khi xác nhận.
+Quy trình Scrum rút gọn của LTD's Book Store: **mục tiêu → backlog/issue → nhánh/PR → test → demo → retrospective**. Với đồ án cá nhân, các vai trò có thể kiêm nhiệm; người thực hiện/giảng viên điền sau khi xác nhận.
 
 ## Lịch theo mốc, chưa ấn định hạn nộp
 
