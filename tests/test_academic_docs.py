@@ -1,4 +1,4 @@
-"""Regression checks for academic documentation structure (VNU Food Hola aligned)."""
+"""Regression checks for LTD Book Store academic documentation structure."""
 from pathlib import Path
 from urllib.parse import unquote
 import re
