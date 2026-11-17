@@ -1,6 +1,6 @@
 # B2 — Báo cáo kỹ thuật và bằng chứng (khung dành cho LTD's Book Store)
 
-Phần này kế thừa **cách tổ chức báo cáo B2** từ VNU Food Hola nhưng chỉ ghi nhận sự thật của LTD. Không sao chép ảnh, tên người hoặc kết quả kiểm thử từ repo kia.
+Báo cáo B2 của **LTD's Book Store** chỉ trình bày kết quả của dự án này. Mọi ảnh, log và kết quả kiểm thử phải phản ánh đúng phiên bản, commit và quá trình thực hiện.
 
 ## 1. Môi trường dự án
 

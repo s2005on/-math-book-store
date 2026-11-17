@@ -1,6 +1,6 @@
-# Quy trình phát triển LTD's Book Store (áp dụng từ VNU Food Hola)
+# Quy trình phát triển LTD's Book Store
 
-Áp dụng cho đồ án cuối kỳ, ưu tiên **bản chạy Windows** và dữ liệu an toàn. Quy trình tham khảo VNU Food Hola: Scrum rút gọn, Git/PR, CI hai hệ điều hành, SemVer, changelog và lưu minh chứng; không sao chép nghiệp vụ đặt đồ ăn sang cửa hàng sách.
+Áp dụng cho đồ án cuối kỳ, ưu tiên **bản chạy Windows** và dữ liệu an toàn. Quy trình riêng của LTD's Book Store gồm Scrum rút gọn, Git/PR, CI hai hệ điều hành, SemVer, changelog và lưu minh chứng kiểm thử.
 
 ## 1. Chu trình một sprint
 

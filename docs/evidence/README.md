@@ -1,6 +1,6 @@
 # Minh chứng kiểm thử và tiến độ LTD's Book Store
 
-Thư mục này dành cho **minh chứng thật**, tương tự cách VNU Food Hola lưu `docs/evidence/`. Hiện chưa thêm ảnh hoặc log giả; hãy bổ sung ở các lần chạy/phiên bản tương ứng.
+Thư mục này dành riêng cho **minh chứng thật của LTD's Book Store**. Hiện chưa thêm ảnh hoặc log; hãy bổ sung bằng chứng kiểm thử đúng từng lần chạy/phiên bản.
 
 ## Quy tắc tên thư mục
 

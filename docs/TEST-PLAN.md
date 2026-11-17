@@ -31,7 +31,7 @@
 
 ## 3. Cách ghi bằng chứng
 
-Mỗi lần nghiệm thu ghi phiên bản, SHA commit, ngày, OS/trình duyệt, lệnh, các bước, expected/actual, số pass/fail và link PR/Actions. Tên đường dẫn `docs/evidence/vX.Y.Z-YYYY-MM-DD/`. Không sao chép ảnh từ VNU Food Hola làm minh chứng đã kiểm tra LTD.
+Mỗi lần nghiệm thu ghi phiên bản, SHA commit, ngày, OS/trình duyệt, lệnh, các bước, expected/actual, số pass/fail và link PR/Actions. Tên đường dẫn `docs/evidence/vX.Y.Z-YYYY-MM-DD/`. Chỉ sử dụng ảnh và log được ghi lại khi kiểm thử chính LTD's Book Store.
 
 ## 4. Khi test lỗi
 

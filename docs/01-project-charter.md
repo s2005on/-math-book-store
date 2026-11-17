@@ -6,7 +6,7 @@
 - **Tên dự án:** LTD's Book Store.
 - **Loại sản phẩm:** Website responsive, mô hình cửa hàng đơn lẻ.
 - **Trạng thái gốc của tài liệu:** UI Foundation — Sprint 0 (lịch sử giai đoạn khởi tạo).
-- **Nguồn tham khảo quy trình:** VNU Food Hola (`s2005on/vnu-food-hola`).
+- **Phương pháp phát triển:** Scrum rút gọn, GitHub Issues, Pull Requests, CI và quản lý phát hành riêng của LTD's Book Store.
 
 ## Bối cảnh và vấn đề
 
