@@ -4,7 +4,7 @@
 
 Website cửa hàng sách Toán với đăng nhập, quản lý kho sách và banner sách sắp ra mắt. Không cần VPS để chạy local.
 
-> **Trạng thái mã nguồn:** nhánh `main` đang chứa v0.5.1; bản ZIP local v0.9.0 (có quản lý đơn hàng và ảnh nét cao) **chưa được đồng bộ đầy đủ lên GitHub**. Xem [đối chiếu](docs/REPO-SYNC-STATUS.md) trước khi tải source từ GitHub thay cho bản ZIP local.
+> **Trạng thái mã nguồn:** nhánh `main` đang chứa v0.5.1; bản ZIP local v1.2.0 (có quản lý đơn hàng và ảnh nét cao) **chưa được đồng bộ đầy đủ lên GitHub**. Xem [đối chiếu](docs/REPO-SYNC-STATUS.md) và [biên bản Art Edition](docs/RELEASE-INTAKE-v1.2.0.md) trước khi tải source từ GitHub thay cho bản ZIP local.
 
 [Đối chiếu yêu cầu và minh chứng LTD](docs/ACADEMIC-TRACEABILITY.md) · [Nhập ZIP phiên bản mới](docs/VERSION-INTAKE.md) · [Quy trình làm đồ án](docs/WORKFLOW.md) · [GitHub Actions](https://github.com/s2005on/LTDs-Book-Store/actions) · [Phiên bản và release](docs/VERSIONING.md)
 
@@ -61,4 +61,6 @@ chmod +x run.sh
 
 ## Chuyển thương hiệu thành LTD's Book Store
 
-Repository chính thức đã đổi tên: [`s2005on/LTDs-Book-Store`](https://github.com/s2005on/LTDs-Book-Store), giữ nguyên lịch sử Git. Lưu ý: mã nguồn trên nhánh `main` hiện vẫn là **v0.5.1**; bản ZIP **v0.9.0** đã được chỉnh tên đồng bộ nhưng chưa nhập đầy đủ mã mới và ảnh độ phân giải cao lên GitHub. Xem [kế hoạch đồng bộ](docs/LTD-RENAME-AND-SYNC.md) trước khi tạo Release.
+Repository chính thức đã đổi tên: [`s2005on/LTDs-Book-Store`](https://github.com/s2005on/LTDs-Book-Store), giữ nguyên lịch sử Git. Lưu ý: mã nguồn trên nhánh `main` hiện vẫn là **v0.5.1**; bản ZIP **v1.2.0** đã được chỉnh tên đồng bộ nhưng chưa nhập đầy đủ mã mới và ảnh độ phân giải cao lên GitHub. Xem [kế hoạch đồng bộ](docs/LTD-RENAME-AND-SYNC.md) trước khi tạo Release.
+
+**Lưu ý khi tải code từ GitHub:** `main` vẫn là v0.5.1; Art Edition v1.2.0 đã được tiếp nhận và kiểm thử local nhưng chưa nhập đầy đủ ảnh/mã. Theo dõi [Issue #10](https://github.com/s2005on/LTDs-Book-Store/issues/10) trước khi dùng GitHub Release cho v1.2.0.
