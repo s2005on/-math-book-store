@@ -1,6 +1,6 @@
 # Kế hoạch kiểm thử LTD's Book Store
 
-**Phiên bản nguồn GitHub hiện tại:** v0.5.1. Các tính năng có trong ZIP local v0.9.0 **không được coi là đã qua CI trên main** cho tới khi nhập và test. Áp dụng phân loại: **Tự động / Thủ công / Chưa thực hiện**; lưu minh chứng ở [evidence/README.md](evidence/README.md).
+**Phiên bản nguồn GitHub hiện tại:** v0.5.1. Các tính năng có trong ZIP local v1.2.1 **không được coi là đã qua CI trên main** cho tới khi nhập và test. Áp dụng phân loại: **Tự động / Thủ công / Chưa thực hiện**; lưu minh chứng ở [evidence/README.md](evidence/README.md).
 
 ## 1. Tự động trên GitHub Actions
 
@@ -24,7 +24,7 @@
 | ADM01 | Thêm/sửa/xóa sách, upload ảnh | API/SQLite lưu đúng, ảnh hiển thị | Screenshot/API test |
 | ADM02 | Đổi trạng thái sách | API và UI cùng giá trị | Checklist |
 | PKG01 | Khởi động ZIP trên Windows | Có thể đăng nhập vào website local | Log/screenshot |
-| ORDER01 | Tạo đơn, lịch sử, hủy đơn, trạng thái | **Chỉ chạy sau khi mã v0.9.0 đã nhập** | API test + screenshot |
+| ORDER01 | Tạo đơn, lịch sử, hủy đơn, trạng thái | **Chỉ chạy sau khi mã v1.2.1 đã nhập** | API test + screenshot |
 | SEC01 | Xem log không lộ secret/PII | Dữ liệu thử nghiệm, có che thông tin | Checklist |
 
 **Ghi chú:** Bảng trên là **test cases cần kiểm tra**, không phải kết quả pass; chỉ đánh dấu đạt sau khi có log hoặc ảnh của đúng phiên bản.
@@ -39,6 +39,6 @@ Tạo GitHub Issue kèm bước tái hiện, môi trường, mức nghiêm trọ
 
 ## 5. Phạm vi chưa xác minh
 
-- Chức năng đơn hàng / quản lý đơn của ZIP v0.9.0 chưa được kiểm thử trong GitHub `main` v0.5.1.
+- Chức năng đơn hàng / quản lý đơn của ZIP v1.2.1 chưa được kiểm thử trong GitHub `main` v0.5.1.
 - Chưa kiểm tra public deployment, thực nhận tiền hay vận chuyển.
 - Kiểm thử browser tự động chưa phải bộ chạy mặc định của CI hiện tại.
