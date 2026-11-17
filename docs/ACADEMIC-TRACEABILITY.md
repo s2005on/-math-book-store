@@ -1,25 +1,24 @@
-# Đối chiếu đồ án LTD's Book Store ↔ VNU Food Hola
+# Ma trận yêu cầu, tài liệu và minh chứng — LTD's Book Store
 
-**Mục đích:** xây dựng hồ sơ quản lý dự án có thể kiểm chứng được khi trình bày với giảng viên, không sao chép nghiệp vụ bán đồ ăn vào dự án sách.
+**Mục đích:** tổng hợp tài liệu và minh chứng kiểm thử của chính LTD's Book Store để báo cáo đồ án có thể kiểm chứng được.
 
-**Nguồn tham chiếu:** [VNU Food Hola](https://github.com/s2005on/vnu-food-hola) (các tài liệu `docs/01–08`, `docs/QUALITY.md`, `docs/GIT.md`, `docs/FINAL-HANDOVER.md` và `docs/evidence/`). 
 **Cơ sở thực tế:** nhánh `main` LTD's Book Store ở thời điểm soạn hồ sơ đang là **v0.5.1**; bản ZIP local **v0.9.0** chưa nhập đầy đủ vào GitHub. Mọi kết quả kiểm thử phải ghi rõ phiên bản/commit.
 
 ## Ma trận hồ sơ
 
-| Phần báo cáo | VNU Food Hola | LTD's Book Store | Minh chứng cần chuẩn bị |
-|---|---|---|---|
-| Đề tài & phạm vi | `01-project-charter.md` | [01-project-charter.md](01-project-charter.md) | Giảng viên duyệt/chỉnh đề tài (nếu có) |
-| Yêu cầu / User Story | `02-requirements.md` | [02-requirements.md](02-requirements.md) | Bảng đối chiếu US ↔ bài test ↔ ảnh kết quả |
-| Kiến trúc & dữ liệu | `03-system-design.md` | [03-system-design.md](03-system-design.md) | Sơ đồ thực tế, tên route và bảng database |
-| WBS / phân chia việc | `04-wbs.md` | [04-wbs.md](04-wbs.md) | Issue/PR liên kết với sản phẩm bàn giao |
-| Gantt và tiến độ | `05-schedule.md` | [05-schedule.md](05-schedule.md) | Ngày thật, thời lượng dự kiến/thực tế |
-| Scrum / vai trò | `06-scrum-team.md` | [06-scrum-team.md](06-scrum-team.md) | Phân vai đúng người thực hiện, sprint review |
-| Sprint Backlog | `07-sprint-0-backlog.md` | [07-sprint-0-backlog.md](07-sprint-0-backlog.md), [SPRINT-TRACKER.md](SPRINT-TRACKER.md) | Issue ↔ nhánh ↔ PR ↔ commit |
-| Demo & nghiệm thu | `08-mvp-demo.md`, `docs/evidence/` | [08-mvp-demo.md](08-mvp-demo.md), [evidence/README.md](evidence/README.md) | Ảnh desktop/mobile, kết quả test, hạn chế |
-| Chất lượng và rủi ro | `QUALITY.md`, `RISKS.md` | [QUALITY.md](QUALITY.md), [RISKS.md](RISKS.md) | Danh sách lỗi, kiểm thử lại, rủi ro |
-| Git và phát hành | `GIT.md`, `VERSIONING.md`, `CHANGELOG.md` | [GIT.md](GIT.md), [VERSIONING.md](VERSIONING.md), [WORKFLOW.md](WORKFLOW.md) | CI xanh trên commit, PR review, release tương ứng |
-| Báo cáo / bàn giao | `FINAL-HANDOVER.md` | [FINAL-REPORT.md](FINAL-REPORT.md), [FINAL-HANDOVER.md](FINAL-HANDOVER.md) | Checklist đối chiếu đã làm/chưa làm |
+| Phần báo cáo | Tài liệu LTD's Book Store | Minh chứng cần chuẩn bị |
+|---|---|---|
+| Đề tài & phạm vi | [01-project-charter.md](01-project-charter.md) | Giảng viên duyệt/chỉnh đề tài (nếu có) |
+| Yêu cầu / User Story | [02-requirements.md](02-requirements.md) | Bảng đối chiếu US ↔ bài test ↔ ảnh kết quả |
+| Kiến trúc & dữ liệu | [03-system-design.md](03-system-design.md) | Sơ đồ thực tế, tên route và bảng database |
+| WBS / phân chia việc | [04-wbs.md](04-wbs.md) | Issue/PR liên kết với sản phẩm bàn giao |
+| Gantt và tiến độ | [05-schedule.md](05-schedule.md) | Ngày thật, thời lượng dự kiến/thực tế |
+| Scrum / vai trò | [06-scrum-team.md](06-scrum-team.md) | Phân vai đúng người thực hiện, sprint review |
+| Sprint Backlog | [07-sprint-0-backlog.md](07-sprint-0-backlog.md), [SPRINT-TRACKER.md](SPRINT-TRACKER.md) | Issue ↔ nhánh ↔ PR ↔ commit |
+| Demo & nghiệm thu | [08-mvp-demo.md](08-mvp-demo.md), [evidence/README.md](evidence/README.md) | Ảnh desktop/mobile, kết quả test, hạn chế |
+| Chất lượng và rủi ro | [QUALITY.md](QUALITY.md), [RISKS.md](RISKS.md) | Danh sách lỗi, kiểm thử lại, rủi ro |
+| Git và phát hành | [GIT.md](GIT.md), [VERSIONING.md](VERSIONING.md), [WORKFLOW.md](WORKFLOW.md) | CI xanh trên commit, PR review, release tương ứng |
+| Báo cáo / bàn giao | [FINAL-REPORT.md](FINAL-REPORT.md), [FINAL-HANDOVER.md](FINAL-HANDOVER.md) | Checklist đối chiếu đã làm/chưa làm |
 
 ## Ma trận chức năng / trạng thái thật trên GitHub
 
