@@ -85,12 +85,12 @@ flowchart TD
     A["Tiếp nhận yêu cầu / ZIP phiên bản mới"] --> B["GitHub Issue + tiêu chí chấp nhận"]
     B --> C["Tạo nhánh feat/ · fix/ · docs/"]
     C --> D["Cập nhật code, ảnh, test, tài liệu"]
-    D --> E["Pull Request"]
-    E --> F{"CI Windows + Ubuntu đạt?<br/>Đã review thay đổi?"}
-    F -->|"Chưa"| D
-    F -->|"Đạt"| G["Merge vào main"]
-    G --> H["Kiểm tra CI trên main"]
-    H --> I["Đồng bộ VERSION + CHANGELOG"]
+    D --> E["Nếu phát hành: cập nhật VERSION + CHANGELOG trong nhánh"]
+    E --> F["Pull Request"]
+    F --> G{"CI Windows + Ubuntu đạt?<br/>Đã review thay đổi?"}
+    G -->|"Chưa"| D
+    G -->|"Đạt"| H["Merge vào main"]
+    H --> I["Kiểm tra CI trên main"]
     I --> J["Tag vX.Y.Z → GitHub Release + ZIP"]
 ```
 
