@@ -5,7 +5,7 @@
 ## 1. Giới thiệu và mục tiêu
 Website thương mại điện tử bán sách Toán lớp 6–10, giúp người mua tìm sách theo khối lớp/mục tiêu; chủ cửa hàng đăng nhập và quản lý danh mục, bìa, giá, trạng thái sách.
 
-Nguồn tham khảo tổ chức đồ án: [VNU Food Hola](https://github.com/s2005on/vnu-food-hola). Hai ứng dụng có domain nghiệp vụ khác nhau; chỉ dùng chung cách chia thư mục và kiểm soát chất lượng Git.
+Quy trình phát triển độc lập của LTD's Book Store sử dụng GitHub Issues, nhánh làm việc, Pull Requests, kiểm thử tự động và hồ sơ nghiệm thu riêng của cửa hàng sách.
 
 ## 2. Hồ sơ phân tích và quản lý
 - Charter và yêu cầu: [01-project-charter.md](01-project-charter.md), [02-requirements.md](02-requirements.md).
