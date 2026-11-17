@@ -51,7 +51,7 @@ Khi lưu bằng chứng: ghi ngày, commit/tag, hệ điều hành, bước th�
 
 ## 6. Trạng thái đồng bộ
 
-Xem [REPO-SYNC-STATUS.md](REPO-SYNC-STATUS.md), [VERSION-INTAKE.md](VERSION-INTAKE.md) và [ACADEMIC-TRACEABILITY.md](ACADEMIC-TRACEABILITY.md). **Bản ZIP v1.2.0 đang dùng trên máy chưa đồng nghĩa với mã nguồn `main` hiện tại (v0.5.1)**. Cần đối chiếu, nhập và kiểm thử trước khi phát hành phiên bản v1.2.0 từ GitHub.
+Xem [REPO-SYNC-STATUS.md](REPO-SYNC-STATUS.md), [RELEASE-INTAKE-v1.2.1.md](RELEASE-INTAKE-v1.2.1.md), [VERSION-INTAKE.md](VERSION-INTAKE.md) và [ACADEMIC-TRACEABILITY.md](ACADEMIC-TRACEABILITY.md). **Bản ZIP v1.2.1 đang dùng trên máy chưa đồng nghĩa với mã nguồn `main` hiện tại (v0.5.1)**. Cần đối chiếu, nhập và kiểm thử trước khi phát hành phiên bản v1.2.1 từ GitHub.
 
 ## 7. Bàn giao học phần và các bản ZIP tiếp theo
 
