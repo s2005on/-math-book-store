@@ -14,4 +14,4 @@
 - [ ] Gắn tag lên đúng commit trong `main`; ghi chú chức năng và giới hạn đã biết trong GitHub Release.
 - [ ] Ghi bằng chứng test, ngày, môi trường và commit vào VERIFICATION.md hoặc file evidence phù hợp.
 
-**Trạng thái 17/11/2026:** code GitHub đang là v0.5.1, ZIP local v0.9.0 **chưa đồng bộ**. Mọi ZIP mới phải qua [VERSION-INTAKE.md](VERSION-INTAKE.md), và từng kết quả nghiệm thu cần lưu trong [evidence](evidence/README.md). Không tick các mục trên khi chưa có minh chứng. Xem [REPO-SYNC-STATUS.md](REPO-SYNC-STATUS.md).
+**Trạng thái 18/11/2026:** code GitHub đang là v0.5.1, ZIP local v1.2.1 **chưa đồng bộ**. Mọi ZIP mới phải qua [VERSION-INTAKE.md](VERSION-INTAKE.md), và từng kết quả nghiệm thu cần lưu trong [evidence](evidence/README.md). Không tick các mục trên khi chưa có minh chứng. Xem [REPO-SYNC-STATUS.md](REPO-SYNC-STATUS.md) và [biên bản v1.2.1](RELEASE-INTAKE-v1.2.1.md).
