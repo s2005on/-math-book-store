@@ -1,16 +1,16 @@
 # Project Documentation Index
 
-The documentation layout follows the project-management structure used in VNU Food Hola, adapted to a book-store project.
+This documentation is authored for LTD's Book Store and reflects its own project work, verification and release process.
 
 | File | Purpose |
 |---|---|
 | WORKFLOW.md | Quy trình Scrum rút gọn, branch/PR, CI, release |
 | REPO-SYNC-STATUS.md | Theo dõi chênh lệch GitHub v0.5.1 và ZIP local v0.9.0 |
-| ACADEMIC-TRACEABILITY.md | Đối chiếu tài liệu và minh chứng theo VNU Food Hola |
+| ACADEMIC-TRACEABILITY.md | Đối chiếu tài liệu, yêu cầu và minh chứng LTD |
 | VERSION-INTAKE.md | Quy trình nhập mỗi ZIP phiên bản mới |
 | SPRINT-TRACKER.md | Theo dõi Sprint/Issue/PR và tình trạng thực tế |
 | MIDTERM.md | Khung báo cáo giữa kỳ, không tự nhận đã được chấm |
-| B2-REPORT.md | Hồ sơ B2 theo cấu trúc VNU Food Hola, chưa tạo minh chứng giả |
+| B2-REPORT.md | Hồ sơ B2 LTD, chưa tạo minh chứng giả |
 | evidence/README.md | Quy tắc lưu ảnh/log minh chứng thật |
 | 01-project-charter.md | Project goals, scope and success criteria |
 | 02-requirements.md | Functional and non-functional requirements |
