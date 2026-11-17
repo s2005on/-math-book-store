@@ -2,7 +2,7 @@
 
 **Mục đích:** tổng hợp tài liệu và minh chứng kiểm thử của chính LTD's Book Store để báo cáo đồ án có thể kiểm chứng được.
 
-**Cơ sở thực tế:** nhánh `main` LTD's Book Store ở thời điểm soạn hồ sơ đang là **v0.5.1**; bản ZIP local **v0.9.0** chưa nhập đầy đủ vào GitHub. Mọi kết quả kiểm thử phải ghi rõ phiên bản/commit.
+**Cơ sở thực tế:** nhánh `main` LTD's Book Store ở thời điểm soạn hồ sơ đang là **v0.5.1**; bản ZIP local **v1.2.1** chưa nhập đầy đủ vào GitHub. Mọi kết quả kiểm thử phải ghi rõ phiên bản/commit.
 
 ## Ma trận hồ sơ
 
