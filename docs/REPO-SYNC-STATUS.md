@@ -1,32 +1,33 @@
 # Trạng thái đồng bộ repository và gói Windows
 
-**Đối chiếu: 17/11/2026**
+**Đối chiếu cập nhật: 17/11/2026**. Phiên bản GitHub `main` vẫn là **0.5.1**, chưa chứa đầy đủ ZIP local **LTD's Book Store v1.2.0 Art Edition**.
 
-| Thành phần | GitHub `main` hiện tại | ZIP LTD v0.9.0 |
+| Thành phần | GitHub `main` hiện tại | Art Edition v1.2.0 đã chuẩn hóa local |
 |---|---|---|
-| Repository | [s2005on/LTDs-Book-Store](https://github.com/s2005on/LTDs-Book-Store), đã đổi tên | `LTDs-Book-Store` |
-| Phiên bản mã nguồn | `VERSION=0.5.1` | `VERSION=0.9.0` |
-| Nhận diện thương hiệu | Đã có LTD's | Đã có LTD's |
-| Đăng nhập và quản trị sách | Có | Có |
-| Banner sắp ra mắt | Có | Có |
-| Đặt hàng/hủy đơn/lịch sử | Chưa đầy đủ như ZIP | Có, lưu SQLite |
-| Quản trị đơn hàng | Chưa có như ZIP | Có |
-| Ảnh bìa | Thumbnail có ảnh chỉ vài KB | WebP chất lượng cao và ảnh gốc |
-| Giá HSG Toán 8 | Cần kiểm tra sau nhập | 198.000đ |
-| Sách Toán tổ hợp và tư duy logic | Chưa đầy đủ | 280.000đ, sắp ra mắt |
-| Kiểm thử | CI hiện tại kiểm thử bản cũ | 16 Python + 4 JavaScript test đạt tại máy làm việc |
+| Repository | [s2005on/LTDs-Book-Store](https://github.com/s2005on/LTDs-Book-Store) | Cùng dự án |
+| VERSION | `0.5.1` | `1.2.0` |
+| Nhận diện | LTD's Book Store | LTD's Book Store |
+| Đăng nhập, quản trị sách | Có mã | Có mã |
+| Đơn hàng, lịch sử/hủy đơn | Chưa có đầy đủ | Có, lưu trong SQLite |
+| Moderator/banner/khuyến mãi | Chưa đầy đủ | Có giao diện và backend |
+| Ảnh sách | Thumbnail cũ | 11 WebP chất lượng cao + 10 ảnh gốc |
+| Chế độ sáng/tối | Chưa có | Có |
+| Giá HSG Toán 8 | 198.000đ (catalog hiện tại cần xác nhận lại) | 198.000đ |
+| Toán tổ hợp và tư duy logic | Dữ liệu cũ | 280.000đ, sắp ra mắt |
+| Test | CI Windows/Ubuntu cho mã v0.5.1 | 17 Python + 4 Node đạt trên bản local chuẩn hóa |
+| GitHub CI v1.2 | **Chưa chạy** | Chưa nhập vào PR |
 
-**Lưu ý:** bản ZIP v0.9.0 đã được kiểm thử riêng, không có nghĩa là CI của phiên bản v0.9.0 trên GitHub đã đạt. Chưa có Release chính thức cho v0.9.0.
+## Vấn đề đã phát hiện trong ZIP đầu vào
 
-## Tiêu chí cho PR nhập v0.9.0
+ZIP được đặt tên v1.2.0 nhưng `VERSION` và README bên trong còn ghi v0.6.0, thư mục gốc còn tên Math Book Store. Đã chuẩn hóa các nội dung này trong **bản ZIP local sửa lỗi**, chưa đồng bộ toàn bộ ảnh nhị phân và mã lên GitHub.
 
-- [x] Đổi tên repository mà không xóa lịch sử.
-- [x] Chuẩn hóa ZIP nguồn, kiểm thử nội bộ 16 Python + 4 JavaScript.
-- [ ] Push toàn bộ mã nguồn `server/`, `tests/`, `start.py`, `VERSION`, README.
-- [ ] Push ảnh WebP chất lượng cao và thư mục `anh-goc/`.
-- [ ] Không đẩy `.env`, `server/data/`, `.venv`, SQLite có thông tin khách hàng.
-- [ ] Kiểm thử chức năng và giao diện desktop/mobile theo checklist.
-- [ ] CI Ubuntu/Windows trên chính PR nhập v0.9.0 đạt.
-- [ ] Merge PR, xác minh `main`, sau đó mới tag/release `v0.9.0`.
+## Tiêu chí nhập phiên bản v1.2.0
 
-Hướng dẫn: [LTD-RENAME-AND-SYNC.md](LTD-RENAME-AND-SYNC.md) · [Issue #3](https://github.com/s2005on/LTDs-Book-Store/issues/3).
+- [x] Kiểm tra nội dung ZIP và xác nhận ảnh/giá/đơn hàng trên bản local.
+- [x] Chuẩn hóa nhận diện, VERSION, smoke tests và lỗi tràn tablet trong gói local.
+- [ ] Push toàn bộ `server/`, `tests/`, `start.py`, ảnh WebP và `anh-goc/` vào nhánh riêng.
+- [ ] Không đẩy `.env`, `server/data/`, `.venv`, SQLite hoặc dữ liệu khách.
+- [ ] CI Windows/Ubuntu và test giao diện trên **đúng commit** đạt.
+- [ ] Merge PR, xác minh `main`, sau đó mới tạo tag/Release `v1.2.0`.
+
+[Biên bản tiếp nhận](RELEASE-INTAKE-v1.2.0.md) · [Issue #10](https://github.com/s2005on/LTDs-Book-Store/issues/10). Bản v0.9.0 trước đây chỉ là mốc local cũ, **không phải release đã đồng bộ trên GitHub**.
