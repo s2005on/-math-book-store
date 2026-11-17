@@ -2,7 +2,7 @@
 
 ## 1. Phiên bản và phạm vi được mô tả
 
-Tài liệu này mô tả **mã nguồn thực có trên GitHub `main` v0.5.1** tại thời điểm xây dựng hồ sơ, **không phải toàn bộ chức năng trong ZIP local v0.9.0**. Bản v0.9.0 cần [nhập và kiểm thử riêng](REPO-SYNC-STATUS.md) trước khi cập nhật sơ đồ. Không có VPS production trong phạm vi này.
+Tài liệu này mô tả **mã nguồn thực có trên GitHub `main` v0.5.1** tại thời điểm xây dựng hồ sơ, **không phải toàn bộ chức năng trong ZIP local v1.2.1**. Bản v1.2.1 cần [nhập và kiểm thử riêng](REPO-SYNC-STATUS.md) trước khi cập nhật sơ đồ. Không có VPS production trong phạm vi này.
 
 ## 2. Kiến trúc thực tế
 
@@ -42,7 +42,7 @@ Filesystem: server/data/uploads/ (ảnh upload)
 | POST | `/api/admin/upload` | quản trị tải ảnh (JPG/PNG/WebP) |
 | GET | `/api/images/{name}` | trả ảnh đã tải |
 
-Không liệt kê API đơn hàng của ZIP v0.9.0 ở đây cho đến khi PR nhập phiên bản được merge.
+Không liệt kê API đơn hàng của ZIP v1.2.1 ở đây cho đến khi PR nhập phiên bản được merge.
 
 ## 4. Mô hình dữ liệu và quy tắc
 
@@ -57,10 +57,10 @@ Trạng thái sản phẩm gồm `available`, `sold_out`, `coming_soon`. Sách s
 
 - Chạy local; `server/data/` không được commit, cần sao lưu trước khi nâng cấp.
 - `.env` chứa cấu hình admin; không cho lên GitHub. Khi mở mạng công cộng cần HTTPS, Secure cookie, audit bảo mật trước khi sử dụng thực.
-- Ảnh bìa gốc giữ nguyên thiết kế, chỉ tối ưu hiển thị; ảnh chất lượng cao của ZIP v0.9.0 chưa đồng bộ vào `main`.
+- Ảnh bìa gốc giữ nguyên thiết kế, chỉ tối ưu hiển thị; ảnh chất lượng cao của ZIP v1.2.1 chưa đồng bộ vào `main`.
 - `catalog.json` hỗ trợ fallback frontend nhưng nguồn dữ liệu động khi server hoạt động là API SQLite.
 - Tài khoản khách có thể đăng nhập; chưa có thanh toán tự động, email, phục hồi mật khẩu hoặc vận chuyển thật.
 
 ## 6. Kiến trúc mục tiêu (chưa tính là đã làm)
 
-Sau khi nhập ZIP v0.9.0, bổ sung sơ đồ bảng `orders` và các API tạo đơn, lịch sử, hủy, quản trị trạng thái dựa trên **mã thực tế đã kiểm thử**, đồng thời cập nhật [TEST-PLAN.md](TEST-PLAN.md) và bằng chứng cho đúng commit.
+Sau khi nhập ZIP v1.2.1, bổ sung sơ đồ bảng `orders` và các API tạo đơn, lịch sử, hủy, quản trị trạng thái dựa trên **mã thực tế đã kiểm thử**, đồng thời cập nhật [TEST-PLAN.md](TEST-PLAN.md) và bằng chứng cho đúng commit.
