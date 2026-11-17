@@ -5,8 +5,9 @@ This documentation is authored for LTD's Book Store and reflects its own project
 | File | Purpose |
 |---|---|
 | WORKFLOW.md | Quy trình Scrum rút gọn, branch/PR, CI, release |
-| REPO-SYNC-STATUS.md | Theo dõi chênh lệch GitHub v0.5.1 và ZIP local v0.9.0 |
+| REPO-SYNC-STATUS.md | Theo dõi chênh lệch GitHub v0.5.1 và ZIP local v1.2.0 |
 | ACADEMIC-TRACEABILITY.md | Đối chiếu tài liệu, yêu cầu và minh chứng LTD |
+| RELEASE-INTAKE-v1.2.0.md | Biên bản nhận Art Edition và kiểm thử local, chờ đồng bộ code/ảnh |
 | VERSION-INTAKE.md | Quy trình nhập mỗi ZIP phiên bản mới |
 | SPRINT-TRACKER.md | Theo dõi Sprint/Issue/PR và tình trạng thực tế |
 | MIDTERM.md | Khung báo cáo giữa kỳ, không tự nhận đã được chấm |
