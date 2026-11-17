@@ -1,6 +1,6 @@
 # Báo cáo tổng kết kỹ thuật — LTD's Book Store
 
-**Trạng thái tài liệu:** bản nháp học thuật có đối chiếu mã nguồn, không phải báo cáo đã được giảng viên duyệt. Phiên bản mã GitHub đang được mô tả: `main` **v0.5.1**; ZIP chạy local **v0.9.0 chưa đồng bộ hoàn toàn**.
+**Trạng thái tài liệu:** bản nháp học thuật có đối chiếu mã nguồn, không phải báo cáo đã được giảng viên duyệt. Phiên bản mã GitHub đang được mô tả: `main` **v0.5.1**; ZIP chạy local **v1.2.1 chưa đồng bộ hoàn toàn**.
 
 ## 1. Giới thiệu và mục tiêu
 Website thương mại điện tử bán sách Toán lớp 6–10, giúp người mua tìm sách theo khối lớp/mục tiêu; chủ cửa hàng đăng nhập và quản lý danh mục, bìa, giá, trạng thái sách.
@@ -17,7 +17,7 @@ Quy trình phát triển độc lập của LTD's Book Store sử dụng GitHub 
 - Frontend HTML/CSS/JavaScript trong `server/web/`, backend FastAPI `server/app.py`, SQLite `server/data/shop.sqlite3` khi chạy.
 - Có đăng ký/đăng nhập khách và admin; quản trị có CRUD sản phẩm và upload ảnh, phân loại theo tình trạng; cửa hàng có tìm kiếm, lọc, chi tiết, giỏ demo.
 - Chưa có backend tạo đơn hàng và quản lý trạng thái đơn trên `main` v0.5.1.
-- Bản ZIP local v0.9.0 đã được phát triển thêm, nhưng phải nhập/test trên GitHub trước khi coi là sản phẩm source chính thức.
+- Bản ZIP local v1.2.1 đã được phát triển thêm, nhưng phải nhập/test trên GitHub trước khi coi là sản phẩm source chính thức.
 - VPS và thanh toán trực tuyến không thuộc bản nghiệm thu hiện tại.
 
 ## 4. Kiểm thử
@@ -27,12 +27,12 @@ Quy trình phát triển độc lập của LTD's Book Store sử dụng GitHub 
 - Mỗi bản mới có báo cáo nhận ZIP: [VERSION-INTAKE.md](VERSION-INTAKE.md).
 
 ## 5. Vấn đề và phương án xử lý
-- Chênh lệch bản ZIP v0.9.0 và mã trên GitHub: theo dõi [Issue #3](https://github.com/s2005on/LTDs-Book-Store/issues/3).
+- Chênh lệch bản ZIP v1.2.1 và mã trên GitHub: theo dõi [Issue #3](https://github.com/s2005on/LTDs-Book-Store/issues/10).
 - Ảnh sách trên GitHub còn nhỏ: nhập ảnh gốc nét cao và test responsive trước release.
 - Tài liệu từng giai đoạn có thể giữ trạng thái lịch sử, nhưng bản tổng kết phải nói rõ trạng thái thời điểm viết.
 
 ## 6. Hạn chế / việc cần hoàn thành trước bảo vệ
-- [ ] Đồng bộ mã, ảnh, test của ZIP v0.9.0 vào PR.
+- [ ] Đồng bộ mã, ảnh, test của ZIP v1.2.1 vào PR.
 - [ ] Kiểm tra quyền và quy trình order, nếu đã nhập backend đơn hàng.
 - [ ] Ảnh minh chứng desktop/mobile/admin và log test, kèm SHA commit.
 - [ ] Chốt phạm vi nghiệm thu cùng giảng viên và ghi phản hồi nếu có.

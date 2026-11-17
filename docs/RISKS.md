@@ -4,7 +4,7 @@
 
 | Mã | Rủi ro | Mức | Ảnh hưởng | Ứng phó |
 |---|---|---|---|---|
-| R01 | ZIP local v0.9.0 khác `main` v0.5.1 | Cao | Nhầm chức năng, release thiếu | PR đồng bộ mã/ảnh + CI trên đúng commit; Issue #3 |
+| R01 | ZIP local v1.2.1 khác `main` v0.5.1 | Cao | Nhầm chức năng, release thiếu | PR đồng bộ mã/ảnh + CI trên đúng commit; Issue #10 |
 | R02 | Ảnh sản phẩm trên GitHub còn thumbnail nhỏ | Cao | Ảnh mờ, trải nghiệm kém | Nhập ảnh độ phân giải cao từ bản chủ dự án cung cấp; UI test |
 | R03 | Mất SQLite và ảnh upload khi thay thư mục | Cao | Mất tài khoản và dữ liệu | Backup `server/data/`, test khôi phục bản sao |
 | R04 | Giá/tình trạng sách chưa xác nhận | Cao | Đơn sai, mua sách chưa phát hành | Admin xác nhận giá và trạng thái trước release |

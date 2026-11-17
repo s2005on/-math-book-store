@@ -6,7 +6,8 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 REQUIRED = [
-    "README.md", "VERSION", "CHANGELOG.md",
+    "README.md", "CONTRIBUTING.md", "VERSION", "CHANGELOG.md",
+    "docs/README.md", "docs/REPO-SYNC-STATUS.md", "docs/RELEASE-INTAKE-v1.2.1.md",
     "docs/01-project-charter.md", "docs/02-requirements.md",
     "docs/03-system-design.md", "docs/04-wbs.md",
     "docs/05-schedule.md", "docs/06-scrum-team.md",
@@ -23,7 +24,9 @@ REQUIRED = [
 
 LINK_PATTERN = re.compile(r"(?<!\!)\[[^\]]+\]\(([^)]+)\)")
 NEW_DOCUMENTS = [
-    "README.md", "docs/ACADEMIC-TRACEABILITY.md",
+    "README.md", "CONTRIBUTING.md", "docs/README.md",
+    "docs/REPO-SYNC-STATUS.md", "docs/RELEASE-INTAKE-v1.2.1.md",
+    "docs/ACADEMIC-TRACEABILITY.md",
     "docs/VERSION-INTAKE.md", "docs/SPRINT-TRACKER.md",
     "docs/MIDTERM.md", "docs/B2-REPORT.md",
     "docs/FINAL-REPORT.md", "docs/FINAL-HANDOVER.md",

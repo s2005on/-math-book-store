@@ -2,14 +2,14 @@
 
 ## 1. Hồ sơ Sprint 0 (lịch sử)
 
-Giai đoạn UI Foundation từng bàn giao giao diện danh mục, giỏ demo, mã FastAPI nền, tài liệu WBS/Scrum và CI. Những kết quả đó thuộc **phiên bản/commit của Sprint 0**, không đại diện cho chức năng mới ở `main` và **không phải** kết quả test ZIP local v0.9.0.
+Giai đoạn UI Foundation từng bàn giao giao diện danh mục, giỏ demo, mã FastAPI nền, tài liệu WBS/Scrum và CI. Những kết quả đó thuộc **phiên bản/commit của Sprint 0**, không đại diện cho chức năng mới ở `main` và **không phải** kết quả test ZIP local v1.2.1.
 
 ## 2. Cơ sở ở GitHub hiện tại
 
 - Repository: https://github.com/s2005on/LTDs-Book-Store
 - `VERSION` trên `main`: **v0.5.1** (cho đến khi PR đồng bộ mới được merge).
 - Nghiệp vụ mã nguồn hiện có: FastAPI/SQLite, đăng nhập/đăng ký, quản trị sách, upload ảnh, trạng thái sách, cửa hàng, giỏ demo.
-- Chưa đồng bộ: order API/quản trị đơn và bộ ảnh gốc chất lượng cao từ ZIP local v0.9.0.
+- Chưa đồng bộ: order API/quản trị đơn và bộ ảnh gốc chất lượng cao từ ZIP local v1.2.1.
 - Chưa triển khai VPS; không đưa `.env`, SQLite khách, backup hoặc PII vào GitHub.
 
 ## 3. Hồ sơ và quy trình đi kèm
@@ -35,4 +35,4 @@ Giai đoạn UI Foundation từng bàn giao giao diện danh mục, giỏ demo, 
 
 ## 5. Trạng thái hiện tại và bước tiếp theo
 
-**Chưa coi là bàn giao v0.9.0 trên GitHub** vì mã ZIP chưa nhập vào `main`. Theo dõi [Issue #3](https://github.com/s2005on/LTDs-Book-Store/issues/3). Khi người dùng gửi bản mới, đối chiếu theo [VERSION-INTAKE.md](VERSION-INTAKE.md), PR → CI → merge → release, rồi mới cập nhật kết luận hồ sơ này.
+**Chưa coi là bàn giao v1.2.1 trên GitHub** vì mã ZIP chưa nhập vào `main`. Theo dõi [Issue #3](https://github.com/s2005on/LTDs-Book-Store/issues/10). Khi người dùng gửi bản mới, đối chiếu theo [VERSION-INTAKE.md](VERSION-INTAKE.md), PR → CI → merge → release, rồi mới cập nhật kết luận hồ sơ này.

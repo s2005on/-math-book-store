@@ -1,33 +1,38 @@
-# Trạng thái đồng bộ repository và gói Windows
+# Trạng thái đồng bộ mã nguồn và các bản ZIP
 
-**Đối chiếu cập nhật: 17/11/2026**. Phiên bản GitHub `main` vẫn là **0.5.1**, chưa chứa đầy đủ ZIP local **LTD's Book Store v1.2.0 Art Edition**.
+**Ngày rà soát:** 18/11/2026. Mục tiêu của bảng này là giúp người xem GitHub phân biệt **mã thực có trên `main`** với những bản website đã được đóng gói và thử nghiệm riêng trên máy.
 
-| Thành phần | GitHub `main` hiện tại | Art Edition v1.2.0 đã chuẩn hóa local |
+| Thành phần | Repository `main` | ZIP local mới nhất |
 |---|---|---|
-| Repository | [s2005on/LTDs-Book-Store](https://github.com/s2005on/LTDs-Book-Store) | Cùng dự án |
-| VERSION | `0.5.1` | `1.2.0` |
-| Nhận diện | LTD's Book Store | LTD's Book Store |
-| Đăng nhập, quản trị sách | Có mã | Có mã |
-| Đơn hàng, lịch sử/hủy đơn | Chưa có đầy đủ | Có, lưu trong SQLite |
-| Moderator/banner/khuyến mãi | Chưa đầy đủ | Có giao diện và backend |
-| Ảnh sách | Thumbnail cũ | 11 WebP chất lượng cao + 10 ảnh gốc |
-| Chế độ sáng/tối | Chưa có | Có |
-| Giá HSG Toán 8 | 198.000đ (catalog hiện tại cần xác nhận lại) | 198.000đ |
-| Toán tổ hợp và tư duy logic | Dữ liệu cũ | 280.000đ, sắp ra mắt |
-| Test | CI Windows/Ubuntu cho mã v0.5.1 | 17 Python + 4 Node đạt trên bản local chuẩn hóa |
-| GitHub CI v1.2 | **Chưa chạy** | Chưa nhập vào PR |
+| Phiên bản | `0.5.1` | `1.2.1` — Auth Update |
+| Mã backend | FastAPI + SQLite, đăng nhập, CRUD sách | Có các tính năng bổ sung của Art Edition |
+| Giao diện khách | Danh mục, lọc, chi tiết và giỏ demo | Có phần nâng cấp giao diện; trang đăng nhập và đăng ký riêng |
+| Đăng ký | Tên đăng nhập và mật khẩu | Thêm họ tên và **số điện thoại bắt buộc** |
+| Đơn hàng | Chưa có backend lưu/xử lý đơn hoàn chỉnh | Có trong mã ZIP local, chưa nhập GitHub |
+| Ảnh sách | Chủ yếu asset minh họa nhỏ | Có ảnh WebP độ phân giải cao và ảnh gốc |
+| Theme, khuyến mãi, nội dung | Chưa đủ các chức năng Art Edition | Có thay đổi trong bản ZIP |
+| Kiểm thử CI | Có CI Ubuntu + Windows cho commit của `main` | **Chưa có CI của GitHub trên mã v1.2.1** |
+| VPS / thanh toán thật | Chưa triển khai | Chưa triển khai |
 
-## Vấn đề đã phát hiện trong ZIP đầu vào
+**Không dùng kết quả test ZIP local để tuyên bố các chức năng đã có hoặc đã được kiểm thử trên `main`.**
 
-ZIP được đặt tên v1.2.0 nhưng `VERSION` và README bên trong còn ghi v0.6.0, thư mục gốc còn tên Math Book Store. Đã chuẩn hóa các nội dung này trong **bản ZIP local sửa lỗi**, chưa đồng bộ toàn bộ ảnh nhị phân và mã lên GitHub.
+## Mốc và hồ sơ
 
-## Tiêu chí nhập phiên bản v1.2.0
+- **v0.5.1**: phiên bản mã nguồn đang nằm trên GitHub.
+- **v1.2.0 Art Edition**: [biên bản tiếp nhận](RELEASE-INTAKE-v1.2.0.md); hiện là mốc lịch sử.
+- **v1.2.1 Auth Update**: [biên bản tiếp nhận mới nhất](RELEASE-INTAKE-v1.2.1.md), có SHA-256 ZIP, tên file và checklist.
+- [Issue #10](https://github.com/s2005on/LTDs-Book-Store/issues/10): công việc đưa app, kiểm thử và ảnh mới lên repository.
+- [VERSION-INTAKE.md](VERSION-INTAKE.md): quy trình nhận các ZIP sắp tới.
 
-- [x] Kiểm tra nội dung ZIP và xác nhận ảnh/giá/đơn hàng trên bản local.
-- [x] Chuẩn hóa nhận diện, VERSION, smoke tests và lỗi tràn tablet trong gói local.
-- [ ] Push toàn bộ `server/`, `tests/`, `start.py`, ảnh WebP và `anh-goc/` vào nhánh riêng.
-- [ ] Không đẩy `.env`, `server/data/`, `.venv`, SQLite hoặc dữ liệu khách.
-- [ ] CI Windows/Ubuntu và test giao diện trên **đúng commit** đạt.
-- [ ] Merge PR, xác minh `main`, sau đó mới tạo tag/Release `v1.2.0`.
+## Checklist để chuyển v1.2.1 lên `main`
 
-[Biên bản tiếp nhận](RELEASE-INTAKE-v1.2.0.md) · [Issue #10](https://github.com/s2005on/LTDs-Book-Store/issues/10). Bản v0.9.0 trước đây chỉ là mốc local cũ, **không phải release đã đồng bộ trên GitHub**.
+- [ ] Tạo nhánh import từ `main`, đối chiếu code ZIP với phiên bản GitHub.
+- [ ] Giữ nguyên `.github/`, `docs/`, `scripts/` và lịch sử Git.
+- [ ] Nhập đầy đủ ảnh, backend, frontend, tests và migration tài khoản.
+- [ ] Không upload `.env`, `.venv`, `server/data/`, SQLite chứa người dùng/đơn hàng.
+- [ ] Kiểm thử đăng ký yêu cầu điện thoại và bảo đảm tài khoản cũ vẫn hoạt động.
+- [ ] Chạy CI Windows/Ubuntu, test giao diện desktop/mobile và ghi minh chứng đúng commit.
+- [ ] Review PR, merge vào `main`, đồng bộ VERSION và CHANGELOG.
+- [ ] Kiểm tra CI `main` rồi mới tạo GitHub Release/tag `v1.2.1`.
+
+**Lưu ý:** repo được tổ chức và chuẩn hóa tài liệu từ bây giờ không đồng nghĩa chức năng v1.2.1 đã được merge. Đợt làm việc này chỉ chỉnh **trình bày GitHub và quy trình**, không sửa code website và không động vào VPS.

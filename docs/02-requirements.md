@@ -40,4 +40,4 @@
 
 ## Ghi chú kiểm soát phạm vi và nghiệm thu
 
-Các trạng thái **UI có** và **Demo có** chỉ nói về mô-đun giao diện; không chứng nhận luồng đặt đơn lưu thật. Ở `main` v0.5.1, US06 và US09 **chưa có backend đơn hàng**. Bản ZIP local v0.9.0 có mã mới nhưng chưa đồng bộ vào repo; chỉ cập nhật bảng khi có PR/CI trên đúng commit và minh chứng trong [evidence](evidence/README.md).
+Các trạng thái **UI có** và **Demo có** chỉ nói về mô-đun giao diện; không chứng nhận luồng đặt đơn lưu thật. Ở `main` v0.5.1, US06 và US09 **chưa có backend đơn hàng**. Bản ZIP local v1.2.1 có mã mới nhưng chưa đồng bộ vào repo; chỉ cập nhật bảng khi có PR/CI trên đúng commit và minh chứng trong [evidence](evidence/README.md).
