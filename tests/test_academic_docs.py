@@ -55,6 +55,22 @@ class AcademicDocsTests(unittest.TestCase):
                     broken.append((relative, raw))
         self.assertEqual(broken, [], f"Broken local Markdown links: {broken}")
 
+    def test_no_unrelated_project_branding_in_current_sources(self):
+        forbidden = ("VNU" + " Food Hola", "vnu" + "-food-hola")
+        roots = [ROOT / p for p in ("docs", ".github", "server", "scripts", "tests")]
+        files = [ROOT / p for p in ("README.md", "START-HERE.md", "CHANGELOG.md", "VERIFICATION.md")]
+        files += [
+            path for directory in roots for path in directory.rglob("*")
+            if path.is_file() and path.suffix.lower() in {".md", ".py", ".js", ".css", ".html", ".yml", ".yaml", ".json", ".svg", ".cjs"}
+            and "data" not in path.parts and "__pycache__" not in path.parts
+        ]
+        violations = []
+        for path in files:
+            content = path.read_text(encoding="utf-8", errors="replace")
+            if any(phrase.lower() in content.lower() for phrase in forbidden):
+                violations.append(str(path.relative_to(ROOT)))
+        self.assertEqual(violations, [], f"Cross-project references remain: {violations}")
+
     def test_release_intake_avoids_automatic_publishing(self):
         intake = (ROOT / "docs/VERSION-INTAKE.md").read_text(encoding="utf-8")
         for token in ("SHA-256", "Pull Request", "VERSION", ".env", "server/data/"):
