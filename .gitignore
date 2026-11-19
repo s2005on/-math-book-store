@@ -1,17 +1,37 @@
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Python
 .venv/
+venv/
 __pycache__/
 *.py[cod]
 .pytest_cache/
+.mypy_cache/
 .coverage
 htmlcov/
+
+# Application data and backups
 server/data/
-.env
+backups/
+*.sqlite
+*.sqlite3
+*.db
+
+# Generated packages and logs
+dist/
+build/
+*.log
+
+# Editor and operating system
+.vscode/
+.idea/
 .DS_Store
 Thumbs.db
+
+# Source images are managed separately from optimized book assets
 server/web/assets/source/
-.env
-.venv/
-server/data/
-__pycache__/
-*.py[cod]
-.DS_Store
