@@ -1,15 +1,12 @@
-# Quy ước phiên bản LTD's Book Store
+# Phiên bản mã nguồn
 
-Theo **SemVer** `MAJOR.MINOR.PATCH`: MAJOR khi thay đổi không tương thích; MINOR cho tính năng mới; PATCH cho sửa lỗi tương thích.
+Mốc phát triển cần đồng bộ: **LTD's Book Store 1.3.0 Pro Edition**.
 
-**Nguồn duy nhất:** file [VERSION](../VERSION) trong Git. `scripts/package.py` tự tạo ZIP `LTDs-Book-Store-v<version>.zip` theo nội dung này; `scripts/verify_package.py` xác nhận gói đầy đủ và không mang dữ liệu local.
+File `VERSION` phải phản ánh mã nguồn thực tế trên nhánh chứa nó. Khi `main` chưa nhập đủ 1.3.0, không được đổi `VERSION` của `main` thành 1.3.0 chỉ để khớp tên ZIP.
 
-## Điều kiện phát hành
+- Tên dự án và nhãn Pro Edition được giữ nguyên.
+- Các bản 0.x, 1.2.0 và 1.2.1 là lịch sử phát triển; giữ commit và ghi chú cần thiết.
+- Mọi thay đổi phải qua nhánh riêng, Pull Request và kiểm thử.
+- Không tạo tag `v1.3.0` hay GitHub Release trong đợt đồng bộ này.
 
-1. PR đã merge lên `main`; CI Ubuntu/Windows đạt.
-2. README, CHANGELOG và ghi chú phiên bản được cập nhật; phần chưa kiểm tra được liệt kê.
-3. Kiểm thử giao diện liên quan, bảo vệ dữ liệu và chức năng chính.
-4. Chủ dự án gắn tag `vX.Y.Z` vào đúng commit trên `main`.
-5. Workflow [release.yml](../.github/workflows/release.yml) chỉ công bố ZIP nếu tag khớp VERSION **và** các bài test đạt.
-
-Tag công bố không được di chuyển. Bản ZIP local v1.2.1 và mã nguồn GitHub v0.5.1 **chưa đồng bộ**; không tự động gắn tag v1.2.1 lên code cũ. Chỉ phát hành sau khi mã và ảnh đã được merge, kiểm thử trên đúng commit. Chi tiết: [REPO-SYNC-STATUS.md](REPO-SYNC-STATUS.md).
+Theo dõi tiến độ tại [trạng thái đồng bộ](REPO-SYNC-STATUS.md).
