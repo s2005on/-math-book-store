@@ -1,5 +1,7 @@
 # LTD's Book Store
 
+Repository: `s2005on/LTDs-Book-Store`.
+
 Website bán sách tham khảo Toán lớp 6–9 và tài liệu ôn thi vào lớp 10.
 
 ## Trạng thái mã nguồn
