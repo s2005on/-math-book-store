@@ -1,14 +1,20 @@
 name: LTD's Book Store CI
 
+# Pull requests validate feature branches; push runs validate main only.
+# This avoids duplicate checks (and notifications) for the same branch commit.
 on:
   push:
-    branches: [main, "feat/**", "fix/**", "docs/**", "test/**", "chore/**"]
+    branches: [main]
   pull_request:
     branches: [main]
   workflow_dispatch:
 
 permissions:
   contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
@@ -31,7 +37,6 @@ jobs:
       - name: Python tests
         run: python -m unittest discover -s tests -v
       - name: JavaScript syntax
-        run: |
-          node --check server/web/app.js
+        run: node --check server/web/app.js
       - name: JavaScript tests
         run: node --test tests/*.test.cjs
