@@ -18,3 +18,11 @@
 ## Ưu tiên xử lý
 
 **Trước tiên:** R01, R02, R03, R04 và R06. Những hạng mục không có bằng chứng kiểm thử vẫn phải để trạng thái mở trong tracker. Xem [SPRINT-TRACKER.md](SPRINT-TRACKER.md).
+
+## Dấu hiệu và quyết định trong kế hoạch Buổi 9
+
+| Rủi ro | Dấu hiệu để xử lý | Phương án thay thế |
+|---|---|---|
+| R01 · Lệch phiên bản | VERSION của commit khác ZIP hoặc bản GitHub thiếu route đặt đơn. | Ghi riêng kết quả theo nguồn, giữ mốc Git đã kiểm tra cho đến khi bản đồng bộ qua test. |
+| R03 · Mất dữ liệu | Sau phục hồi thiếu đơn mẫu hoặc ảnh đã tải. | Dừng thử trên dữ liệu đang dùng, phục hồi và kiểm tra trên bản sao. |
+| R09 · Vượt quỹ giờ | Cuối tuần 2 vẫn chưa có đơn thử tra lại được bằng mã. | Hoãn phần nâng cấp UX, dành giờ tuần 3 cho đặt và theo dõi đơn. |

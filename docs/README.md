@@ -1,5 +1,7 @@
 # Bộ tài liệu đồ án LTD's Book Store
 
+[Buổi 9 – Phạm vi cá nhân, nghiệm thu và thử nghiệm tích hợp](B9.md) · [Lịch 4 tuần](05-schedule.md)
+
 Tài liệu kỹ thuật, quản lý dự án, kiểm thử và bàn giao của **LTD's Book Store**. [Quay về README chính](../README.md).
 
 > **Phân biệt phiên bản:** nguồn `main` hiện là **v0.5.1**; ZIP **v1.2.1 Auth Update** được kiểm tra riêng trên máy và **chưa đồng bộ toàn bộ code/ảnh lên GitHub**. Xem [đối chiếu](REPO-SYNC-STATUS.md). Mọi bằng chứng cần gắn với đúng commit.
