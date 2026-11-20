@@ -8,7 +8,7 @@ VERSION = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
 if not VERSION or any(ch not in "0123456789." for ch in VERSION):
     raise ValueError("VERSION không hợp lệ")
 ARCHIVE = DIST / f"LTDs-Book-Store-v{VERSION}.zip"
-EXCLUDED_DIRS = {".git", ".venv", "__pycache__", "node_modules", "dist", ".pytest_cache"}
+EXCLUDED_DIRS = {".git", ".venv", "__pycache__", "node_modules", "dist", "backups", ".pytest_cache"}
 EXCLUDED_FILES = {".env", "shop.sqlite3"}
 EXCLUDED_SUFFIXES = {".pyc", ".pyo"}
 

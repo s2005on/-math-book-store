@@ -1,6 +1,10 @@
 # Changelog — LTD's Book Store
 
-## v0.5.1 — Sửa khởi chạy Windows (mã nguồn GitHub hiện tại, chưa phát hành tag)
+## v1.3.0 Pro Edition
+
+Đồng bộ ứng dụng, kiểm thử và ảnh từ bản Pro. Bổ sung hồ sơ Buổi 9, kế hoạch cá nhân và ca nghiệm thu luồng đơn hàng. [Chi tiết phiên bản](RELEASE-NOTES-v1.3.0.md).
+
+## v0.5.1 — Sửa khởi chạy Windows
 
 - Chạy lại `start.py` trong môi trường `.venv` sau khi cài thư viện để khắc phục lỗi thiếu `dotenv`.
 - Thêm đăng nhập/đăng ký, quản trị sách, upload ảnh, SQLite và trạng thái còn hàng/hết hàng/sắp ra mắt từ các lượt nâng cấp v0.4–v0.5.

@@ -1,4 +1,408 @@
-<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Tài khoản · LTD's Book Store</title><style>body{font-family:system-ui,sans-serif;background:#f2f6f7;margin:0;color:#193a4a}.wrap{max-width:570px;margin:8vh auto;padding:24px;background:white;border-radius:20px;box-shadow:0 8px 28px #15426312}a{color:#0c637c;text-decoration:none}button{border:0;border-radius:10px;background:#0d6681;color:#fff;padding:12px 18px;font:inherit;font-weight:700;cursor:pointer}p{color:#627885}</style></head><body><main class="wrap"><a href="/">← Về cửa hàng</a><h1>Tài khoản của bạn</h1><p id="status">Đang kiểm tra trạng thái đăng nhập...</p><p id="admin"></p><button id="logout" hidden>Đăng xuất</button></main><script>
-let token='';fetch('/api/me',{credentials:'same-origin'}).then(r=>r.json()).then(d=>{if(!d.authenticated){location.replace('/login.html');return;}token=d.csrf;document.querySelector('#status').textContent='Đang đăng nhập: '+d.username+' ('+(d.role==='admin'?'quản trị viên':'khách hàng')+')';document.querySelector('#logout').hidden=false;if(d.role==='admin')document.querySelector('#admin').innerHTML='<a href="/admin.html">Vào trang quản trị sách →</a>';}).catch(()=>document.querySelector('#status').textContent='Tính năng tài khoản cần máy chủ FastAPI.');
-document.querySelector('#logout').onclick=async()=>{const r=await fetch('/api/logout',{method:'POST',credentials:'same-origin',headers:{'X-CSRF-Token':token}});if(r.ok)location.href='/login.html';else alert('Không đăng xuất được');};
-</script></body></html>
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#091d28">
+  <title>Tài khoản & Theo dõi đơn hàng | LTD's Book Store</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font-display: 'Outfit', 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      --font-body: 'Plus Jakarta Sans', 'Outfit', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      --ink: #0b1f2a; --muted: #617182; --green: #091d28; --teal: #057699; --cyan: #52d0ef;
+      --line: #e4edf5; --bg: #f8fafd;
+      font-family: var(--font-body); color: var(--ink); background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+    }
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 86% 10%, rgba(82, 208, 239, .14) 0, transparent 42%),
+        radial-gradient(circle at 12% 88%, rgba(172, 186, 225, .18) 0, transparent 45%),
+        var(--bg);
+      padding-bottom: 50px;
+    }
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+    .shell { max-width: 1120px; margin: auto; padding: 20px 24px; }
+    .top {
+      background:
+        radial-gradient(circle at 80% 0%, rgba(42, 157, 186, .45) 0, transparent 55%),
+        linear-gradient(135deg, #0b1528 0%, #0d1326 58%, #191736 100%);
+      color: #fff; border-bottom: 1px solid rgba(154, 236, 238, .18);
+    }
+    .top .shell { display: flex; gap: 16px; align-items: center; justify-content: space-between; padding-top: 15px; padding-bottom: 15px; }
+    .top strong { font-family: var(--font-display); font-weight: 600; font-size: 17.5px; letter-spacing: -.02em; display: flex; align-items: center; gap: 8px; }
+    .top-links { display: flex; gap: 10px; align-items: center; }
+    .top a, .top button {
+      color: #e2f6fb; text-decoration: none; font-family: var(--font-display); font-size: 12.5px; font-weight: 500;
+      padding: 8px 16px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, .18); background: rgba(255, 255, 255, .08); transition: all .2s;
+    }
+    .top a:hover, .top button:hover { background: #fff; color: #091d28; }
+
+    .lead { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; padding: 24px 0 14px; }
+    h1, h2, h3 { font-family: var(--font-display); font-weight: 500; letter-spacing: -.025em; color: var(--ink); margin: 0; }
+    h1 { font-size: clamp(26px, 4vw, 35px); }
+    h2 { font-size: 19px; }
+    .muted { color: var(--muted); font-size: 12.5px; margin: 4px 0 0; }
+
+    .kpi-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 20px; }
+    .kpi-card { background: #fff; border: 1px solid var(--line); border-radius: 20px; padding: 18px 20px; box-shadow: 0 8px 24px rgba(11, 27, 43, .04); }
+    .kpi-card b { display: block; font-family: var(--font-display); font-size: 24px; font-weight: 600; color: var(--green); }
+    .kpi-card.teal b { color: var(--teal); }
+    .kpi-card span { font-size: 11.5px; color: var(--muted); font-weight: 500; }
+
+    .account-grid { display: grid; grid-template-columns: 350px 1fr; gap: 20px; align-items: start; }
+    .card { background: #fff; border: 1px solid var(--line); border-radius: 22px; padding: 22px; margin-bottom: 18px; box-shadow: 0 12px 34px rgba(11, 27, 43, .045); }
+    .head { display: flex; justify-content: space-between; gap: 12px; align-items: center; flex-wrap: wrap; margin-bottom: 14px; }
+
+    label { display: block; margin: 11px 0; font-size: 12px; font-weight: 600; color: #1e293b; }
+    input, textarea, select {
+      display: block; width: 100%; margin-top: 5px; padding: 10px 13px;
+      border: 1px solid #dce6f0; border-radius: 12px; background: #f9fbfd; color: var(--ink); font-size: 12.5px;
+    }
+    input:focus, textarea:focus, select:focus { background: #fff; outline: 2px solid rgba(82, 208, 239, .25); border-color: var(--teal); }
+
+    .btn {
+      background: var(--green); border: 1px solid var(--green); border-radius: 999px; color: #fff;
+      font-family: var(--font-display); font-size: 12px; font-weight: 500; padding: 9px 17px; transition: all .2s;
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none;
+    }
+    .btn:hover { background: var(--teal); border-color: var(--teal); }
+    .btn.outline { background: #fff; border-color: rgba(11, 31, 42, .22); color: var(--ink); }
+    .btn.outline:hover { background: var(--green); border-color: var(--green); color: #fff; }
+    .btn.warn { background: #fff1f2; border-color: #fecdd3; color: #be123c; }
+    .btn.warn:hover { background: #ffe4e6; }
+
+    .orders-toolbar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+    .orders-toolbar input { flex: 1; min-width: 180px; margin: 0; border-radius: 999px; background: #fff; }
+    .orders-toolbar select { width: auto; min-width: 155px; margin: 0; border-radius: 999px; background: #fff; }
+
+    .order { border: 1px solid var(--line); border-radius: 18px; padding: 18px; margin: 14px 0; background: #fcfdff; }
+    .line { display: flex; gap: 12px; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+    .order-id { font-family: var(--font-display); font-weight: 600; color: var(--teal); font-size: 15px; }
+    .tag { padding: 5px 12px; border-radius: 999px; background: #dff7fa; color: var(--teal); font-family: var(--font-display); font-weight: 600; font-size: 11px; }
+    .tag.pending { background: #eef2ff; color: #4355b9; }
+    .tag.cancelled { background: #fff1f2; color: #be123c; }
+    .tag.completed { background: #dcfce7; color: #15803d; }
+
+    /* 4-Step Visual Order Stepper */
+    .stepper { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 14px 0; }
+    .step { position: relative; padding: 7px 8px; border-radius: 10px; background: #f1f5f9; color: #94a3b8; font-size: 10.5px; font-weight: 600; text-align: center; }
+    .step.done { background: #e0f7fa; color: #057699; }
+    .step.current { background: var(--green); color: #9aecee; }
+
+    .details {
+      background: linear-gradient(145deg, #f1f9fc 0%, #ffffff 55%, #f3f5fc 100%);
+      border: 1px solid #e7eff6; padding: 12px 14px; border-radius: 14px; font-size: 12.5px; line-height: 1.75; margin-top: 10px;
+    }
+    .details img { width: 44px; height: 52px; object-fit: contain; border-radius: 5px; background: #fff; margin-right: 10px; }
+    .item { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 4px 0; }
+    .item div { display: flex; align-items: center; }
+    .shop-feedback-box {
+      margin-top: 10px; padding: 10px 13px; border-radius: 12px;
+      background: #eef9fd; border: 1px solid rgba(82, 208, 239, .38); font-size: 12px; color: #0c4a60;
+    }
+    .info { font-size: 12px; color: #5b6b7c; line-height: 1.75; margin: 10px 0; }
+    .order-footer { display: flex; justify-content: space-between; gap: 10px; align-items: center; flex-wrap: wrap; padding-top: 10px; border-top: 1px dashed var(--line); }
+    .total { font-family: var(--font-display); font-size: 18px; font-weight: 600; color: var(--teal); }
+    .order-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+
+    .toast-status {
+      position: fixed; bottom: 22px; right: 22px; z-index: 50; padding: 12px 18px;
+      border-radius: 999px; background: var(--green); color: #fff; font-family: var(--font-display);
+      font-size: 12.5px; font-weight: 500; box-shadow: 0 14px 32px rgba(9, 25, 42, .24);
+    }
+
+    @media (max-width: 880px) {
+      .account-grid { grid-template-columns: 1fr; }
+      .kpi-row { grid-template-columns: 1fr; }
+      .stepper { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="shell">
+      <strong>
+        <svg style="width:20px;height:20px;fill:none;stroke:#52d0ef;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3.5A2.5 2.5 0 0 1 7.5 1H19a1.5 1.5 0 0 1 1.5 1.5v16A1.5 1.5 0 0 1 19 20H7.5A2.5 2.5 0 0 0 5 22.5z"></path><path d="M5 3.5V21a2 2 0 0 0 2 2h12.5"></path><path d="M13 1v7l-2.2-1.6L8.5 8V1"></path><line x1="9" y1="12" x2="16" y2="12"></line></svg>
+        LTD's Book Store
+      </strong>
+      <div class="top-links">
+        <a id="adminTopBtn" href="/admin.html" hidden>🎛️ Trang quản trị</a>
+        <a href="/">← Tiếp tục mua sách</a>
+        <button id="logout" type="button" hidden>Đăng xuất</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="shell">
+    <div class="lead">
+      <div>
+        <h1 id="welcome">Tài khoản & đơn hàng</h1>
+        <p class="muted" id="accountStatus">Đang tải thông tin thành viên…</p>
+      </div>
+    </div>
+
+    <div class="kpi-row">
+      <div class="kpi-card"><b id="kpiOrders">0</b><span>Tổng đơn hàng đã đặt</span></div>
+      <div class="kpi-card"><b id="kpiActive">0</b><span>Đơn đang xử lý / vận chuyển</span></div>
+      <div class="kpi-card teal"><b id="kpiSpent">0đ</b><span>Tổng giá trị mua sách</span></div>
+    </div>
+
+    <div class="account-grid">
+      <aside>
+        <section class="card">
+          <div class="head">
+            <div>
+              <h2>Hồ sơ nhận hàng</h2>
+              <p class="muted">Tự động điền khi đặt sách mới.</p>
+            </div>
+          </div>
+          <form id="profileForm">
+            <label>Họ và tên<input id="pfName" required minlength="2" maxlength="80" placeholder="Họ và tên người nhận"></label>
+            <label>Số điện thoại<input id="pfPhone" required pattern="0[35789][0-9]{8}" maxlength="16" placeholder="09xxxxxxxx"></label>
+            <label>Địa chỉ nhận sách mặc định<textarea id="pfAddress" rows="3" maxlength="240" placeholder="Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành"></textarea></label>
+            <button class="btn" type="submit" style="width:100%;margin-top:6px">Lưu thông tin nhận hàng</button>
+          </form>
+          <hr style="border:0;border-top:1px solid var(--line);margin:18px 0">
+          <button class="btn outline" type="button" id="togglePwBtn" style="width:100%">🔒 Đổi mật khẩu tài khoản</button>
+          <form id="pwForm" hidden style="margin-top:12px">
+            <label>Mật khẩu hiện tại<input type="password" id="pwCurrent" required minlength="8"></label>
+            <label>Mật khẩu mới (ít nhất 10 ký tự)<input type="password" id="pwNew" required minlength="10"></label>
+            <button class="btn" type="submit" style="width:100%;margin-top:6px">Cập nhật mật khẩu</button>
+          </form>
+        </section>
+      </aside>
+
+      <section class="card">
+        <div class="head">
+          <div>
+            <h2>Lịch sử & Tiến trình đơn hàng</h2>
+            <p class="muted">Theo dõi trạng thái giao sách, in hóa đơn hoặc mua lại nhanh chỉ với 1 chạm.</p>
+          </div>
+          <button class="btn outline" type="button" id="reload">↻ Làm mới</button>
+        </div>
+        <div class="orders-toolbar">
+          <input type="search" id="orderSearch" placeholder="Tìm theo mã đơn (LTD-...) hoặc tên sách…">
+          <select id="orderFilter">
+            <option value="all">Tất cả trạng thái</option>
+            <option value="pending">Chờ xác nhận</option>
+            <option value="confirmed">Đã xác nhận</option>
+            <option value="shipping">Đang giao</option>
+            <option value="completed">Hoàn tất</option>
+            <option value="cancelled">Đã hủy</option>
+          </select>
+        </div>
+        <div id="orders"><p class="muted">Đang tải đơn hàng…</p></div>
+      </section>
+    </div>
+
+    <p role="status" id="message" class="toast-status" hidden></p>
+  </main>
+
+  <script>
+    'use strict';
+    const $ = id => document.getElementById(id);
+    const money = n => new Intl.NumberFormat('vi-VN').format(n || 0) + 'đ';
+    const escapeHTML = s => String(s ?? '').replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+    const labels = { pending: 'Chờ xác nhận', confirmed: 'Đã xác nhận', shipping: 'Đang giao hàng', completed: 'Hoàn tất', cancelled: 'Đã hủy' };
+    const pmLabels = { cod: 'Thanh toán COD', bank_qr: 'VietQR 24/7', momo: 'Ví MoMo', vnpay: 'VNPAY-QR' };
+    const CART_KEY = 'ltds-book-store-cart-v120';
+    let csrf = '', allOrders = [], toastTimer = null;
+
+    function notify(text) {
+      const m = $('message');
+      m.textContent = text;
+      m.hidden = false;
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => { m.hidden = true; }, 2800);
+    }
+
+    async function api(path, init = {}) {
+      const response = await fetch(path, {
+        credentials: 'same-origin', ...init,
+        headers: { ...(init.body ? { 'Content-Type': 'application/json' } : {}), ...(csrf ? { 'X-CSRF-Token': csrf } : {}), ...init.headers }
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) throw Error(result.detail || 'Không thể xử lý yêu cầu');
+      return result;
+    }
+
+    function renderStepper(status) {
+      if (status === 'cancelled') return '';
+      const steps = [
+        { key: 'pending', label: '1. Đặt đơn' },
+        { key: 'confirmed', label: '2. Đã xác nhận' },
+        { key: 'shipping', label: '3. Đang giao' },
+        { key: 'completed', label: '4. Hoàn tất' }
+      ];
+      const idx = steps.findIndex(s => s.key === status);
+      return '<div class="stepper">' + steps.map((s, i) => {
+        const cls = i < idx ? 'step done' : (i === idx ? 'step current' : 'step');
+        return `<div class="${cls}">${s.label}</div>`;
+      }).join('') + '</div>';
+    }
+
+    function renderOrdersList() {
+      const q = $('orderSearch').value.trim().toLowerCase();
+      const st = $('orderFilter').value;
+      const filtered = allOrders.filter(o => {
+        const matchSt = st === 'all' || o.status === st;
+        const hay = (o.order_number + ' ' + o.items.map(i => i.name).join(' ')).toLowerCase();
+        return matchSt && (!q || hay.includes(q));
+      });
+
+      $('kpiOrders').textContent = allOrders.length;
+      $('kpiActive').textContent = allOrders.filter(o => ['pending', 'confirmed', 'shipping'].includes(o.status)).length;
+      $('kpiSpent').textContent = money(allOrders.filter(o => o.status !== 'cancelled').reduce((s, o) => s + (o.total || 0), 0));
+
+      if (!filtered.length) {
+        $('orders').innerHTML = '<p class="muted" style="padding:20px 0">Không có đơn hàng nào khớp bộ lọc. <a href="/" style="color:#057699;font-weight:600">Khám phá tủ sách ngay →</a></p>';
+        return;
+      }
+
+      $('orders').innerHTML = filtered.map(o => {
+        const items = o.items.map(i => `<div class="item"><div><img src="${escapeHTML(i.image)}" alt=""><span>${escapeHTML(i.name)} <b>× ${i.quantity}</b></span></div><strong>${money(i.price * i.quantity)}</strong></div>`).join('');
+        const shopBox = (o.tracking_code || o.admin_note)
+          ? `<div class="shop-feedback-box">${o.tracking_code ? `<div>🚚 Mã vận đơn: <b>${escapeHTML(o.tracking_code)}</b></div>` : ''}${o.admin_note ? `<div>💬 Ghi chú từ cửa hàng: ${escapeHTML(o.admin_note)}</div>` : ''}</div>`
+          : '';
+        const shipTxt = o.shipping_fee > 0 ? ` · Phí ship: ${money(o.shipping_fee)}` : ' · Freeship';
+        const discTxt = o.discount_amount > 0 ? ` · Mã ${escapeHTML(o.promo_code)} (-${money(o.discount_amount)})` : '';
+        return `<article class="order">
+          <div class="line">
+            <div>
+              <span class="order-id">${escapeHTML(o.order_number)}</span>
+              <div class="muted">${new Date(o.created_at).toLocaleString('vi-VN')}</div>
+            </div>
+            <span class="tag ${escapeHTML(o.status)}">${escapeHTML(labels[o.status] || o.status)}</span>
+          </div>
+          ${renderStepper(o.status)}
+          <div class="details">${items}</div>
+          ${shopBox}
+          <p class="info">
+            Người nhận: <b>${escapeHTML(o.customer_name)}</b> · ${escapeHTML(o.phone)}<br>
+            Giao đến: ${escapeHTML(o.address)}<br>
+            Thanh toán: <b>${escapeHTML(pmLabels[o.payment_method] || 'Thanh toán COD')}</b>${shipTxt}${discTxt}
+          </p>
+          <div class="order-footer">
+            <strong class="total">Tổng: ${money(o.total)}</strong>
+            <div class="order-btns">
+              <button class="btn outline" type="button" data-reorder="${escapeHTML(o.id)}">🔄 Mua lại</button>
+              <button class="btn outline" type="button" data-print="${escapeHTML(o.id)}">🖨️ In phiếu</button>
+              ${o.status === 'pending' ? `<button class="btn warn" type="button" data-cancel="${escapeHTML(o.id)}">Hủy đơn</button>` : ''}
+            </div>
+          </div>
+        </article>`;
+      }).join('');
+    }
+
+    async function load() {
+      try {
+        allOrders = await api('/api/orders');
+        renderOrdersList();
+      } catch (e) { notify(e.message); }
+    }
+
+    $('orderSearch').addEventListener('input', renderOrdersList);
+    $('orderFilter').addEventListener('change', renderOrdersList);
+
+    $('orders').addEventListener('click', async e => {
+      const cancelBtn = e.target.closest('[data-cancel]');
+      const reorderBtn = e.target.closest('[data-reorder]');
+      const printBtn = e.target.closest('[data-print]');
+
+      if (reorderBtn) {
+        const ord = allOrders.find(x => x.id === reorderBtn.dataset.reorder);
+        if (!ord) return;
+        const nextCart = {};
+        for (const it of ord.items) nextCart[it.book_id] = Math.min(99, (nextCart[it.book_id] || 0) + it.quantity);
+        try { localStorage.setItem(CART_KEY, JSON.stringify(nextCart)); } catch {}
+        location.href = '/?openCart=1';
+        return;
+      }
+
+      if (printBtn) {
+        const ord = allOrders.find(x => x.id === printBtn.dataset.print);
+        if (!ord) return;
+        const win = window.open('', '_blank', 'width=720,height=680');
+        if (!win) { window.print(); return; }
+        const rows = ord.items.map(i => `<tr><td style="padding:8px 0;border-bottom:1px solid #e2e8f0">${escapeHTML(i.name)}</td><td style="text-align:center;border-bottom:1px solid #e2e8f0">${i.quantity}</td><td style="text-align:right;border-bottom:1px solid #e2e8f0">${money(i.price * i.quantity)}</td></tr>`).join('');
+        win.document.write(`<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>Hóa đơn ${escapeHTML(ord.order_number)}</title><style>body{font-family:system-ui,sans-serif;padding:32px;color:#0b1f2a;max-width:640px;margin:auto}table{width:100%;border-collapse:collapse;margin:18px 0}th{text-align:left;border-bottom:2px solid #091d28;padding-bottom:8px;font-size:12px}</style></head><body><h2>LTD's Book Store — Phiếu đơn hàng</h2><p>Mã đơn: <b>${escapeHTML(ord.order_number)}</b> · Trạng thái: ${escapeHTML(labels[ord.status] || ord.status)}<br>Người nhận: ${escapeHTML(ord.customer_name)} (${escapeHTML(ord.phone)})<br>Địa chỉ: ${escapeHTML(ord.address)}</p><table><thead><tr><th>Đầu sách</th><th style="text-align:center">SL</th><th style="text-align:right">Thành tiền</th></tr></thead><tbody>${rows}</tbody></table><h3 style="text-align:right;color:#057699">Tổng thanh toán: ${money(ord.total)}</h3><script>window.onload=()=>window.print()<\/script></body></html>`);
+        win.document.close();
+        return;
+      }
+
+      if (cancelBtn) {
+        if (!confirm('Bạn muốn hủy đơn hàng này? Số lượng sách sẽ được hoàn lại kho tự động.')) return;
+        cancelBtn.disabled = true;
+        try {
+          await api('/api/orders/' + encodeURIComponent(cancelBtn.dataset.cancel) + '/cancel', { method: 'POST' });
+          await load();
+          notify('Đơn hàng đã được hủy thành công.');
+        } catch (err) { notify(err.message); } finally { cancelBtn.disabled = false; }
+      }
+    });
+
+    $('profileForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      try {
+        const res = await api('/api/me/profile', {
+          method: 'PUT',
+          body: JSON.stringify({
+            full_name: $('pfName').value.trim(),
+            phone: $('pfPhone').value.trim(),
+            address: $('pfAddress').value.trim()
+          })
+        });
+        $('welcome').textContent = 'Xin chào, ' + res.full_name;
+        notify('Đã lưu hồ sơ nhận hàng mặc định!');
+      } catch (err) { notify(err.message); }
+    });
+
+    $('togglePwBtn').onclick = () => { $('pwForm').hidden = !$('pwForm').hidden; };
+    $('pwForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      try {
+        await api('/api/me/password', {
+          method: 'POST',
+          body: JSON.stringify({
+            current_password: $('pwCurrent').value,
+            new_password: $('pwNew').value
+          })
+        });
+        $('pwForm').reset();
+        $('pwForm').hidden = true;
+        notify('Đã đổi mật khẩu thành công!');
+      } catch (err) { notify(err.message); }
+    });
+
+    $('reload').onclick = load;
+    $('logout').onclick = async () => {
+      try { await api('/api/logout', { method: 'POST' }); location.href = '/login.html'; }
+      catch (e) { notify(e.message); }
+    };
+
+    (async () => {
+      try {
+        const me = await api('/api/me');
+        if (!me.authenticated) { location.replace('/login.html'); return; }
+        csrf = me.csrf;
+        $('welcome').textContent = 'Xin chào, ' + (me.full_name || me.username);
+        $('accountStatus').textContent = `Tài khoản: @${me.username} · Vai trò: ${me.role === 'admin' ? 'Quản trị viên' : 'Khách hàng thành viên'}`;
+        $('pfName').value = me.full_name || '';
+        $('pfPhone').value = me.phone || '';
+        $('pfAddress').value = me.address || '';
+        $('logout').hidden = false;
+        if (me.role === 'admin') $('adminTopBtn').hidden = false;
+        await load();
+      } catch (e) { notify('Không tải được tài khoản: ' + e.message); }
+    })();
+  </script>
+</body>
+</html>

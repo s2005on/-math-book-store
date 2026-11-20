@@ -1,54 +1,11 @@
-# LTD's Book Store — bản chạy máy cá nhân v0.5.1
+# Chạy LTD's Book Store v1.3.0 Pro Edition trên Windows
 
-Website cửa hàng sách Toán với đăng nhập, quản lý kho sách và banner sách sắp ra mắt. Không cần VPS hay GitHub để chạy sau khi đã tải ZIP về máy.
+1. Cài Python 3.11 trở lên và chọn **Add python.exe to PATH** trong bộ cài.
+2. Tải mã nguồn của commit cần chạy, giải nén vào một thư mục riêng.
+3. Mở thư mục chứa `VERSION` và nhấp đúp `RUN-WINDOWS.bat`. Lần đầu cần Internet để cài phụ thuộc. Làm theo lời nhắc tạo tài khoản quản trị.
+4. Mở http://127.0.0.1:8017/ để tìm sách. Dùng dữ liệu thử khi đăng ký và đặt đơn. Trang tài khoản ở `/account.html`, trang quản trị ở `/admin.html`.
+5. Giữ cửa sổ lệnh mở khi dùng. Nhấn Ctrl+C để dừng. Khi dùng thư mục dữ liệu mặc định, chạy `BACKUP-WINDOWS.bat` sau khi dừng để sao lưu `server/data/`.
 
-## Cách chạy nhanh trên Windows
+Nếu cửa sổ đóng sớm, mở CMD trong thư mục vừa giải nén rồi chạy `RUN-WINDOWS.bat` để đọc thông báo lỗi. Nếu cổng 8017 đang được dùng bởi một bản LTD khác, dừng bản đó trước khi chạy lại.
 
-1. Cài **Python 3.11 trở lên** từ https://www.python.org/downloads/ (khi cài, chọn **Add Python to PATH**).
-2. Giải nén toàn bộ file ZIP vào một thư mục, ví dụ `Desktop\\LTDs-Book-Store`.
-3. Nhấn đúp **RUN-WINDOWS.bat**.
-4. Lần đầu chạy, cửa sổ sẽ hỏi tên đăng nhập và mật khẩu quản trị (ít nhất 12 ký tự). Mật khẩu được lưu trong file `.env` trên máy.
-5. Website tự mở tại http://127.0.0.1:8017/
-
-Lần đầu cần Internet để tải thư viện Python. Những lần sau chạy lại `RUN-WINDOWS.bat`, không cần tạo tài khoản admin lần nữa.
-
-## macOS / Linux
-
-Cài Python 3.11+, mở Terminal tại thư mục đã giải nén và chạy:
-
-```bash
-chmod +x run.sh
-./run.sh
-```
-
-## Các địa chỉ
-
-- Trang cửa hàng: http://127.0.0.1:8017/
-- Đăng nhập: http://127.0.0.1:8017/login.html
-- Quản lý sách: http://127.0.0.1:8017/admin.html
-- Kiểm tra hoạt động: http://127.0.0.1:8017/health
-
-## Tính năng
-
-- Đăng ký/đăng nhập khách hàng và tài khoản quản trị.
-- Thêm sách mới, tải ảnh bìa JPG/PNG/WebP (tối đa 5 MB), sửa thông tin, giá, mô tả và xóa sách.
-- Trạng thái: **Còn hàng**, **Hết hàng**, **Sắp ra mắt**.
-- Sách sắp ra mắt tự hiển thị trong banner riêng; không thể thêm vào giỏ hàng.
-- Tìm kiếm, lọc sách, xem chi tiết và giỏ hàng demo.
-
-## Dữ liệu và an toàn
-
-- Cơ sở dữ liệu SQLite và ảnh tải lên được lưu trong `server/data/`.
-- File `.env` lưu thông tin khởi tạo admin. Không gửi file này cho người khác và không tải lên GitHub.
-- Không xóa `server/data/` nếu muốn giữ tài khoản, sách và ảnh đã tải lên.
-- Sao lưu định kỳ toàn bộ thư mục `server/data/`.
-- Website mặc định chỉ truy cập trên máy đang chạy (`127.0.0.1`), không tự công khai lên Internet.
-
-## Lưu ý
-
-- Checkout hiện là bản demo, chưa gửi đơn hàng và chưa tích hợp thanh toán.
-- Cần để cửa sổ terminal chạy nền trong lúc dùng website; nhấn Ctrl+C để dừng.
-- Nếu cổng 8017 đang được ứng dụng khác sử dụng, hãy tắt ứng dụng đó rồi chạy lại.
-
-## Bản sửa v0.5.1
-- Bộ khởi chạy chuyển sang Python của `.venv` sau khi cài thư viện, xử lý lỗi `No module named 'dotenv'` trên Windows.
+[Hồ sơ Buổi 9](docs/B9.md) · [Chức năng bản Pro](RELEASE-NOTES-v1.3.0.md)

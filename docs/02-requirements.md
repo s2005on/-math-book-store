@@ -14,10 +14,10 @@
 | US03 | Tôi muốn tìm kiếm và sắp xếp danh mục. | Should | UI có |
 | US04 | Tôi muốn xem thông tin chi tiết một sản phẩm. | Must | UI có |
 | US05 | Tôi muốn thêm, xóa và đổi số lượng trong giỏ. | Must | Demo có |
-| US06 | Tôi muốn gửi đơn và nhận mã đơn. | Must | Chưa có backend; form demo |
-| US07 | Quản trị viên muốn đăng nhập để quản lý hệ thống. | Must | Có API và UI trên `main` v0.5.1 |
-| US08 | Quản trị viên muốn thêm, sửa, ẩn sản phẩm và cập nhật giá. | Must | Có CRUD/ảnh/trạng thái trên `main` v0.5.1; cần test thủ công |
-| US09 | Quản trị viên muốn xem và cập nhật trạng thái đơn hàng. | Must | Chưa triển khai |
+| US06 | Tôi muốn gửi đơn và nhận mã đơn. | Must | Có API tạo và đọc lại đơn trong Pro |
+| US07 | Quản trị viên muốn đăng nhập để quản lý hệ thống. | Must | Có API và UI từ v0.5.1 |
+| US08 | Quản trị viên muốn thêm, sửa, ẩn sản phẩm và cập nhật giá. | Must | Có CRUD/ảnh/trạng thái từ v0.5.1; cần test thủ công |
+| US09 | Quản trị viên muốn xem và cập nhật trạng thái đơn hàng. | Must | Có API quản trị đơn trong Pro |
 | US10 | Người mua muốn thanh toán trực tuyến. | Could | Ngoài phạm vi Sprint 0 |
 
 ## Quy tắc nghiệp vụ cần áp dụng ở Sprint backend
@@ -40,4 +40,4 @@
 
 ## Ghi chú kiểm soát phạm vi và nghiệm thu
 
-Các trạng thái **UI có** và **Demo có** chỉ nói về mô-đun giao diện; không chứng nhận luồng đặt đơn lưu thật. Ở `main` v0.5.1, US06 và US09 **chưa có backend đơn hàng**. Bản ZIP local v1.2.1 có mã mới nhưng chưa đồng bộ vào repo; chỉ cập nhật bảng khi có PR/CI trên đúng commit và minh chứng trong [evidence](evidence/README.md).
+Phạm vi nghiệm thu Buổi 9 tập trung US02, US05, US06 và US09. API đơn hàng có kiểm thử trong bản Pro. Kiểm tra thủ công hai phiên khách và quản trị nằm ở tuần 3. [Tiêu chí và bằng chứng](B9.md).

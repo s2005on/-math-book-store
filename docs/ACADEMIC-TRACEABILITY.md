@@ -1,5 +1,7 @@
 # Ma trận yêu cầu, tài liệu và minh chứng — LTD's Book Store
 
+**Mốc hiện hành:** v1.3.0 Pro Edition. Các bảng v0.5.1 bên dưới là ghi nhận lịch sử. [Đối chiếu nguồn và phiên bản](REPO-SYNC-STATUS.md) · [Nghiệm thu Buổi 9](B9.md).
+
 **Mục đích:** tổng hợp tài liệu và minh chứng kiểm thử của chính LTD's Book Store để báo cáo đồ án có thể kiểm chứng được.
 
 **Cơ sở thực tế:** nhánh `main` LTD's Book Store ở thời điểm soạn hồ sơ đang là **v0.5.1**; bản ZIP local **v1.2.1** chưa nhập đầy đủ vào GitHub. Mọi kết quả kiểm thử phải ghi rõ phiên bản/commit.

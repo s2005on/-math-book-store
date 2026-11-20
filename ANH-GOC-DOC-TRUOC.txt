@@ -1,0 +1,4 @@
+THU MUC anh-goc/ CHUA ANH SACH GOC CUA BAN, KHONG CHINH SUA BIA.
+Website dung anh WebP chat luong cao trong server/web/assets/books/ de tai nhanh hon.
+Neu can thay doi anh, vao http://127.0.0.1:8017/admin.html roi chon anh tu may.
+Anh goi kem tu bansach.zip do nguoi dung cung cap.

@@ -2,6 +2,7 @@ import json
 import unittest
 from pathlib import Path
 from fastapi.testclient import TestClient
+import test_settings  # isolate local test database
 from server.app import app
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -18,7 +19,7 @@ class ServerSmokeTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()["status"], "ok")
         self.assertTrue(response.json()["api_ready"])
-        self.assertEqual(response.json()["stage"], "inventory-v0.5")
+        self.assertEqual(response.json()["stage"], "art-edition-v1.2.1")
 
     def test_storefront_is_served(self):
         response = self.client.get("/")
@@ -29,13 +30,13 @@ class ServerSmokeTests(unittest.TestCase):
     def test_admin_preview_is_served(self):
         response = self.client.get("/admin.html")
         self.assertEqual(response.status_code, 200)
-        self.assertIn("Quản lý sách", response.text)
+        self.assertIn("Bảng điều khiển Moderator", response.text)
         self.assertIn("bookStatus", response.text)
 
     def test_catalog_json_is_served(self):
         response = self.client.get("/catalog.json")
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.json()), 7)
+        self.assertEqual(len(response.json()), 9)
 
     def test_catalog_asset_references_exist(self):
         products = json.loads((WEB / "catalog.json").read_text(encoding="utf-8"))

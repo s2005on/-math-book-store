@@ -1,5 +1,7 @@
 # 04 — Work Breakdown Structure
 
+**Mốc hiện hành:** v1.3.0 Pro Edition. Các bảng v0.5.1 bên dưới là ghi nhận lịch sử. [Đối chiếu nguồn và phiên bản](REPO-SYNC-STATUS.md) · [Nghiệm thu Buổi 9](B9.md).
+
 | WBS | Công việc | Kết quả | Trạng thái |
 |---|---|---|---|
 | 1.0 | Khởi tạo dự án | Repository, README, Git ignore | Hoàn thành |

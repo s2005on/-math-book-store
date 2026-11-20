@@ -1,5 +1,7 @@
 # Sprint tracker — LTD's Book Store
 
+**Mốc hiện hành:** v1.3.0 Pro Edition. Các bảng v0.5.1 bên dưới là ghi nhận lịch sử. [Đối chiếu nguồn và phiên bản](REPO-SYNC-STATUS.md) · [Nghiệm thu Buổi 9](B9.md).
+
 Quy trình Scrum rút gọn của LTD's Book Store: **mục tiêu → backlog/issue → nhánh/PR → test → demo → retrospective**. Với đồ án cá nhân, các vai trò có thể kiêm nhiệm; người thực hiện/giảng viên điền sau khi xác nhận.
 
 ## Lịch theo mốc, chưa ấn định hạn nộp
