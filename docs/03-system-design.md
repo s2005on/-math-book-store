@@ -1,4 +1,20 @@
 # 03 — Thiết kế hệ thống LTD's Book Store
+ 
+## Kiến trúc v1.3.0 Pro Edition
+
+```mermaid
+flowchart TD
+    Buyer["Khách hàng"] --> UI["Cửa hàng và tài khoản"]
+    Seller["Người bán"] --> Admin["Giao diện quản trị"]
+    UI --> API["FastAPI"]
+    Admin --> API
+    API --> DB["SQLite"]
+    API --> Images["Ảnh bìa và ảnh tải lên"]
+```
+
+Khách gửi giỏ lên API. Máy chủ đọc giá và trạng thái sách, ghi đơn vào `orders` và `order_items` rồi trả mã đơn. Đăng nhập dùng `users` và `sessions`. Giao diện quản trị đọc và cập nhật trạng thái qua API. Các bảng `reviews`, `waitlist` và `site_settings` phục vụ đánh giá, danh sách chờ và cấu hình. [Điều kiện nghiệm thu và các route đơn hàng](B9.md).
+
+## Hồ sơ kiến trúc lịch sử v0.5.1
 
 ## 1. Phiên bản và phạm vi được mô tả
 

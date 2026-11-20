@@ -1,8 +1,9 @@
-"""API integration checks for LTD's Book Store v0.4."""
+"""API integration checks for LTD's Book Store v1.2.0."""
 import io
 import unittest
 from fastapi.testclient import TestClient
 from PIL import Image
+import test_settings  # isolate local test database
 from server.app import app, database, pw_hash
 
 class InventoryTests(unittest.TestCase):

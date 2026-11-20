@@ -9,19 +9,9 @@
 
 **[Tài liệu đồ án](docs/README.md)** · **[Hướng dẫn chạy](START-HERE.md)** · **[Kiểm thử CI](https://github.com/s2005on/LTDs-Book-Store/actions)** · **[Issues](https://github.com/s2005on/LTDs-Book-Store/issues)** · **[Releases](https://github.com/s2005on/LTDs-Book-Store/releases)**
 
-> **Trạng thái mã nguồn — 18/11/2026:** nhánh `main` vẫn là **v0.5.1**. Bản ZIP chạy trên máy **v1.2.1 (Auth Update)** đã được cung cấp riêng, **chưa được nhập đầy đủ vào repository**. Bản ZIP này có giao diện đăng nhập/đăng ký riêng và yêu cầu số điện thoại khi đăng ký; không được coi những chức năng đó đã có trên `main`. Xem [trạng thái đồng bộ](docs/REPO-SYNC-STATUS.md) và [Issue #10](https://github.com/s2005on/LTDs-Book-Store/issues/10). 
+## 1. v1.3.0 Pro Edition
 
-## 1. Chức năng của mã nguồn hiện tại
-
-| Dành cho khách hàng | Dành cho quản trị |
-|---|---|
-| Xem danh mục, tìm kiếm và lọc sách Toán | Đăng nhập tài khoản quản trị |
-| Xem thông tin sách và giá bán | Thêm, sửa và xóa sách |
-| Giỏ hàng **demo** trên trình duyệt | Tải ảnh bìa JPG/PNG/WebP |
-| Đăng ký, đăng nhập và đăng xuất | Cập nhật giá, mô tả, trạng thái |
-| Xem sách **sắp ra mắt** (không đặt mua) | Quản lý sản phẩm còn hàng/hết hàng |
-
-**Phạm vi của `main`:** chưa có backend lưu đơn hàng và xử lý đơn hoàn chỉnh. Các chức năng đơn hàng, khuyến mãi, giao diện Art Edition và đăng ký số điện thoại bắt buộc thuộc các bản ZIP local mới hơn, đang chờ [đồng bộ qua Pull Request](docs/VERSION-INTAKE.md). Chưa tích hợp thanh toán trực tuyến hay vận chuyển thực tế.
+Người mua có thể lọc sách, quản lý giỏ hàng, đăng ký tài khoản, gửi đơn dùng dữ liệu thử và xem lại trạng thái trong tài khoản. Quản trị viên quản lý danh mục, ảnh bìa, tồn kho và xử lý đơn hàng. SQLite lưu đơn và từng dòng hàng. Phạm vi nghiệm thu cá nhân và kết quả thử nằm trong [hồ sơ Buổi 9](docs/B9.md).
 
 ## 2. Chạy nhanh trên Windows
 
@@ -46,14 +36,14 @@ Lần chạy đầu cần Internet để cài thư viện trong `.venv`. Dữ li
 flowchart LR
     A["Khách hàng / Quản trị<br/>HTML · CSS · JavaScript"]
     B["FastAPI<br/>server/app.py"]
-    C[("SQLite<br/>users · sessions · books")]
+    C[("SQLite<br/>users · books · orders · order_items")]
     D["Ảnh tải lên<br/>server/data/uploads"]
     A -->|"HTTP / JSON"| B
     B --> C
     B --> D
 ```
 
-Giỏ hàng của phiên bản GitHub hiện tại là chức năng demo tại trình duyệt; không phải một giao dịch đã ghi nhận trong cơ sở dữ liệu.
+Khi khách gửi đơn, FastAPI kiểm tra dữ liệu và tính tổng từ giá trên máy chủ. Khách dùng mã đơn để đối chiếu kết quả trong tài khoản.
 
 ## 4. Cấu trúc repository
 

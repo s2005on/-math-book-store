@@ -1,1 +1,1 @@
-"""LTD's Book Store application package."""
+"""Math Book Store application package."""

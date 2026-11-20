@@ -29,7 +29,7 @@ def main() -> None:
             path = name[len(PREFIX):]
             if (
                 path == ".env" or path.startswith(".venv/")
-                or path.startswith("server/data/")
+                or path.startswith("server/data/") or path.startswith("backups/")
                 or path.endswith(".sqlite3")
                 or "__pycache__" in path
             ):

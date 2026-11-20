@@ -11,6 +11,8 @@ Bản đề xuất cho Buổi 9. Tuần 1 bắt đầu khi sinh viên triển kh
 
 Sau mỗi tuần, sinh viên ghi ngày thực hiện, giờ thực tế, sản phẩm và việc chuyển tiếp theo lịch sử Git. Bắt đầu bằng [WBS](04-wbs.md) và ghi tiến độ tại [Sprint Tracker](SPRINT-TRACKER.md).
 
+**Cập nhật thực tế:** mã, test và ảnh Pro Edition đã được nhập trong đợt sửa hồ sơ B9. Phần việc tuần 2 còn lại là nghiệm thu trên đúng commit GitHub và ghi lỗi thực tế.
+
 ## Mốc sprint đã ghi trước Buổi 9
 
 | Phase | Work | Output | Status |

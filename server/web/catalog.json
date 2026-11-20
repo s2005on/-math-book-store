@@ -8,7 +8,8 @@
     "description": "Bộ sách cơ bản và nâng cao, gồm Tập 1 và Tập 2.",
     "label": "BỘ 2 TẬP",
     "sortOrder": 1,
-    "in_stock": true
+    "in_stock": true,
+    "status": "available"
   },
   {
     "id": "math7",
@@ -19,7 +20,8 @@
     "description": "Bộ sách cơ bản và nâng cao, gồm Tập 1 và Tập 2.",
     "label": "BỘ 2 TẬP",
     "sortOrder": 2,
-    "in_stock": true
+    "in_stock": true,
+    "status": "available"
   },
   {
     "id": "math8",
@@ -30,7 +32,8 @@
     "description": "Bộ sách cơ bản và nâng cao, gồm Tập 1 và Tập 2.",
     "label": "BỘ 2 TẬP",
     "sortOrder": 3,
-    "in_stock": true
+    "in_stock": true,
+    "status": "available"
   },
   {
     "id": "math9",
@@ -41,7 +44,8 @@
     "description": "Bộ sách cơ bản và nâng cao, gồm Tập 1 và Tập 2.",
     "label": "BỘ 2 TẬP",
     "sortOrder": 4,
-    "in_stock": true
+    "in_stock": true,
+    "status": "available"
   },
   {
     "id": "entrance",
@@ -49,10 +53,11 @@
     "category": "Ôn thi lớp 10",
     "price": 270000,
     "image": "assets/books/entrance-set.webp",
-    "description": "Bộ 2 cuốn luyện thi vào lớp 10: Đại số Tập 1 và Hình học Tập 2.",
+    "description": "Bộ luyện thi vào lớp 10 gồm Đại số tập 1 và Hình học tập 2, theo chương trình GDPT 2018.",
     "label": "LUYỆN THI",
     "sortOrder": 5,
-    "in_stock": true
+    "in_stock": true,
+    "status": "available"
   },
   {
     "id": "hsg8",
@@ -63,7 +68,8 @@
     "description": "Tài liệu chinh phục đề thi học sinh giỏi môn Toán dành cho học sinh lớp 8.",
     "label": "HỌC SINH GIỎI",
     "sortOrder": 6,
-    "in_stock": true
+    "in_stock": true,
+    "status": "available"
   },
   {
     "id": "63de",
@@ -74,6 +80,31 @@
     "description": "Tuyển tập 63 đề ôn thi vào lớp 10 môn Toán. Giá 139.000đ theo thông tin người bán.",
     "label": "ÔN THI LỚP 10",
     "sortOrder": 7,
-    "in_stock": true
+    "in_stock": true,
+    "status": "available"
+  },
+  {
+    "id": "hsg7",
+    "name": "Chinh phục đề thi học sinh giỏi Toán 7",
+    "category": "Lớp 7",
+    "price": 198000,
+    "image": "assets/books/hsg7.webp",
+    "description": "Sách bồi dưỡng và chinh phục đề thi học sinh giỏi Toán lớp 7. Chưa có hàng phát hành, theo thông tin người bán.",
+    "label": "HỌC SINH GIỎI · CHƯA PHÁT HÀNH",
+    "sortOrder": 18,
+    "status": "coming_soon",
+    "in_stock": false
+  },
+  {
+    "id": "upcoming-logic",
+    "name": "Toán tổ hợp và tư duy logic",
+    "category": "Ôn thi lớp 10",
+    "price": 280000,
+    "image": "assets/books/upcoming-logic.webp",
+    "description": "Sắp ra mắt: Toán tổ hợp và tư duy logic – bồi dưỡng học sinh giỏi và ôn thi vào lớp chuyên, gồm các chủ đề đếm, xác suất, bất biến, cực hạn và chiến thuật tư duy. Ngày phát hành chưa được xác nhận.",
+    "label": "SÁCH SẮP RA MẮT",
+    "sortOrder": 0,
+    "status": "coming_soon",
+    "in_stock": false
   }
 ]

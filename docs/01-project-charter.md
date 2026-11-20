@@ -1,5 +1,7 @@
 # 01 — Project Charter
 
+**Mốc hiện hành:** v1.3.0 Pro Edition. Các bảng v0.5.1 bên dưới là ghi nhận lịch sử. [Đối chiếu nguồn và phiên bản](REPO-SYNC-STATUS.md) · [Nghiệm thu Buổi 9](B9.md).
+
 ## Thông tin dự án
 
 - **Tên đề tài:** Xây dựng website thương mại điện tử bán sách tham khảo Toán.

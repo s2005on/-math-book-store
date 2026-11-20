@@ -1,25 +1,808 @@
-<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Quản lý sách · LTD's Book Store</title><style>
-:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#17293b;background:#f3f6fa}*{box-sizing:border-box}body{margin:0}button,input,select,textarea{font:inherit}button{cursor:pointer}.wrap{max-width:1160px;margin:auto;padding:22px}header{background:#12304d;color:white;padding:17px}.head{display:flex;align-items:center;justify-content:space-between;gap:16px}.head a{color:white;text-decoration:none}h1{font-size:clamp(22px,4vw,32px)}h2{font-size:19px}main{padding-bottom:80px}.card{background:white;border:1px solid #dde6ef;border-radius:18px;padding:22px;box-shadow:0 5px 24px #18324b0c;margin:18px 0}label{display:grid;gap:6px;font-weight:600;font-size:13px;margin:12px 0}input,select,textarea{padding:12px;border:1px solid #bbcbd7;border-radius:10px;width:100%;background:white;color:#213d50}input[type=checkbox]{width:auto;accent-color:#0d6981}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}.btn{border:0;border-radius:10px;padding:11px 17px;font-weight:650;background:#0a657e;color:white}.btn.alt{background:#e8f0f6;color:#193b55}.btn.warn{background:#fff0ed;color:#a33120}.muted{color:#607487;font-size:13px}.error{color:#ae2e22;font-weight:650}.success{color:#087654}.books{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.book{display:flex;align-items:center;gap:14px;border:1px solid #e2e9ef;border-radius:14px;padding:12px}.book img{width:85px;height:110px;object-fit:contain;background:#f3f6fa;border-radius:8px}.book strong{display:block;font-size:13px}.book small{display:block;color:#627587;margin:7px 0}.book .actions{margin:5px 0}.book button{font-size:12px;padding:7px 10px}.tag{padding:4px 8px;border-radius:9px;background:#e7f4eb;color:#19733d}.out{background:#ffe9e4;color:#ae3424}.preview{display:block;max-width:180px;max-height:160px;object-fit:contain;margin:9px 0}#editor{scroll-margin-top:20px}@media(max-width:680px){.wrap{padding:14px}.grid,.books{grid-template-columns:1fr}.card{padding:15px}.book img{width:70px;height:90px}}
-</style></head><body><header><div class="wrap head"><b>∑ LTD's Book Store / Quản trị</b><a href="/">← Về cửa hàng</a></div></header><main class="wrap"><h1>Quản lý kho sách</h1><p class="muted">Đăng nhập bằng tài khoản quản trị để đăng ảnh, thêm sách, sửa giá và đổi tình trạng bán hàng.</p>
-<section class="card" id="loginPanel"><h2>Đăng nhập quản trị</h2><form id="loginForm"><label>Tên đăng nhập<input name="username" autocomplete="username" required minlength="3"></label><label>Mật khẩu<input name="password" type="password" autocomplete="current-password" required></label><button class="btn">Đăng nhập</button></form><p class="muted">Tài khoản quản trị phải được cấu hình trên máy chủ bằng biến môi trường, không có mật khẩu mặc định.</p></section>
-<section id="workspace" hidden><div class="actions"><button class="btn alt" id="logout">Đăng xuất</button><span id="who" class="muted"></span></div>
-<section class="card" id="editor"><h2 id="formTitle">Thêm sách mới</h2><form id="bookForm"><div class="grid"><label>Tên sách<input name="name" maxlength="150" required placeholder="Tên sách đầy đủ"></label><label>Danh mục<select name="category"><option>Lớp 6</option><option>Lớp 7</option><option>Lớp 8</option><option>Lớp 9</option><option>Ôn thi lớp 10</option><option>Khác</option></select></label><label>Giá bán (VNĐ)<input type="number" name="price" min="0" max="100000000" placeholder="Để trống nếu chưa có giá"></label><label>Nhãn phụ<input name="label" maxlength="80" placeholder="Ví dụ: Bộ 2 tập"></label></div><label>Mô tả<textarea name="description" rows="3" maxlength="1200"></textarea></label><label>Ảnh bìa (JPG, PNG, WebP; tối đa 5 MB)<input type="file" id="imageFile" accept="image/jpeg,image/png,image/webp"></label><img class="preview" id="preview" alt="Ảnh sách" hidden><input id="imageUrl" type="hidden" required><label>Trạng thái sách<select id="bookStatus" name="status"><option value="available">Còn hàng</option><option value="sold_out">Hết hàng</option><option value="coming_soon">Sắp ra mắt – tự hiện trên banner</option></select></label><p class="muted">Sách sắp ra mắt vẫn xuất hiện trong banner giới thiệu, nhưng không thể thêm vào giỏ hàng.</p><div class="actions"><button class="btn" type="submit" id="save">Lưu sách</button><button class="btn alt" type="button" id="cancel">Tạo mục mới</button></div></form></section>
-<section class="card"><h2>Sách đang quản lý (<span id="count">0</span>)</h2><div id="books" class="books"></div></section></section><p role="status" id="message"></p></main>
-<script>
-'use strict';
-const el=id=>document.getElementById(id),f=el('bookForm');let csrf='',items=[],editing=null;
-const money=n=>n===null?'Chưa báo giá':new Intl.NumberFormat('vi-VN').format(n)+'đ';
-const safe=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const msg=(s,bad=false)=>{el('message').textContent=s;el('message').className=bad?'error':'success';};
-async function api(path,opts={}){const r=await fetch(path,{credentials:'same-origin',...opts,headers:{...(opts.body instanceof FormData?{}:{'Content-Type':'application/json'}),...(csrf?{'X-CSRF-Token':csrf}:{}),...opts.headers}});let data=await r.json().catch(()=>({}));if(!r.ok)throw Error(data.detail||'Lỗi kết nối máy chủ');return data;}
-async function check(){try{const me=await api('/api/me');csrf=me.csrf||'';if(me.role==='admin'){el('loginPanel').hidden=true;el('workspace').hidden=false;el('who').textContent='Đang đăng nhập: '+me.username;await load();}else{el('loginPanel').hidden=false;el('workspace').hidden=true;}}catch(e){msg('Trang quản trị cần chạy với máy chủ FastAPI, không thể quản lý dữ liệu qua GitHub Pages.',true);}}
-async function load(){items=await api('/api/books');el('count').textContent=items.length;el('books').innerHTML=items.map(b=>'<article class="book"><img src="'+safe(b.image)+'" alt=""><div><strong>'+safe(b.name)+'</strong><small>'+safe(b.category)+' · '+money(b.price)+' · <span class="tag '+(b.status==='available'?'':'out')+'">'+(b.status==='coming_soon'?'Sắp ra mắt':b.status==='sold_out'?'Hết hàng':'Còn hàng')+'</span></small><div class="actions"><button class="btn alt" data-edit="'+safe(b.id)+'">Chỉnh sửa</button><button class="btn warn" data-remove="'+safe(b.id)+'">Xóa</button></div></div></article>').join('');}
-function reset(){editing=null;f.reset();el('bookStatus').value='available';el('imageUrl').value='';el('preview').hidden=true;el('formTitle').textContent='Thêm sách mới';}
-el('loginForm').addEventListener('submit',async e=>{e.preventDefault();const v=Object.fromEntries(new FormData(e.target));try{const r=await api('/api/login',{method:'POST',body:JSON.stringify(v)});csrf=r.csrf;msg('Đã đăng nhập');await check();}catch(x){msg(x.message,true);}});
-el('logout').onclick=async()=>{try{await api('/api/logout',{method:'POST'});csrf='';await check();msg('Đã đăng xuất');}catch(e){msg(e.message,true);}};
-el('cancel').onclick=reset;
-el('imageFile').onchange=()=>{const file=el('imageFile').files[0];if(file){const url=URL.createObjectURL(file);el('preview').src=url;el('preview').hidden=false;}};
-el('books').onclick=async e=>{const edit=e.target.closest('[data-edit]'),remove=e.target.closest('[data-remove]');if(edit){const b=items.find(x=>x.id===edit.dataset.edit);if(!b)return;editing=b.id;for(const field of ['name','category','label','description'])f.elements[field].value=b[field]||'';f.elements.price.value=b.price??'';el('imageUrl').value=b.image;el('preview').src=b.image;el('preview').hidden=false;el('bookStatus').value=b.status||(b.in_stock?'available':'sold_out');el('imageFile').value='';el('formTitle').textContent='Chỉnh sửa: '+b.name;el('editor').scrollIntoView({behavior:'smooth'});}else if(remove){if(!confirm('Xóa sách này khỏi cửa hàng?'))return;try{await api('/api/admin/books/'+encodeURIComponent(remove.dataset.remove),{method:'DELETE'});await load();msg('Đã xóa sách');}catch(ex){msg(ex.message,true);}}};
-f.addEventListener('submit',async e=>{e.preventDefault();el('save').disabled=true;try{let image=el('imageUrl').value;const file=el('imageFile').files[0];if(file){const data=new FormData();data.append('file',file);const r=await api('/api/admin/upload',{method:'POST',body:data});image=r.url;}if(!image)throw Error('Bạn cần chọn ảnh bìa sách');const form=new FormData(f);const price=form.get('price');const body={name:form.get('name').trim(),category:form.get('category'),price:price===''?null:Number(price),description:form.get('description'),label:form.get('label'),image,status:el('bookStatus').value,in_stock:el('bookStatus').value==='available'};await api(editing?'/api/admin/books/'+encodeURIComponent(editing):'/api/admin/books',{method:editing?'PUT':'POST',body:JSON.stringify(body)});reset();await load();msg('Đã lưu sách thành công');}catch(ex){msg(ex.message,true);}finally{el('save').disabled=false;}});
-check();
-</script></body></html>
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Moderator & Quản trị · LTD's Book Store</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/admin.css?v=1.3.0">
+</head>
+<body>
+  <header class="admin-header">
+    <div class="head">
+      <a class="head-brand" href="/">
+        <span class="icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3.5A2.5 2.5 0 0 1 7.5 1H19a1.5 1.5 0 0 1 1.5 1.5v16A1.5 1.5 0 0 1 19 20H7.5A2.5 2.5 0 0 0 5 22.5z"></path><path d="M5 3.5V21a2 2 0 0 0 2 2h12.5"></path><path d="M13 1v7l-2.2-1.6L8.5 8V1"></path><line x1="9" y1="12" x2="16" y2="12"></line></svg>
+        </span>
+        <span>LTD's <em>Book Store</em> · Moderator</span>
+      </a>
+      <a class="head-link" href="/">← Xem cửa hàng trực tiếp</a>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="card" id="loginPanel" style="max-width:460px;margin:40px auto">
+      <h2>Đăng nhập quản trị</h2>
+      <p class="muted" style="margin-bottom:14px">Đăng nhập bằng tài khoản quản trị viên để điều hành kho sách, đơn hàng và khách hàng.</p>
+      <form id="loginForm">
+        <label>Tên đăng nhập<input name="username" autocomplete="username" required minlength="3"></label>
+        <label>Mật khẩu<input name="password" type="password" autocomplete="current-password" required></label>
+        <button class="btn" style="width:100%;justify-content:center;margin-top:8px">Đăng nhập hệ thống →</button>
+      </form>
+    </section>
+
+    <section id="workspace" hidden>
+      <div class="dash-top">
+        <div>
+          <h1>Bảng điều khiển Moderator · LTD's Book Store</h1>
+          <p class="muted">Quản trị tồn kho tự động, duyệt vận đơn nhanh, chăm sóc khách hàng chờ sách và điều phối ưu đãi.</p>
+        </div>
+        <div class="user-pill">
+          <span id="who" class="muted" style="font-weight:600"></span>
+          <button class="btn alt" id="logout" type="button" style="padding:6px 12px;font-size:11.5px">Đăng xuất</button>
+        </div>
+      </div>
+
+      <div class="stat-grid" id="stats">
+        <div class="stat"><b id="statBooks">0</b><span>Tổng đầu sách</span></div>
+        <div class="stat warn"><b id="statLowStock">0</b><span>Sắp hết kho (≤ 5)</span></div>
+        <div class="stat accent"><b id="statPending">0</b><span>Đơn chờ xác nhận</span></div>
+        <div class="stat gold"><b id="statShipping">0</b><span>Đơn đang giao</span></div>
+        <div class="stat"><b id="statCustomers">0</b><span>Khách hàng & Chờ sách</span></div>
+        <div class="stat"><b id="statRevenue">0đ</b><span>Doanh thu hoàn tất</span></div>
+      </div>
+
+      <div class="analytics-strip">
+        <div class="mini-card">
+          <h3>🔥 Top đầu sách bán chạy nhất</h3>
+          <div id="topBooksList"><p class="muted">Chưa có dữ liệu đơn hàng.</p></div>
+        </div>
+        <div class="mini-card">
+          <h3>💳 Tỷ trọng phương thức thanh toán</h3>
+          <div id="paymentBreakdown"><p class="muted">Chưa có giao dịch.</p></div>
+        </div>
+      </div>
+
+      <nav class="admin-tabs" aria-label="Chức năng quản trị">
+        <button class="tab-btn active" id="tabBooks" type="button">📚 Kho sách & Tồn kho</button>
+        <button class="tab-btn" id="tabOrders" type="button">📦 Đơn hàng & Vận đơn</button>
+        <button class="tab-btn" id="tabCrm" type="button">👥 Khách hàng, Đặt trước & Đánh giá</button>
+        <button class="tab-btn" id="tabPromos" type="button">🏷️ Mã giảm giá</button>
+        <button class="tab-btn" id="tabMod" type="button">🎛️ Giao diện, Vận chuyển & Liên hệ</button>
+      </nav>
+
+      <!-- TAB 1: INVENTORY & STOCK -->
+      <div id="inventoryPanel" class="inventory-layout">
+        <section class="card sticky-editor" id="editor">
+          <h2 id="formTitle">Thêm sách mới</h2>
+          <form id="bookForm">
+            <label>Tên sách<input name="name" maxlength="150" required placeholder="Nhập tên sách đầy đủ"></label>
+            <div class="grid-2">
+              <label>Danh mục<select name="category" id="bookCategorySelect"></select></label>
+              <label>Giá bán (VNĐ)<input type="number" name="price" min="0" max="100000000" placeholder="Để trống nếu chưa có"></label>
+            </div>
+            <div class="grid-3">
+              <label>Trạng thái<select id="bookStatus" name="status"><option value="available">Còn hàng</option><option value="sold_out">Hết hàng</option><option value="coming_soon">Sắp ra mắt</option></select></label>
+              <label>Tồn kho (cuốn)<input type="number" name="stock_qty" id="bookStockQty" min="0" max="100000" value="50"></label>
+              <label>Thứ tự ưu tiên<input type="number" name="sortOrder" id="bookSortOrder" min="0" max="9999" placeholder="Tự động"></label>
+            </div>
+            <label>Nhãn phụ (Kicker)<input name="label" maxlength="80" placeholder="VD: Bộ 2 tập · Bồi dưỡng HSG"></label>
+            <label>Mô tả nội dung<textarea name="description" rows="3" maxlength="1200" placeholder="Mô tả ngắn gọn nội dung & đối tượng học sinh..."></textarea></label>
+            <div class="grid-2">
+              <label>Tải ảnh bìa mới<input type="file" id="imageFile" accept="image/jpeg,image/png,image/webp"></label>
+              <label>Hoặc chọn từ thư viện<select id="libraryImageSelect"><option value="">— Chọn ảnh có sẵn —</option></select></label>
+            </div>
+            <div class="preview-box" id="previewBox">
+              <span id="previewPlaceholder">Chưa chọn ảnh bìa</span>
+              <img class="preview" id="preview" alt="Xem trước bìa sách" hidden>
+            </div>
+            <input id="imageUrl" type="hidden" required>
+            <div class="actions">
+              <button class="btn" type="submit" id="save">Lưu đầu sách</button>
+              <button class="btn alt" type="button" id="cancel">Tạo mục mới</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="card">
+          <div class="section-title"><h2 style="margin:0">Danh sách kho sách (<span id="count">0</span>)</h2></div>
+          <div class="inv-toolbar">
+            <input type="search" id="bookSearch" placeholder="Tìm nhanh theo tên sách hoặc nhãn...">
+            <select id="bookCatFilter"><option value="all">Tất cả danh mục</option></select>
+            <select id="bookStatusFilter">
+              <option value="all">Mọi trạng thái</option>
+              <option value="available">Đang bán</option>
+              <option value="low_stock">⚠️ Sắp hết kho (≤ 5)</option>
+              <option value="coming_soon">Sắp ra mắt</option>
+              <option value="sold_out">Hết hàng</option>
+            </select>
+          </div>
+          <div id="books" class="books"></div>
+        </section>
+      </div>
+
+      <!-- TAB 2: ORDERS & FULFILLMENT -->
+      <div id="orderPanel" hidden>
+        <section class="card">
+          <div class="section-title">
+            <div>
+              <h2 style="margin:0">Quản lý đơn đặt sách & Vận đơn</h2>
+              <p class="muted">Tìm kiếm nhanh, cập nhật mã vận đơn cho khách, duyệt trạng thái 1 chạm và xuất báo cáo Excel/CSV.</p>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <a class="btn alt" href="/api/admin/orders/export.csv">📥 Xuất CSV</a>
+              <button class="btn alt" id="reloadOrders" type="button">↻ Làm mới</button>
+            </div>
+          </div>
+          <div class="order-toolbar">
+            <input type="search" id="orderSearchInput" placeholder="Tìm theo Mã đơn (LTD-...), Tên người nhận, Số điện thoại hoặc Tên sách…">
+            <select id="orderStatusFilter">
+              <option value="all">Tất cả trạng thái</option>
+              <option value="pending">Chờ xác nhận</option>
+              <option value="confirmed">Đã xác nhận</option>
+              <option value="shipping">Đang giao</option>
+              <option value="completed">Hoàn tất</option>
+              <option value="cancelled">Đã hủy</option>
+            </select>
+          </div>
+          <div id="orderList"></div>
+        </section>
+      </div>
+
+      <!-- TAB 3: CRM, WAITLIST & REVIEWS -->
+      <div id="crmPanel" hidden>
+        <div class="grid-2">
+          <section class="card">
+            <h2>🔔 Danh sách khách chờ Sách sắp ra mắt (<span id="waitlistTotal">0</span>)</h2>
+            <p class="muted" style="margin-bottom:12px">Liên hệ ngay cho học sinh/phụ huynh khi đầu sách mới chính thức nhập kho.</p>
+            <div id="waitlistBox"></div>
+          </section>
+          <section class="card">
+            <h2>⭐ Quản lý Đánh giá & Nhận xét sách (<span id="reviewsTotal">0</span>)</h2>
+            <p class="muted" style="margin-bottom:12px">Kiểm duyệt các nhận xét thực tế từ độc giả hiển thị trên trang chủ.</p>
+            <div id="reviewsAdminBox"></div>
+          </section>
+        </div>
+        <section class="card">
+          <h2>👥 Danh sách Khách hàng thành viên (<span id="customersTotal">0</span>)</h2>
+          <div style="overflow-x:auto">
+            <table class="data-table">
+              <thead><tr><th>Tài khoản</th><th>Họ và tên</th><th>Số điện thoại</th><th>Địa chỉ mặc định</th><th>Số đơn</th><th>Tổng chi tiêu</th></tr></thead>
+              <tbody id="customersTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <!-- TAB 4: PROMO CODES -->
+      <div id="promoPanel" hidden>
+        <div class="grid-2">
+          <section class="card">
+            <h2>Tung mã giảm giá mới</h2>
+            <p class="muted" style="margin-bottom:12px">Mặc định ô mã giảm giá được <b>ẩn hoàn toàn</b> trên web. Khi muốn tung ưu đãi, hãy bật công tắc bên dưới; bạn có thể phát hành <b>Mã ẩn bí mật</b> (khách tự nhập) hoặc <b>Mã công khai</b> (hiện sẵn gợi ý).</p>
+            <label class="inline-check" style="padding:12px 14px;background:var(--green-soft);border-radius:14px">
+              <input type="checkbox" id="enablePromosToggle">
+              <span><b>Bật chương trình nhập mã ưu đãi trên cửa hàng</b></span>
+            </label>
+            <form id="promoForm">
+              <div class="grid-2">
+                <label>Mã Code<input id="pCode" required maxlength="24" placeholder="VD: KHAIHE20" style="text-transform:uppercase"></label>
+                <label>Loại giảm<select id="pType"><option value="percent">Theo phần trăm (%)</option><option value="fixed">Số tiền cố định (VNĐ)</option></select></label>
+              </div>
+              <div class="grid-3">
+                <label>Giá trị giảm<input id="pValue" type="number" min="1" required placeholder="VD: 10 hoặc 20000"></label>
+                <label>Đơn tối thiểu<input id="pMinOrder" type="number" min="0" value="0"></label>
+                <label>Giảm tối đa (nếu %)<input id="pMaxDiscount" type="number" min="0" value="50000"></label>
+              </div>
+              <label class="inline-check"><input type="checkbox" id="pShowPublic"> <span>Hiện chip gợi ý công khai trong giỏ hàng (Bỏ tích = <b>Mã ẩn bí mật</b>, chỉ khách biết mã mới nhập được)</span></label>
+              <button class="btn" type="submit">＋ Thêm mã giảm giá</button>
+            </form>
+          </section>
+
+          <section class="card">
+            <h2>Danh sách mã đang quản lý</h2>
+            <div id="promoList"></div>
+          </section>
+        </div>
+      </div>
+
+      <!-- TAB 5: MODERATOR (UI, SHIPPING, CATEGORIES, BANNER) -->
+      <div id="modPanel" hidden>
+        <div class="grid-2">
+          <section class="card">
+            <h2>Chủ đề, Vận chuyển & Thông tin liên hệ</h2>
+            <div class="grid-2">
+              <label>Tên cửa hàng / Người phụ trách<input id="modContactName" maxlength="80"></label>
+              <label>Hotline tư vấn<input id="modContactPhone" maxlength="30"></label>
+            </div>
+            <label>Ghi chú khung giờ hỗ trợ<input id="modContactNote" maxlength="120"></label>
+
+            <hr style="border:0;border-top:1px solid var(--line);margin:16px 0">
+            <h2 style="margin-bottom:6px">Chính sách Phí vận chuyển & Freeship</h2>
+            <label class="inline-check" style="margin-bottom:10px">
+              <input type="checkbox" id="modEnableShipping">
+              <span>Tự động cộng phí vận chuyển cho đơn dưới ngưỡng Freeship</span>
+            </label>
+            <div class="grid-2">
+              <label>Ngưỡng miễn phí vận chuyển (VNĐ)<input type="number" id="modFreeshipThreshold" min="0" step="10000" value="200000"></label>
+              <label>Phí vận chuyển tiêu chuẩn (VNĐ)<input type="number" id="modShippingFee" min="0" step="1000" value="25000"></label>
+            </div>
+
+            <hr style="border:0;border-top:1px solid var(--line);margin:16px 0">
+            <label>Bảng màu chủ đạo (Artaka Theme)</label>
+            <div class="theme-swatches" id="themeSwatches">
+              <div class="swatch" data-theme="emerald"><i style="background:linear-gradient(90deg,#091d28,#057699,#52d0ef)"></i>Artaka Cyan</div>
+              <div class="swatch" data-theme="navy"><i style="background:linear-gradient(90deg,#0a1936,#1d63b8,#60a5fa)"></i>Royal Ocean</div>
+              <div class="swatch" data-theme="burgundy"><i style="background:linear-gradient(90deg,#191336,#5b4bc4,#a5b4fc)"></i>Indigo Aurora</div>
+              <div class="swatch" data-theme="slate"><i style="background:linear-gradient(90deg,#0f172a,#0e7490,#38bdf8)"></i>Slate Cyan</div>
+            </div>
+            <div class="grid-2" style="margin-top:10px">
+              <label class="inline-check"><input type="checkbox" id="modShowAdvisor"> <span>Hiện thanh Gợi ý lộ trình học</span></label>
+              <label class="inline-check"><input type="checkbox" id="modShowComingSoon"> <span>Hiện mục Sách sắp ra mắt</span></label>
+            </div>
+
+            <hr style="border:0;border-top:1px solid var(--line);margin:16px 0">
+            <h2 style="margin-bottom:6px">Danh mục sách (Thêm mục ngoài sách Toán)</h2>
+            <div class="cat-pills" id="modCategoryPills"></div>
+            <div style="display:flex;gap:8px;margin-top:10px">
+              <input id="newCatInput" placeholder="VD: Vật lý, Tiếng Anh, Sách kỹ năng..." maxlength="40">
+              <button class="btn alt" type="button" id="addCatBtn" style="white-space:nowrap">＋ Thêm mục</button>
+            </div>
+            <div class="actions">
+              <button class="btn" type="button" id="saveSiteCfgBtn">Lưu cấu hình Cửa hàng & Vận chuyển</button>
+            </div>
+          </section>
+
+          <section class="card">
+            <h2>Chỉnh sửa Banner quảng cáo</h2>
+            <form id="bannerForm">
+              <label>Dòng thông báo trên cùng<input name="announcement_text" required maxlength="180"></label>
+              <div class="grid-2">
+                <label>Nhãn nhỏ Hero<input name="hero_eyebrow" required maxlength="100"></label>
+                <label>Tiêu đề Hero (Dòng 1)<input name="hero_title_line1" required maxlength="100"></label>
+              </div>
+              <label>Tiêu đề Hero (Chữ nổi bật)<input name="hero_title_highlight" required maxlength="100"></label>
+              <label>Mô tả Banner Hero<textarea name="hero_description" rows="2" required maxlength="400"></textarea></label>
+              <div class="grid-2">
+                <label>Tem tròn trên<input name="hero_sticker_top" required maxlength="20"></label>
+                <label>Tem tròn dưới<input name="hero_sticker_bottom" required maxlength="20"></label>
+              </div>
+              <div class="grid-2">
+                <label>Thẻ ghi chú (Tiêu đề)<input name="hero_note_title" required maxlength="80"></label>
+                <label>Thẻ ghi chú (Phụ đề)<input name="hero_note_sub" required maxlength="100"></label>
+              </div>
+              <div class="grid-2">
+                <label>Nhãn Sắp ra mắt<input name="coming_soon_eyebrow" required maxlength="100"></label>
+                <label>Tiêu đề Sắp ra mắt<input name="coming_soon_title" required maxlength="60"></label>
+              </div>
+              <label>Chữ nổi bật Sắp ra mắt<input name="coming_soon_highlight" required maxlength="60"></label>
+              <label>Mô tả Sắp ra mắt<textarea name="coming_soon_description" rows="2" required maxlength="400"></textarea></label>
+              <div class="actions">
+                <button class="btn" type="submit" id="saveBannerBtn">Lưu Banner quảng cáo</button>
+                <button class="btn alt" type="button" id="resetBannerBtn">Khôi phục mặc định</button>
+              </div>
+            </form>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <p role="status" id="message" class="toast-msg" hidden></p>
+  </main>
+
+  <script>
+    'use strict';
+    const el = id => document.getElementById(id);
+    const f = el('bookForm'), bf = el('bannerForm');
+    let csrf = '', items = [], editing = null, currentOrders = [], siteCfg = null, toastTimer = null;
+
+    const money = n => n === null || n === undefined ? 'Chưa báo giá' : new Intl.NumberFormat('vi-VN').format(n) + 'đ';
+    const safe = v => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const msg = (s, bad = false) => {
+      const m = el('message');
+      m.textContent = s; m.className = bad ? 'toast-msg error' : 'toast-msg'; m.hidden = false;
+      clearTimeout(toastTimer); toastTimer = setTimeout(() => { m.hidden = true; }, 3200);
+    };
+
+    async function api(path, opts = {}) {
+      const r = await fetch(path, {
+        credentials: 'same-origin', ...opts,
+        headers: { ...(opts.body instanceof FormData ? {} : { 'Content-Type': 'application/json' }), ...(csrf ? { 'X-CSRF-Token': csrf } : {}), ...opts.headers }
+      });
+      const data = await r.json().catch(() => ({}));
+      if (!r.ok) throw Error(data.detail || 'Lỗi kết nối máy chủ');
+      return data;
+    }
+
+    async function loadLibraryImages() {
+      try {
+        const res = await api('/api/admin/library-images');
+        const all = [...(res.builtin || []), ...(res.uploaded || [])];
+        el('libraryImageSelect').innerHTML = '<option value="">— Chọn ảnh có sẵn —</option>' +
+          all.map(u => `<option value="${safe(u)}">${safe(u.split('/').pop())}</option>`).join('');
+      } catch {}
+    }
+
+    async function check() {
+      try {
+        const me = await api('/api/me');
+        csrf = me.csrf || '';
+        if (me.role === 'admin') {
+          el('loginPanel').hidden = true; el('workspace').hidden = false;
+          el('who').textContent = 'Moderator: ' + me.username;
+          await Promise.all([loadSiteConfig(), load(), stats(), loadBannerForm(), loadLibraryImages()]);
+        } else {
+          el('loginPanel').hidden = false; el('workspace').hidden = true;
+        }
+      } catch { msg('Trang quản trị cần chạy với máy chủ FastAPI.', true); }
+    }
+
+    function syncCategoryDropdowns() {
+      const cats = (siteCfg && siteCfg.categories) || ['Lớp 6', 'Lớp 7', 'Lớp 8', 'Lớp 9', 'Ôn thi lớp 10', 'Khác'];
+      el('bookCategorySelect').innerHTML = cats.map(c => `<option>${safe(c)}</option>`).join('');
+      el('bookCatFilter').innerHTML = '<option value="all">Tất cả danh mục</option>' + cats.map(c => `<option>${safe(c)}</option>`).join('');
+      el('modCategoryPills').innerHTML = cats.map(c => `<span class="cat-pill">${safe(c)} <button type="button" data-del-cat="${safe(c)}" title="Xóa mục">×</button></span>`).join('');
+    }
+
+    function renderBooks() {
+      const q = el('bookSearch').value.trim().toLowerCase();
+      const cat = el('bookCatFilter').value;
+      const st = el('bookStatusFilter').value;
+      const filtered = items.filter(b => {
+        const bStatus = b.status || (b.in_stock ? 'available' : 'sold_out');
+        const qty = Number(b.stock_qty ?? 0);
+        const matchSt = st === 'all' || (st === 'low_stock' ? (bStatus === 'available' && qty <= 5) : bStatus === st);
+        return (!q || (b.name + ' ' + (b.label || '')).toLowerCase().includes(q)) && (cat === 'all' || b.category === cat) && matchSt;
+      });
+      el('count').textContent = `${filtered.length}/${items.length}`;
+      el('books').innerHTML = filtered.length ? filtered.map(b => {
+        const stKey = b.status || (b.in_stock ? 'available' : 'sold_out');
+        const qty = Number(b.stock_qty ?? 0);
+        const isLow = stKey === 'available' && qty <= 5;
+        const tagClass = stKey === 'coming_soon' ? 'soon' : stKey === 'sold_out' ? 'out' : (isLow ? 'low' : '');
+        const tagText = stKey === 'coming_soon' ? `Sắp ra mắt (${b.waitlist_count || 0} chờ)` : stKey === 'sold_out' ? 'Hết hàng (0)' : (isLow ? `Sắp hết (${qty} cuốn)` : `Còn ${qty} cuốn`);
+        const ratingNote = b.review_count ? ` · ★${b.rating_avg}` : '';
+        return `<article class="book">
+          <img src="${safe(b.image)}" alt="">
+          <div class="book-info">
+            <strong>${safe(b.name)}</strong>
+            <small>${safe(b.category)} · <b>${money(b.price)}</b> · <span class="tag ${tagClass}">${tagText}</span>${ratingNote}</small>
+            <div class="actions">
+              <button class="btn alt" type="button" data-edit="${safe(b.id)}">Chỉnh sửa</button>
+              <button class="btn alt" type="button" data-plus10="${safe(b.id)}" title="Nhập thêm nhanh 10 cuốn">+10 kho</button>
+              <button class="btn warn" type="button" data-remove="${safe(b.id)}">Xóa</button>
+            </div>
+          </div>
+        </article>`;
+      }).join('') : '<p class="muted">Không có đầu sách nào khớp bộ lọc.</p>';
+    }
+
+    async function load() { items = await api('/api/books'); renderBooks(); }
+    el('bookSearch').addEventListener('input', renderBooks);
+    el('bookCatFilter').addEventListener('change', renderBooks);
+    el('bookStatusFilter').addEventListener('change', renderBooks);
+
+    function reset() {
+      editing = null; f.reset(); el('bookStatus').value = 'available'; el('bookStockQty').value = 50; el('bookSortOrder').value = '';
+      el('imageUrl').value = ''; el('libraryImageSelect').value = '';
+      el('preview').hidden = true; el('previewPlaceholder').hidden = false; el('formTitle').textContent = 'Thêm sách mới';
+    }
+
+    el('loginForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      try { const r = await api('/api/login', { method: 'POST', body: JSON.stringify(Object.fromEntries(new FormData(e.target))) }); csrf = r.csrf; msg('Đã đăng nhập quản trị'); await check(); }
+      catch (x) { msg(x.message, true); }
+    });
+    el('logout').onclick = async () => { try { await api('/api/logout', { method: 'POST' }); csrf = ''; await check(); } catch (e) { msg(e.message, true); } };
+    el('cancel').onclick = reset;
+    el('imageFile').onchange = () => {
+      const file = el('imageFile').files[0];
+      if (file) { el('preview').src = URL.createObjectURL(file); el('preview').hidden = false; el('previewPlaceholder').hidden = true; el('libraryImageSelect').value = ''; }
+    };
+    el('libraryImageSelect').onchange = () => {
+      const val = el('libraryImageSelect').value;
+      if (val) { el('imageUrl').value = val; el('preview').src = val.startsWith('/') ? val : '/' + val; el('preview').hidden = false; el('previewPlaceholder').hidden = true; el('imageFile').value = ''; }
+    };
+
+    el('books').onclick = async e => {
+      const edit = e.target.closest('[data-edit]'), remove = e.target.closest('[data-remove]'), plus10 = e.target.closest('[data-plus10]');
+      if (edit) {
+        const b = items.find(x => x.id === edit.dataset.edit); if (!b) return;
+        editing = b.id;
+        for (const field of ['name', 'category', 'label', 'description']) f.elements[field].value = b[field] || '';
+        f.elements.price.value = b.price ?? '';
+        el('bookStockQty').value = b.stock_qty ?? 50;
+        el('bookSortOrder').value = b.sortOrder ?? '';
+        el('imageUrl').value = b.image;
+        el('preview').src = b.image.startsWith('/') ? b.image : '/' + b.image;
+        el('preview').hidden = false; el('previewPlaceholder').hidden = true;
+        el('bookStatus').value = b.status || (b.in_stock ? 'available' : 'sold_out');
+        el('formTitle').textContent = 'Chỉnh sửa: ' + b.name; el('editor').scrollIntoView({ behavior: 'smooth' });
+      } else if (plus10) {
+        const b = items.find(x => x.id === plus10.dataset.plus10); if (!b) return;
+        const newQty = Number(b.stock_qty || 0) + 10;
+        const newStatus = b.status === 'coming_soon' ? 'coming_soon' : 'available';
+        try {
+          await api('/api/admin/books/' + encodeURIComponent(b.id), {
+            method: 'PUT',
+            body: JSON.stringify({ name: b.name, category: b.category, price: b.price, image: b.image, description: b.description || '', label: b.label || '', status: newStatus, in_stock: newStatus === 'available', stock_qty: newQty, sortOrder: b.sortOrder })
+          });
+          await load(); await stats(); msg(`Đã cộng thêm 10 cuốn cho "${b.name}" (Tồn: ${newQty})`);
+        } catch (ex) { msg(ex.message, true); }
+      } else if (remove) {
+        if (!confirm('Xóa sách này khỏi cửa hàng?')) return;
+        try { await api('/api/admin/books/' + encodeURIComponent(remove.dataset.remove), { method: 'DELETE' }); await load(); await stats(); msg('Đã xóa sách'); }
+        catch (ex) { msg(ex.message, true); }
+      }
+    };
+
+    f.addEventListener('submit', async e => {
+      e.preventDefault(); el('save').disabled = true;
+      try {
+        let image = el('imageUrl').value;
+        const file = el('imageFile').files[0];
+        if (file) {
+          const data = new FormData(); data.append('file', file);
+          const r = await api('/api/admin/upload', { method: 'POST', body: data });
+          image = r.url;
+          await loadLibraryImages();
+        }
+        if (!image) throw Error('Bạn cần tải ảnh mới hoặc chọn ảnh bìa có sẵn trong thư viện');
+        const form = new FormData(f), price = form.get('price'), sortVal = form.get('sortOrder');
+        const stVal = el('bookStatus').value;
+        const qtyVal = Number(form.get('stock_qty') || 0);
+        const body = {
+          name: form.get('name').trim(),
+          category: form.get('category'),
+          price: price === '' ? null : Number(price),
+          description: form.get('description'),
+          label: form.get('label'),
+          image,
+          status: stVal,
+          in_stock: stVal === 'available' && qtyVal > 0,
+          stock_qty: qtyVal,
+          sortOrder: sortVal === '' ? null : Number(sortVal)
+        };
+        await api(editing ? '/api/admin/books/' + encodeURIComponent(editing) : '/api/admin/books', { method: editing ? 'PUT' : 'POST', body: JSON.stringify(body) });
+        reset(); await load(); await stats(); msg('Đã lưu đầu sách & tồn kho thành công');
+      } catch (ex) { msg(ex.message, true); } finally { el('save').disabled = false; }
+    });
+
+    const statusLabels = { pending: 'Chờ xác nhận', confirmed: 'Đã xác nhận', shipping: 'Đang giao', completed: 'Hoàn tất', cancelled: 'Đã hủy' };
+    const pmLabels = { cod: 'Thanh toán COD', bank_qr: 'VietQR 24/7', momo: 'Ví MoMo', vnpay: 'VNPAY-QR' };
+
+    async function stats() {
+      try {
+        const x = await api('/api/admin/stats');
+        el('statBooks').textContent = `${x.books} (${x.coming_soon} sắp mở)`;
+        el('statLowStock').textContent = x.low_stock ?? 0;
+        el('statPending').textContent = x.pending;
+        el('statShipping').textContent = x.shipping ?? 0;
+        el('statCustomers').textContent = `${x.customers ?? 0} KH · ${x.waitlist_count ?? 0} chờ`;
+        el('statRevenue').textContent = new Intl.NumberFormat('vi-VN').format(x.completed_revenue || 0) + 'đ';
+
+        const tb = x.top_books || [];
+        el('topBooksList').innerHTML = tb.length
+          ? tb.map((b, i) => `<div class="top-book-bar"><span><b>#${i + 1}</b> ${safe(b.name)}</span><strong>${b.sold_qty} cuốn · ${money(b.revenue)}</strong></div>`).join('')
+          : '<p class="muted">Chưa phát sinh đơn hàng.</p>';
+
+        const bp = x.by_payment || [];
+        el('paymentBreakdown').innerHTML = bp.length
+          ? bp.map(p => `<div class="top-book-bar"><span>${safe(pmLabels[p.payment_method] || p.payment_method)} (${p.count} đơn)</span><strong>${money(p.revenue)}</strong></div>`).join('')
+          : '<p class="muted">Chưa phát sinh giao dịch.</p>';
+      } catch {}
+    }
+
+    function switchTab(tab) {
+      el('inventoryPanel').hidden = tab !== 'books';
+      el('orderPanel').hidden = tab !== 'orders';
+      el('crmPanel').hidden = tab !== 'crm';
+      el('promoPanel').hidden = tab !== 'promos';
+      el('modPanel').hidden = tab !== 'mod';
+      el('tabBooks').classList.toggle('active', tab === 'books');
+      el('tabOrders').classList.toggle('active', tab === 'orders');
+      el('tabCrm').classList.toggle('active', tab === 'crm');
+      el('tabPromos').classList.toggle('active', tab === 'promos');
+      el('tabMod').classList.toggle('active', tab === 'mod');
+      if (tab === 'orders') loadOrders();
+      if (tab === 'crm') loadCrmData();
+    }
+    el('tabBooks').onclick = () => switchTab('books');
+    el('tabOrders').onclick = () => switchTab('orders');
+    el('tabCrm').onclick = () => switchTab('crm');
+    el('tabPromos').onclick = () => switchTab('promos');
+    el('tabMod').onclick = () => switchTab('mod');
+
+    function renderOrders() {
+      const filter = el('orderStatusFilter').value;
+      const q = el('orderSearchInput').value.trim().toLowerCase();
+      const list = currentOrders.filter(o => {
+        const matchSt = filter === 'all' || o.status === filter;
+        const hay = `${o.order_number} ${o.customer_name} ${o.phone} ${o.address} ${o.items.map(i => i.name).join(' ')}`.toLowerCase();
+        return matchSt && (!q || hay.includes(q));
+      });
+      el('orderList').innerHTML = list.length ? list.map(o => {
+        const lines = o.items.map(x => `<div>• ${safe(x.name)} × <b>${x.quantity}</b> — <b>${money(x.price * x.quantity)}</b></div>`).join('');
+        const choices = Object.entries(statusLabels).map(([v, l]) => `<option value="${v}" ${o.status === v ? 'selected' : ''}>${l}</option>`).join('');
+        const pm = pmLabels[o.payment_method] || 'Thanh toán COD';
+        const disc = o.discount_amount > 0 ? ` · Mã <b>${safe(o.promo_code)}</b> (-${money(o.discount_amount)})` : '';
+        const ship = o.shipping_fee > 0 ? ` · Ship: ${money(o.shipping_fee)}` : ' · Freeship';
+        const locked = ['cancelled', 'completed'].includes(o.status);
+        const nextQuick = o.status === 'pending'
+          ? `<button class="btn" type="button" data-quick-status="confirmed" data-order-id="${safe(o.id)}">✓ Xác nhận ngay</button>`
+          : o.status === 'confirmed'
+            ? `<button class="btn" type="button" data-quick-status="shipping" data-order-id="${safe(o.id)}">🚚 Giao vận chuyển</button>`
+            : o.status === 'shipping'
+              ? `<button class="btn" type="button" data-quick-status="completed" data-order-id="${safe(o.id)}">★ Đánh dấu Hoàn tất</button>`
+              : '';
+        return `<article class="order-row">
+          <div class="order-head">
+            <div>
+              <b>${safe(o.order_number)}</b> <span class="pm-pill">${safe(pm)}</span>
+              <div class="order-details">${new Date(o.created_at).toLocaleString('vi-VN')} · Người nhận: <b>${safe(o.customer_name)}</b> (${safe(o.phone)})</div>
+            </div>
+            <span class="status-pill">${safe(statusLabels[o.status] || o.status)}</span>
+          </div>
+          <div class="order-items">${lines}</div>
+          <div class="order-details">Địa chỉ giao: <b>${safe(o.address)}</b><br>Ghi chú khách: ${safe(o.note || 'Không có')}${ship}${disc}</div>
+          <div class="order-meta-inputs">
+            <input type="text" data-tracking="${safe(o.id)}" value="${safe(o.tracking_code || '')}" placeholder="Mã vận đơn (VD: SPX123456…)" ${locked ? 'disabled' : ''}>
+            <input type="text" data-admin-note="${safe(o.id)}" value="${safe(o.admin_note || '')}" placeholder="Ghi chú của shop gửi khách hàng…" ${locked ? 'disabled' : ''}>
+          </div>
+          <div class="order-actions">
+            <b style="font-size:15px;color:var(--green-2)">Tổng thu: ${money(o.total)}</b>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+              ${nextQuick}
+              <select data-status="${safe(o.id)}" ${locked ? 'disabled' : ''}>${choices}</select>
+              <button class="btn alt" type="button" data-save-order="${safe(o.id)}" ${locked ? 'disabled' : ''}>Lưu cập nhật</button>
+              <button class="btn alt" type="button" data-print-slip="${safe(o.id)}">🖨️ Phiếu giao</button>
+            </div>
+          </div>
+        </article>`;
+      }).join('') : '<p class="muted">Không có đơn hàng nào khớp tìm kiếm.</p>';
+    }
+
+    async function loadOrders() { try { currentOrders = await api('/api/admin/orders'); renderOrders(); } catch (e) { msg(e.message, true); } }
+    el('reloadOrders').onclick = loadOrders;
+    el('orderStatusFilter').onchange = renderOrders;
+    el('orderSearchInput').addEventListener('input', renderOrders);
+
+    async function submitOrderUpdate(id, forcedStatus = null) {
+      const select = el('orderList').querySelector(`[data-status="${id}"]`);
+      const trackIn = el('orderList').querySelector(`[data-tracking="${id}"]`);
+      const noteIn = el('orderList').querySelector(`[data-admin-note="${id}"]`);
+      const status = forcedStatus || (select ? select.value : 'pending');
+      await api('/api/admin/orders/' + encodeURIComponent(id), {
+        method: 'PUT',
+        body: JSON.stringify({
+          status,
+          tracking_code: trackIn ? trackIn.value.trim() : '',
+          admin_note: noteIn ? noteIn.value.trim() : ''
+        })
+      });
+      await Promise.all([loadOrders(), load(), stats()]);
+      msg('Đã cập nhật đơn hàng & đồng bộ kho!');
+    }
+
+    el('orderList').onclick = async e => {
+      const saveBtn = e.target.closest('[data-save-order]');
+      const quickBtn = e.target.closest('[data-quick-status]');
+      const slipBtn = e.target.closest('[data-print-slip]');
+      if (slipBtn) {
+        const o = currentOrders.find(x => x.id === slipBtn.dataset.printSlip);
+        if (!o) return;
+        const w = window.open('', '_blank', 'width=700,height=640');
+        if (!w) return;
+        const rows = o.items.map(i => `<tr><td style="padding:7px 0;border-bottom:1px solid #ddd">${safe(i.name)}</td><td style="text-align:center;border-bottom:1px solid #ddd"><b>${i.quantity}</b></td><td style="text-align:right;border-bottom:1px solid #ddd">${money(i.price * i.quantity)}</td></tr>`).join('');
+        w.document.write(`<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>Phiếu giao ${safe(o.order_number)}</title><style>body{font-family:system-ui,sans-serif;padding:28px;max-width:600px;margin:auto;border:2px dashed #091d28}table{width:100%;border-collapse:collapse;margin:14px 0}</style></head><body><h2 style="margin:0">PHIẾU GIAO SÁCH — LTD's Book Store</h2><p>Mã đơn: <b>${safe(o.order_number)}</b> ${o.tracking_code ? `· Vận đơn: <b>${safe(o.tracking_code)}</b>` : ''}</p><p>Người nhận: <b>${safe(o.customer_name)}</b> — ĐT: <b>${safe(o.phone)}</b><br>Địa chỉ: ${safe(o.address)}<br>Ghi chú: ${safe(o.note || 'Không có')}</p><table><thead><tr><th style="text-align:left">Đầu sách</th><th>SL</th><th style="text-align:right">Thành tiền</th></tr></thead><tbody>${rows}</tbody></table><h3 style="text-align:right">Thu hộ / Tổng thanh toán: ${money(o.total)} (${safe(pmLabels[o.payment_method] || 'COD')})</h3><script>window.onload=()=>window.print()<\/script></body></html>`);
+        w.document.close();
+        return;
+      }
+      if (quickBtn) {
+        quickBtn.disabled = true;
+        try { await submitOrderUpdate(quickBtn.dataset.orderId, quickBtn.dataset.quickStatus); }
+        catch (err) { msg(err.message, true); } finally { quickBtn.disabled = false; }
+      } else if (saveBtn) {
+        saveBtn.disabled = true;
+        try { await submitOrderUpdate(saveBtn.dataset.saveOrder); }
+        catch (err) { msg(err.message, true); } finally { saveBtn.disabled = false; }
+      }
+    };
+
+    // CRM, Waitlist & Reviews
+    async function loadCrmData() {
+      try {
+        const [customers, waitlist, reviews] = await Promise.all([
+          api('/api/admin/customers'),
+          api('/api/admin/waitlist'),
+          api('/api/admin/reviews')
+        ]);
+        el('customersTotal').textContent = customers.length;
+        el('customersTableBody').innerHTML = customers.length ? customers.map(c => `
+          <tr>
+            <td><b>@${safe(c.username)}</b></td>
+            <td>${safe(c.full_name || '—')}</td>
+            <td>${safe(c.phone || '—')}</td>
+            <td>${safe(c.address || 'Chưa lưu')}</td>
+            <td><b>${c.order_count}</b> đơn</td>
+            <td><b style="color:var(--green-2)">${money(c.total_spent)}</b></td>
+          </tr>
+        `).join('') : '<tr><td colspan="6" class="muted">Chưa có khách hàng thành viên.</td></tr>';
+
+        el('waitlistTotal').textContent = waitlist.length;
+        el('waitlistBox').innerHTML = waitlist.length ? waitlist.map(w => `
+          <div class="promo-row">
+            <div>
+              <b>${safe(w.customer_name)}</b> (${safe(w.phone)}) · <span class="tag ${w.notified ? '' : 'soon'}">${w.notified ? 'Đã liên hệ' : 'Chờ báo mở bán'}</span>
+              <div class="muted">Sách chờ: <b>${safe(w.book_name)}</b>${w.note ? ` · "${safe(w.note)}"` : ''}</div>
+            </div>
+            <div style="display:flex;gap:6px">
+              <button class="btn alt" type="button" data-notify-wait="${w.id}" data-notified="${w.notified ? '0' : '1'}">${w.notified ? 'Đánh dấu chưa báo' : '✓ Đã báo khách'}</button>
+              <button class="btn warn" type="button" data-del-wait="${w.id}">Xóa</button>
+            </div>
+          </div>
+        `).join('') : '<p class="muted">Chưa có khách đăng ký nhận thông báo sách sắp ra mắt.</p>';
+
+        el('reviewsTotal').textContent = reviews.length;
+        el('reviewsAdminBox').innerHTML = reviews.length ? reviews.map(r => `
+          <div class="promo-row">
+            <div>
+              <b>${safe(r.author_name)}</b> · <span style="color:#f59e0b">${'★'.repeat(r.rating)}</span> · <small class="muted">${safe(r.book_name || r.book_id)}</small>
+              <div class="muted">${safe(r.comment)}</div>
+            </div>
+            <button class="btn warn" type="button" data-del-rev="${r.id}">Xóa</button>
+          </div>
+        `).join('') : '<p class="muted">Chưa có đánh giá nào từ độc giả.</p>';
+      } catch (e) { msg(e.message, true); }
+    }
+
+    el('waitlistBox').onclick = async e => {
+      const nb = e.target.closest('[data-notify-wait]'), db = e.target.closest('[data-del-wait]');
+      if (nb) {
+        await api('/api/admin/waitlist/' + nb.dataset.notifyWait, { method: 'PUT', body: JSON.stringify({ notified: nb.dataset.notified === '1' }) });
+        await Promise.all([loadCrmData(), stats()]);
+        msg('Đã cập nhật trạng thái liên hệ khách chờ sách');
+      } else if (db) {
+        await api('/api/admin/waitlist/' + db.dataset.delWait, { method: 'DELETE' });
+        await Promise.all([loadCrmData(), stats()]);
+        msg('Đã xóa đăng ký chờ');
+      }
+    };
+    el('reviewsAdminBox').onclick = async e => {
+      const del = e.target.closest('[data-del-rev]');
+      if (!del) return;
+      await api('/api/admin/reviews/' + del.dataset.delRev, { method: 'DELETE' });
+      await Promise.all([loadCrmData(), load(), stats()]);
+      msg('Đã xóa đánh giá');
+    };
+
+    // Site Config (Moderator + Shipping + Promos)
+    async function loadSiteConfig() {
+      siteCfg = await api('/api/admin/site-config');
+      syncCategoryDropdowns();
+      el('enablePromosToggle').checked = Boolean(siteCfg.enable_promos);
+      el('modContactName').value = siteCfg.contact_name || '';
+      el('modContactPhone').value = siteCfg.contact_phone || '';
+      el('modContactNote').value = siteCfg.contact_note || '';
+      el('modEnableShipping').checked = Boolean(siteCfg.enable_shipping_fee);
+      el('modFreeshipThreshold').value = siteCfg.freeship_threshold ?? 200000;
+      el('modShippingFee').value = siteCfg.shipping_fee ?? 25000;
+      el('modShowAdvisor').checked = siteCfg.show_advisor !== false;
+      el('modShowComingSoon').checked = siteCfg.show_coming_soon !== false;
+      document.querySelectorAll('.swatch').forEach(sw => sw.classList.toggle('active', sw.dataset.theme === (siteCfg.theme_preset || 'emerald')));
+      renderPromos();
+    }
+
+    async function saveSiteConfig(notice = 'Đã lưu cấu hình') {
+      const res = await api('/api/admin/site-config', { method: 'PUT', body: JSON.stringify(siteCfg) });
+      siteCfg = res.config;
+      syncCategoryDropdowns();
+      renderPromos();
+      msg(notice);
+    }
+
+    function renderPromos() {
+      const list = (siteCfg && siteCfg.promos) || [];
+      el('promoList').innerHTML = list.length ? list.map((pr, idx) => {
+        const desc = pr.type === 'percent' ? `Giảm ${pr.value}% (tối đa ${money(pr.max_discount)})` : `Giảm ${money(pr.value)}`;
+        return `<div class="promo-row">
+          <div><b>${safe(pr.code)}</b> · <span class="tag ${pr.active ? '' : 'out'}">${pr.active ? 'Đang bật' : 'Đã tắt'}</span><div class="muted">${desc} · Đơn từ ${money(pr.min_order)} · ${pr.show_public ? 'Hiện gợi ý công khai' : 'Mã riêng tư'}</div></div>
+          <div style="display:flex;gap:6px"><button class="btn alt" type="button" data-toggle-promo="${idx}">${pr.active ? 'Tắt' : 'Bật'}</button><button class="btn warn" type="button" data-del-promo="${idx}">Xóa</button></div>
+        </div>`;
+      }).join('') : '<p class="muted">Chưa có mã giảm giá nào. Trang bán hàng hiện đang ẩn ô nhập mã.</p>';
+    }
+
+    el('enablePromosToggle').onchange = async () => {
+      siteCfg.enable_promos = el('enablePromosToggle').checked;
+      await saveSiteConfig(siteCfg.enable_promos ? 'Đã bật tính năng mã giảm giá' : 'Đã tắt mã giảm giá trên trang bán hàng');
+    };
+
+    el('promoForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const code = el('pCode').value.trim().toUpperCase();
+      if (!code) return;
+      siteCfg.promos = (siteCfg.promos || []).filter(p => p.code !== code);
+      siteCfg.promos.push({
+        code, type: el('pType').value, value: Number(el('pValue').value),
+        min_order: Number(el('pMinOrder').value || 0), max_discount: Number(el('pMaxDiscount').value || 0),
+        active: true, show_public: el('pShowPublic').checked
+      });
+      siteCfg.enable_promos = true;
+      el('enablePromosToggle').checked = true;
+      await saveSiteConfig(`Đã tung mã giảm giá ${code}`);
+      el('promoForm').reset();
+    });
+
+    el('promoList').onclick = async e => {
+      const tog = e.target.closest('[data-toggle-promo]'), del = e.target.closest('[data-del-promo]');
+      if (tog) {
+        const idx = Number(tog.dataset.togglePromo);
+        siteCfg.promos[idx].active = !siteCfg.promos[idx].active;
+        await saveSiteConfig('Đã cập nhật trạng thái mã');
+      } else if (del) {
+        siteCfg.promos.splice(Number(del.dataset.delPromo), 1);
+        await saveSiteConfig('Đã xóa mã giảm giá');
+      }
+    };
+
+    el('themeSwatches').onclick = e => {
+      const sw = e.target.closest('.swatch'); if (!sw) return;
+      siteCfg.theme_preset = sw.dataset.theme;
+      document.querySelectorAll('.swatch').forEach(x => x.classList.toggle('active', x === sw));
+    };
+
+    el('addCatBtn').onclick = () => {
+      const val = el('newCatInput').value.trim();
+      if (!val || siteCfg.categories.includes(val)) return;
+      siteCfg.categories.push(val);
+      el('newCatInput').value = '';
+      syncCategoryDropdowns();
+    };
+
+    el('modCategoryPills').onclick = e => {
+      const btn = e.target.closest('[data-del-cat]'); if (!btn) return;
+      if (siteCfg.categories.length <= 1) return msg('Cần giữ ít nhất 1 danh mục', true);
+      siteCfg.categories = siteCfg.categories.filter(c => c !== btn.dataset.delCat);
+      syncCategoryDropdowns();
+    };
+
+    el('saveSiteCfgBtn').onclick = async () => {
+      siteCfg.contact_name = el('modContactName').value.trim() || 'LTD Book Store';
+      siteCfg.contact_phone = el('modContactPhone').value.trim() || '0888 686 868';
+      siteCfg.contact_note = el('modContactNote').value.trim();
+      siteCfg.enable_shipping_fee = el('modEnableShipping').checked;
+      siteCfg.freeship_threshold = Number(el('modFreeshipThreshold').value || 200000);
+      siteCfg.shipping_fee = Number(el('modShippingFee').value || 25000);
+      siteCfg.show_advisor = el('modShowAdvisor').checked;
+      siteCfg.show_coming_soon = el('modShowComingSoon').checked;
+      await saveSiteConfig('Đã lưu cấu hình Cửa hàng, Vận chuyển & Giao diện');
+    };
+
+    // Banner Editor
+    const DEFAULT_BANNER = {
+      announcement_text: "LTD's BOOK STORE · CHỌN SÁCH ĐÚNG, HỌC TẬP HIỆU QUẢ",
+      hero_eyebrow: 'CHỌN SÁCH ĐÚNG · HỌC TOÁN TỐT',
+      hero_title_line1: 'Mỗi trang sách,',
+      hero_title_highlight: 'mở một lối tư duy.',
+      hero_description: 'Sách bài tập, luyện thi và bồi dưỡng Toán được chọn lọc theo từng khối lớp. Tìm cuốn sách phù hợp nhất cho lộ trình học tập của bạn.',
+      hero_sticker_top: 'STUDY', hero_sticker_bottom: 'SMART',
+      hero_note_title: 'Học chắc từng bước', hero_note_sub: 'Vững kiến thức · Tự tin kỳ thi',
+      coming_soon_eyebrow: 'ĐÓN ĐẦU KIẾN THỨC', coming_soon_title: 'Sách', coming_soon_highlight: 'sắp ra mắt.',
+      coming_soon_description: 'Khám phá những đầu sách đang chuẩn bị phát hành. Đăng ký nhận thông báo ngay khi sách mở bán chính thức.'
+    };
+    async function loadBannerForm() {
+      try { const b = await api('/api/banner'); for (const [k, v] of Object.entries(b)) if (bf.elements[k]) bf.elements[k].value = v; } catch {}
+    }
+    bf.addEventListener('submit', async e => {
+      e.preventDefault(); el('saveBannerBtn').disabled = true;
+      try { await api('/api/admin/banner', { method: 'PUT', body: JSON.stringify(Object.fromEntries(new FormData(bf))) }); msg('Đã lưu Banner quảng cáo'); }
+      catch (err) { msg(err.message, true); } finally { el('saveBannerBtn').disabled = false; }
+    });
+    el('resetBannerBtn').onclick = () => { for (const [k, v] of Object.entries(DEFAULT_BANNER)) if (bf.elements[k]) bf.elements[k].value = v; msg('Đã điền mặc định — bấm Lưu để áp dụng'); };
+
+    check();
+  </script>
+</body>
+</html>
